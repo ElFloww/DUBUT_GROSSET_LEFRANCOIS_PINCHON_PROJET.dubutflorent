@@ -1,6 +1,4 @@
 ﻿using R5._08.Project.Database;
-using System;
-using System.Windows.Forms;
 
 namespace ProjetForm
 {
@@ -12,16 +10,16 @@ namespace ProjetForm
         [STAThread]
         private static void Main()
         {
-            //Connection à la base de données
-            bool connexionOuverte = DatabaseConnection.OpenConnection();
-            if (connexionOuverte)
+            //Connection to the database
+            bool v_ConnectionStatus = DatabaseConnection.OpenConnection();
+            if (v_ConnectionStatus)
             {
-                MessageBox.Show("Connexion à la base réussi !");
+                MessageBox.Show("Successful connection to the database !");
 
             }
             else
             {
-                MessageBox.Show("Echec de connexion à la base !");
+                MessageBox.Show("Connection to the database failed !");
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

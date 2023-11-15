@@ -4,14 +4,14 @@ namespace R5._08.Project.Database
 {
     public static class DatabaseConnection
     {
-        public static MySqlConnection? DBConnection;
+        public static MySqlConnection? m_DBConnection;
 
         public static bool OpenConnection()
         {
-            DBConnection = new MySqlConnection(ConnectionString.GetConnectionString());
+            m_DBConnection = new MySqlConnection(ConnectionString.GetConnectionString());
             try
             {
-                DBConnection.Open();
+                m_DBConnection.Open();
                 return true;
             }
             catch (Exception v_Ex)
@@ -24,9 +24,9 @@ namespace R5._08.Project.Database
         public static bool CloseConnection()
         {
             bool v_Result = false;
-            if (DBConnection != null && DBConnection.State == System.Data.ConnectionState.Open)
+            if (m_DBConnection != null && m_DBConnection.State == System.Data.ConnectionState.Open)
             {
-                DBConnection.Close();
+                m_DBConnection.Close();
                 v_Result = true;
             }
             return v_Result;

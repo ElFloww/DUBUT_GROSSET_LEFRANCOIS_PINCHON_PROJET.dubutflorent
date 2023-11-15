@@ -18,6 +18,7 @@
         private void btnHomeQuit_Click(object p_Sender, EventArgs p_EventArgs)
         {
             // Fermeture de l'application
+            Application.Exit();
         }
 
         private void btnHomeScores_Click(object p_Sender, EventArgs p_EventArgs)

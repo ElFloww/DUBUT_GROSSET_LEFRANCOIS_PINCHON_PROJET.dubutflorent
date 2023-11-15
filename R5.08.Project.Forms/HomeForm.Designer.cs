@@ -110,7 +110,6 @@
             this.Name = "HomeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Puissance 4";
-            this.Load += new System.EventHandler(this.HomeForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

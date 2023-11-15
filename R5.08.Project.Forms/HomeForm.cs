@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace ProjetForm
+﻿namespace ProjetForm
 {
     public partial class HomeForm : Form
     {
@@ -31,22 +28,6 @@ namespace ProjetForm
             // Ouverture de la page de scores
             ScoresForm v_ScoresForm = new ScoresForm();
             v_ScoresForm.ShowDialog();
-        }
-
-        private void HomeForm_Load(object sender, EventArgs e)
-        {
-            //Connection à la base de données
-            bool connexionOuverte = DatabaseConnection.InitConnexion();
-            if (connexionOuverte)
-            {
-                MessageBox.Show("Connexion à la base réussi !");
-
-            }
-            else
-            {
-                MessageBox.Show("Echec de connexion à la base !");
-                this.Close();
-            }
         }
     }
 }

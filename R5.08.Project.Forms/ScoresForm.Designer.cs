@@ -37,8 +37,9 @@
             // lblHomeTitle
             // 
             this.lblHomeTitle.AutoSize = true;
-            this.lblHomeTitle.Font = new System.Drawing.Font("Verdana", 30F);
-            this.lblHomeTitle.Location = new System.Drawing.Point(315, 50);
+            this.lblHomeTitle.Font = new System.Drawing.Font("Verdana", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblHomeTitle.Location = new System.Drawing.Point(368, 58);
+            this.lblHomeTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHomeTitle.Name = "lblHomeTitle";
             this.lblHomeTitle.Size = new System.Drawing.Size(154, 48);
             this.lblHomeTitle.TabIndex = 1;
@@ -51,12 +52,13 @@
             this.btnGameModeBack.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGameModeBack.FlatAppearance.BorderSize = 0;
             this.btnGameModeBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGameModeBack.Font = new System.Drawing.Font("Verdana", 10F);
+            this.btnGameModeBack.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnGameModeBack.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnGameModeBack.Location = new System.Drawing.Point(645, 12);
+            this.btnGameModeBack.Location = new System.Drawing.Point(752, 14);
+            this.btnGameModeBack.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnGameModeBack.Name = "btnGameModeBack";
-            this.btnGameModeBack.Padding = new System.Windows.Forms.Padding(30, 0, 30, 0);
-            this.btnGameModeBack.Size = new System.Drawing.Size(127, 27);
+            this.btnGameModeBack.Padding = new System.Windows.Forms.Padding(35, 0, 35, 0);
+            this.btnGameModeBack.Size = new System.Drawing.Size(148, 31);
             this.btnGameModeBack.TabIndex = 6;
             this.btnGameModeBack.Text = "Retour";
             this.btnGameModeBack.UseVisualStyleBackColor = false;
@@ -67,23 +69,27 @@
             this.scoresGridView.AllowUserToAddRows = false;
             this.scoresGridView.AllowUserToDeleteRows = false;
             this.scoresGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.scoresGridView.Location = new System.Drawing.Point(32, 120);
+            this.scoresGridView.Location = new System.Drawing.Point(37, 138);
+            this.scoresGridView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.scoresGridView.Name = "scoresGridView";
             this.scoresGridView.ReadOnly = true;
-            this.scoresGridView.Size = new System.Drawing.Size(720, 307);
+            this.scoresGridView.Size = new System.Drawing.Size(840, 354);
             this.scoresGridView.TabIndex = 7;
             // 
             // ScoresForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.ClientSize = new System.Drawing.Size(915, 532);
             this.Controls.Add(this.scoresGridView);
             this.Controls.Add(this.btnGameModeBack);
             this.Controls.Add(this.lblHomeTitle);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ScoresForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Puissance 4";
+            this.Load += new System.EventHandler(this.ScoresForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.scoresGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

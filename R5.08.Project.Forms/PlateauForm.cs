@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
+﻿using MySqlConnector;
+using R5._08.Project.Forms;
+using DB = R5._08.Project.Database.DatabaseConnection;
 
 namespace ProjetForm
 {
@@ -128,7 +125,11 @@ namespace ProjetForm
 
             if (Puissance4Manager.CheckIfWin(v_Puissance4))
             {
-                String v_PseudoPlayerWinner = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur2() : v_Puissance4.getJoueur1();
+                string v_PseudoPlayerWinner = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur2() : v_Puissance4.getJoueur1();
+                string v_PseudoPlayerLose = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur1() : v_Puissance4.getJoueur2();
+                int v_Timer = 100;
+                AddPlayer(true, v_PseudoPlayerWinner, v_Timer);
+                AddPlayer(false, v_PseudoPlayerLose, v_Timer);
                 EnableEndScreen(v_PseudoPlayerWinner, false);
             }
 
@@ -144,6 +145,66 @@ namespace ProjetForm
                 aiPlay();
             }
         }
+
+        public void AddPlayer(bool p_Winner, string p_Name, int p_PartyTime)
+        {
+            try
+            {
+                Scoreboard v_Scoreboard = new();
+                string v_Query = $"SELECT * FROM Scoreboard WHERE Name = '{p_Name}'";
+                MySqlCommand v_Command = new(v_Query, DB.m_DBConnection);
+                MySqlDataReader v_DataReader = v_Command.ExecuteReader();
+                while (v_DataReader.Read())
+                {
+                    v_Scoreboard = new Scoreboard() { Id = v_DataReader.GetInt32(0), Name = v_DataReader.GetString(1), NumberOfGames = v_DataReader.GetInt32(2), NumberOfWins = v_DataReader.GetInt32(3), AverageTime = v_DataReader.GetInt32(4) };
+                }
+                v_DataReader.Close();
+                v_Command.Dispose();
+
+                if (v_Scoreboard.Name != null)
+                {
+                    v_Scoreboard.AverageTime = (v_Scoreboard.AverageTime * v_Scoreboard.NumberOfGames + p_PartyTime) / (v_Scoreboard.NumberOfGames + 1);
+                    v_Scoreboard.NumberOfGames = v_Scoreboard.NumberOfGames + 1;
+                }
+                else
+                {
+                    v_Scoreboard = new() { Name = p_Name, NumberOfGames = 1, AverageTime = p_PartyTime };
+                }
+
+                if(p_Winner)
+                {
+                    v_Scoreboard.NumberOfWins = v_Scoreboard.NumberOfWins + 1;
+
+                }
+                else
+                {
+                    v_Scoreboard.NumberOfWins = v_Scoreboard.NumberOfWins;
+
+                }
+
+                if(v_Scoreboard.Id == 0)
+                {
+                    string v_InsertQuery = $"INSERT INTO Scoreboard (Name, NumberOfGames, NumberOfWins, AverageTime) VALUES ('{v_Scoreboard.Name}',{v_Scoreboard.NumberOfGames},{v_Scoreboard.NumberOfWins},{v_Scoreboard.AverageTime})";
+                    MySqlCommand v_InsertCommand = new(v_InsertQuery, DB.m_DBConnection);
+                    v_InsertCommand.ExecuteNonQuery();
+                    v_DataReader.Close();
+                    v_Command.Dispose();
+                }
+                else
+                {
+                    string v_UpdateQuery = $"UPDATE Scoreboard SET NumberOfGames = {v_Scoreboard.NumberOfGames}, NumberOfWins = {v_Scoreboard.NumberOfWins}, AverageTime = {v_Scoreboard.AverageTime} WHERE Id = {v_Scoreboard.Id}";
+                    MySqlCommand v_UpdateCommand = new(v_UpdateQuery, DB.m_DBConnection);
+                    v_UpdateCommand.ExecuteNonQuery();
+                    v_DataReader.Close();
+                    v_Command.Dispose();
+                }
+            }
+            catch (Exception v_Ex)
+            {
+                Console.WriteLine(v_Ex.ToString());
+            }
+        }
+
 
         private void btnPlateauAbandon_Click(object p_Sender, EventArgs p_EventArgs)
         {

@@ -11,15 +11,15 @@ namespace ProjetForm
         private static void Main()
         {
             //Connection to the database
-            bool v_ConnectionStatus = DatabaseConnection.OpenConnection();
+            bool v_ConnectionStatus = DatabaseConnection.OpenConnection(ConnectionString.GetConnectionString());
             if (v_ConnectionStatus)
             {
-                MessageBox.Show("Successful connection to the database !");
+                MessageBox.Show("Connexion réussie à la base de données !");
 
             }
             else
             {
-                MessageBox.Show("Connection to the database failed !");
+                MessageBox.Show("La connexion à la base de données a échoué !");
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

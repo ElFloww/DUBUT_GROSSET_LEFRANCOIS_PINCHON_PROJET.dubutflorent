@@ -6,9 +6,9 @@ namespace R5._08.Project.Database
     {
         public static MySqlConnection? m_DBConnection;
 
-        public static bool OpenConnection()
+        public static bool OpenConnection(string p_ConnectionString)
         {
-            m_DBConnection = new MySqlConnection(ConnectionString.GetConnectionString());
+            m_DBConnection = new MySqlConnection(p_ConnectionString);
             try
             {
                 m_DBConnection.Open();

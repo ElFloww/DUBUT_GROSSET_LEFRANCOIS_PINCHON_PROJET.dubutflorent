@@ -16,7 +16,7 @@ namespace ProjetForm
             Hide();
 
             // Ouverture de la page Home
-            HomeForm v_HomeForm = new HomeForm();
+            HomeForm v_HomeForm = new();
             v_HomeForm.ShowDialog();
         }
 
@@ -43,8 +43,6 @@ namespace ProjetForm
             {
                 Console.WriteLine(v_Ex.ToString());
             }
-
-            
         }
     }
 }

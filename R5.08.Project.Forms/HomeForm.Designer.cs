@@ -117,10 +117,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblHomeTitle;
-        private System.Windows.Forms.Button btnHomePlay;
-        private System.Windows.Forms.Button btnHomeScores;
-        private System.Windows.Forms.Button btnHomeQuit;
+        public System.Windows.Forms.Label lblHomeTitle;
+        public System.Windows.Forms.Button btnHomePlay;
+        public System.Windows.Forms.Button btnHomeScores;
+        public System.Windows.Forms.Button btnHomeQuit;
     }
 }
 

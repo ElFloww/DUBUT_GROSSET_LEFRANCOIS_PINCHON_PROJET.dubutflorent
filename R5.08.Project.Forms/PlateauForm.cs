@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+﻿using MySqlConnector;
+using R5._08.Project.Forms;
+using DB = R5._08.Project.Database.DatabaseConnection;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace ProjetForm
 {
     public partial class PlateauForm : Form
     {
         private Puissance4 v_Puissance4;
+        private Timer m_Timer;
+        private int m_ElapsedTime = 0;
 
         public PlateauForm(Puissance4 p_Puissance4)
         {
@@ -52,7 +53,7 @@ namespace ProjetForm
         /// Active l'écran de fin
         /// </summary>
         /// <param name="p_PseudoPlayerWinner">Le pseudo du joueur qui a gagné</param>
-        private void EnableEndScreen(String p_PseudoPlayerWinner, bool draw)
+        private void EnableEndScreen(String p_PseudoPlayerWinner, bool p_Draw)
         {
             // Affichage de la group Box pour montrer le gagnant
             groupBoxWinner.Visible = true;
@@ -63,15 +64,13 @@ namespace ProjetForm
             v_BtnColList.ForEach((btn) => btn.Enabled = false);
             btnPlateauAbandon.Enabled = false;
 
-            if(draw)
+            if(p_Draw)
             {
                 lblWinner.Text = "Égalité !";
             } else
             {
                 lblWinner.Text = p_PseudoPlayerWinner + " a gagné !";
             }
-
-            
         }
 
         private void buttonColonne_Click(object p_Sender, EventArgs p_EventArgs)
@@ -111,7 +110,6 @@ namespace ProjetForm
                     break;
 
                 default:
-                    //TODO should resolv this error
                     throw new Exception("Bouton inexistant");
             }
 
@@ -128,12 +126,19 @@ namespace ProjetForm
 
             if (Puissance4Manager.CheckIfWin(v_Puissance4))
             {
-                String v_PseudoPlayerWinner = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur2() : v_Puissance4.getJoueur1();
+                m_Timer.Stop();
+                string v_PseudoPlayerWinner = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur2() : v_Puissance4.getJoueur1();
+                string v_PseudoPlayerLose = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur1() : v_Puissance4.getJoueur2();
+                AddPlayer(true, v_PseudoPlayerWinner);
+                AddPlayer(false, v_PseudoPlayerLose);
                 EnableEndScreen(v_PseudoPlayerWinner, false);
             }
 
             if (Puissance4Manager.CheckIfDraw(v_Puissance4.getBoard()))
             {
+                m_Timer.Stop();
+                AddPlayer(false, v_Puissance4.getJoueur2());
+                AddPlayer(false, v_Puissance4.getJoueur1());
                 EnableEndScreen("égalité", true);
             }
 
@@ -144,6 +149,69 @@ namespace ProjetForm
                 aiPlay();
             }
         }
+
+        public void AddPlayer(bool p_IsWinner, string p_Name)
+        {
+            try
+            {
+                //Create object to store data
+                Scoreboard v_Scoreboard = new();
+                
+                //Check if the player already exists in the database
+                string v_Query = $"SELECT * FROM Scoreboard WHERE Name = '{p_Name}'";
+                MySqlCommand v_Command = new(v_Query, DB.m_DBConnection);
+                MySqlDataReader v_DataReader = v_Command.ExecuteReader();
+                while (v_DataReader.Read())
+                {
+                    v_Scoreboard = new Scoreboard() { Id = v_DataReader.GetInt32(0), Name = v_DataReader.GetString(1), NumberOfGames = v_DataReader.GetInt32(2), NumberOfWins = v_DataReader.GetInt32(3), AverageTime = v_DataReader.GetInt32(4) };
+                }
+                v_DataReader.Close();
+                v_Command.Dispose();
+
+                //If exist update data
+                if (v_Scoreboard.Name != null)
+                {
+                    v_Scoreboard.AverageTime = (v_Scoreboard.AverageTime * v_Scoreboard.NumberOfGames + m_ElapsedTime) / (v_Scoreboard.NumberOfGames + 1);
+                    v_Scoreboard.NumberOfGames = v_Scoreboard.NumberOfGames + 1;
+                }
+                else //Create the data
+                {
+                    v_Scoreboard = new() { Name = p_Name, NumberOfGames = 1, AverageTime = m_ElapsedTime };
+                }
+
+                //Check if the player is the winner
+                if (p_IsWinner)
+                {
+                    v_Scoreboard.NumberOfWins = v_Scoreboard.NumberOfWins + 1;
+
+                }
+                else
+                {
+                    v_Scoreboard.NumberOfWins = v_Scoreboard.NumberOfWins;
+
+                }
+
+                string v_UpsertQuery;
+                if(v_Scoreboard.Id == 0)
+                {
+                    v_UpsertQuery = $"INSERT INTO Scoreboard (Name, NumberOfGames, NumberOfWins, AverageTime) VALUES ('{v_Scoreboard.Name}',{v_Scoreboard.NumberOfGames},{v_Scoreboard.NumberOfWins},{v_Scoreboard.AverageTime})";
+
+                }
+                else
+                {
+                    v_UpsertQuery = $"UPDATE Scoreboard SET NumberOfGames = {v_Scoreboard.NumberOfGames}, NumberOfWins = {v_Scoreboard.NumberOfWins}, AverageTime = {v_Scoreboard.AverageTime} WHERE Id = {v_Scoreboard.Id}";
+                }
+                MySqlCommand v_InsertCommand = new(v_UpsertQuery, DB.m_DBConnection);
+                v_InsertCommand.ExecuteNonQuery();
+                v_DataReader.Close();
+                v_Command.Dispose();
+            }
+            catch (Exception v_Ex)
+            {
+                Console.WriteLine(v_Ex.ToString());
+            }
+        }
+
 
         private void btnPlateauAbandon_Click(object p_Sender, EventArgs p_EventArgs)
         {
@@ -166,7 +234,7 @@ namespace ProjetForm
             Application.Exit();
         }
 
-        private void btnWinnerPlay_Click(object sender, EventArgs e)
+        private void btnWinnerPlay_Click(object p_Sender, EventArgs p_EventArgs)
         {
             Hide();
 
@@ -174,6 +242,20 @@ namespace ProjetForm
             Puissance4 newPuissance4 = new Puissance4(v_Puissance4.getJoueur1(), v_Puissance4.getJoueur2(), v_Puissance4.isPlayerVSPlayerMode()); ;
             PlateauForm v_PlateauForm = new PlateauForm(newPuissance4);
             v_PlateauForm.ShowDialog();
+        }
+
+        private void PlateauForm_Load(object p_Sender, EventArgs p_EventArgs)
+        {
+            m_Timer = new();
+            m_Timer.Interval = 1000;
+            m_Timer.Tick += TimerTick;
+            m_Timer.Start();
+        }
+
+        private void TimerTick(object? p_Sender, EventArgs? p_EventArgs)
+        {
+            m_ElapsedTime++;
+            lblPlateauTimer.Text = $"Temps écoulé : {m_ElapsedTime} secondes";
         }
     }
 }

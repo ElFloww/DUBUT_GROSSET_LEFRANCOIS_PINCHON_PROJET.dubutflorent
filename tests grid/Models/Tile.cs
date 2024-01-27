@@ -32,6 +32,7 @@ namespace R5._08.Project.Forms.Models
             this.v_GridId = v_GridId;
         }
 
+        /** Permet de mettre à jour un voisin de la Tile **/
         public void NewNeighbor(Tile p_tile)
         {
             if (p_tile.v_Player != v_Player || p_tile.v_Player == 0 || v_Player == 0) { return; }
@@ -81,6 +82,8 @@ namespace R5._08.Project.Forms.Models
             this.v_Vectors.Add(v_NewVector);
         }
 
+        /** Mettre à jour la taille des vecteurs de la Tile **/
+        /** Mal fini ???? **/
         public void UpdateVectors()
         {
             // { "Vertical", "Horizontale", "Diagonale-Gauche", "Diagonale-Droite" }
@@ -99,6 +102,7 @@ namespace R5._08.Project.Forms.Models
                 else { throw  new Exception("Direction de vecteur invalide: " +  v_Vector.v_Direction); }
             }
 
+            // Mettre à jour les vecteurs verticales
             if (v_Vertical.Count > 0)
             {
                 Vecteur v_RootVector = v_Vertical[0];
@@ -118,6 +122,7 @@ namespace R5._08.Project.Forms.Models
             }
         }
 
+        /** Récupérer les voisins de la Tile **/
         public List<Tile> GetNeighbors()
         {
             List<Tile> v_Neighbors = new List<Tile>();

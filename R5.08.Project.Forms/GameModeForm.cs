@@ -1,4 +1,5 @@
-﻿using System;
+﻿using R5._08.Project.Forms.Models;
+using System;
 using System.Windows.Forms;
 
 namespace ProjetForm
@@ -140,15 +141,18 @@ namespace ProjetForm
         {
             Hide();
 
-            Puissance4 v_Puissance4;
+            puissance4 v_Puissance4 = new puissance4();
             if (radioButtonPlayerVSPlayer.Checked)
             {
-                v_Puissance4 = new Puissance4(inputPseudoPlayer1.Text, inputPseudoPlayer2.Text, true);
+                v_Puissance4.v_Joueur1 = inputPseudoPlayer1.Text;
+                v_Puissance4.v_Joueur2 = inputPseudoPlayer2.Text;
             } else
             {
                 // Récupérer le niveau de difficulté de l'IA, 0 -> Easy, 1 -> Normal, 2 -> Hard
                 int v_NiveauIa = radioButtonModeEasy.Checked ? 0 : (radioButtonModeNormal.Checked ? 1 : 2);
-                v_Puissance4 = new Puissance4(inputPseudoPlayer.Text, "Le Bot", false, v_NiveauIa);
+                v_Puissance4.v_Joueur1 = inputPseudoPlayer1.Text;
+                v_Puissance4.v_Joueur2 = "Le Bot";
+                v_Puissance4.v_difficulty = v_NiveauIa;
             }
 
             // Ouverture du plateau de jeu

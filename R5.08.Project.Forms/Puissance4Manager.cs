@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.CompilerServices;
+using R5._08.Project.Forms.Models;
 
 namespace ProjetForm
 {
@@ -20,11 +21,11 @@ namespace ProjetForm
         /// </summary>
         /// <param name="p_Puissance4"> La partie de puissance4</param>
         /// <returns>Le pion</returns>
-        public static PictureBox CreatePawn(Puissance4 p_Puissance4)
+        public static PictureBox CreatePawn(puissance4 p_Puissance4)
         {
-            if (p_Puissance4.isRedPlayerToPlay())
-                return CreatePawn(p_Puissance4, Color.Red);
-            return CreatePawn(p_Puissance4, Color.Yellow);
+            if (p_Puissance4.v_CurrentPlayer == 0)
+                return CreatePawn(Color.Red);
+            return CreatePawn(Color.Yellow);
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace ProjetForm
         /// <param name="p_Puissance4">La partie de puissance4</param>
         /// <param name="p_Color">La couleur du pion</param>
         /// <returns>Le pion</returns>
-        private static PictureBox CreatePawn(Puissance4 p_Puissance4, Color p_Color)
+        private static PictureBox CreatePawn(Color p_Color)
         {
             PictureBox v_PBBoxPawn = new PictureBox();
 

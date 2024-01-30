@@ -1,4 +1,5 @@
 ﻿using ProjetForm;
+using R5._08.Project.Forms.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +25,10 @@ namespace R5._08.Project.Forms
             }
         }
 
-        public static Point EasyModePlay(Puissance4 v_Puissance4)
+        public static int EasyModePlay(puissance4 v_Puissance4)
         {
             // Faire jouer l'IA.
-            int[] v_AvailablesColumns = Puissance4Manager.GetAvailablesColumnsId(v_Puissance4);
+            List<int> v_AvailablesColumns = v_Puissance4.GetAvailableCols();
 
             Random rd = new Random();
             List<float> v_WinrateForAi;
@@ -43,28 +44,26 @@ namespace R5._08.Project.Forms
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
                 for (int grid_number = 0; grid_number <= 100; grid_number++)
                 {
-                    Puissance4 tmp_grid = new Puissance4("Joueur", "Bot", false);
-                    tmp_grid.Copy(v_Puissance4);
+                    puissance4 tmp_grid = (puissance4)v_Puissance4.Clone();
 
-                    int[] v_AvailablesColumnsTmpGrid = Puissance4Manager.GetAvailablesColumnsId(v_Puissance4);
-                    while (v_AvailablesColumnsTmpGrid.Length > 0 && !Puissance4Manager.CheckIfWin(tmp_grid))
+                    List<int> v_AvailablesColumnsTmpGrid = v_Puissance4.GetAvailableCols();
+                    while (v_AvailablesColumnsTmpGrid.Count > 0 && v_Puissance4.v_Winner == -1 )
                     {
                         PictureBox v_Pawn = Puissance4Manager.CreatePawn(v_Puissance4);
 
-                        int v_ColIndex = rd.Next(v_AvailablesColumnsTmpGrid.Length);
+                        int v_ColIndex = rd.Next(v_AvailablesColumnsTmpGrid.Count);
                         int v_Col = v_AvailablesColumnsTmpGrid[v_ColIndex];
 
-                        Point v_Pos = Puissance4Manager.GetPawnPosition(tmp_grid, v_Col);
-                        Bot.AddPawnOnCustomBoard(v_Pawn, v_Pos, tmp_grid);
+                        tmp_grid.PlacePawn(v_Col);
 
                         // Mettre à jour la liste des colonnes disponibles
-                        v_AvailablesColumnsTmpGrid = Puissance4Manager.GetAvailablesColumnsId(tmp_grid);
+                        v_AvailablesColumnsTmpGrid = v_Puissance4.GetAvailableCols();
 
                     }
 
-                    if (Puissance4Manager.CheckIfWin(tmp_grid))
+                    if (tmp_grid.v_Winner != -1)
                     {
-                        string v_PseudoPlayerWinner = tmp_grid.isRedPlayerToPlay() ? tmp_grid.getJoueur2() : tmp_grid.getJoueur1();
+                        string v_PseudoPlayerWinner = tmp_grid.GetWinnerName();
                         if (v_PseudoPlayerWinner == "Bot")
                         {
                             v_WinrateForAi.Add(120);
@@ -90,9 +89,9 @@ namespace R5._08.Project.Forms
                     v_BestScoreForAi = v_AvgWinrate;
                 }
             }
+;           
 
-            Point v_PawnPosition = Puissance4Manager.GetPawnPosition(v_Puissance4, v_BestColumnForAi);
-            return v_PawnPosition;
+            return v_BestColumnForAi;
         }
 
     }

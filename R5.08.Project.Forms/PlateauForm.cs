@@ -3,20 +3,21 @@ using R5._08.Project.Forms;
 using DB = R5._08.Project.Database.DatabaseConnection;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
+using R5._08.Project.Forms.Models;
 
 namespace ProjetForm
 {
     public partial class PlateauForm : Form
     {
-        private Puissance4 v_Puissance4;
+        private puissance4 v_Puissance4;
         private Timer m_Timer;
         private int m_ElapsedTime = 0;
 
-        public PlateauForm(Puissance4 p_Puissance4)
+        public PlateauForm(puissance4 p_Puissance4)
         {
             InitializeComponent();
             this.v_Puissance4 = p_Puissance4;
-            lblPlayerToPlay.Text = p_Puissance4.isRedPlayerToPlay() ? p_Puissance4.getJoueur1() : p_Puissance4.getJoueur2();
+            lblPlayerToPlay.Text = p_Puissance4.GetPlayerToPlay();
         }
 
         /// <summary>
@@ -24,21 +25,10 @@ namespace ProjetForm
         /// </summary>
         /// <param name="v_PlayerPawn">Le pion du joueur</param>
         /// <param name="v_PawnPosition">La position du pion</param>
-        private void AddPawnOnBoard(PictureBox v_PlayerPawn, Point v_PawnPosition)
+        private void AddPawnOnBoard(PictureBox v_PlayerPawn, int v_ColumnPlayed, int v_RowPlayed)
         {
             // Ajout du pion sur le plateau
-            plateauJeu.Controls.Add(v_PlayerPawn, v_PawnPosition.X, v_PawnPosition.Y);
-            v_Puissance4.setOnBoard(v_PawnPosition.Y, v_PawnPosition.X, true);
-            if (v_Puissance4.isRedPlayerToPlay())
-            {
-                v_Puissance4.setRedPawnOnBoard(v_PawnPosition.Y, v_PawnPosition.X, true);
-                v_Puissance4.setRedPlayerToPlay(false);
-            }
-            else
-            {
-                v_Puissance4.setYellowPawnOnBoard(v_PawnPosition.Y, v_PawnPosition.X, true);
-                v_Puissance4.setRedPlayerToPlay(true);
-            }
+            plateauJeu.Controls.Add(v_PlayerPawn, v_ColumnPlayed, Grid.NUMBER_OF_ROWS - v_RowPlayed - 1);
         }
 
         /// <summary>
@@ -48,10 +38,15 @@ namespace ProjetForm
         {
             if (v_Puissance4.v_difficulty == 0)
             {
-                Point v_Pos = Bot.EasyModePlay(v_Puissance4);
+                int v_Col = Bot.EasyModePlay(v_Puissance4);
                 PictureBox v_AiPawn = Puissance4Manager.CreatePawn(v_Puissance4);
 
-                AddPawnOnBoard(v_AiPawn, v_Pos);
+                try
+                {
+                    int v_Row = v_Puissance4.PlacePawn(v_Col);
+                    AddPawnOnBoard(v_AiPawn, v_Col, v_Row);
+                } catch (Exception e) { }
+                
             } else
             {
 
@@ -121,61 +116,60 @@ namespace ProjetForm
                 default:
                     throw new Exception("Bouton inexistant");
             }
+            v_ColumnPlayed -= 1;
 
             // Crée un nouveau pion à ajouter
             v_PlayerPawn = Puissance4Manager.CreatePawn(v_Puissance4);
 
-            // Calcule des position dans le plateau
-            v_PawnPosition = Puissance4Manager.GetPawnPosition(v_Puissance4, v_ColumnPlayed);
 
-            if(v_PawnPosition.X != -1)
-            {
-                AddPawnOnBoard(v_PlayerPawn, v_PawnPosition);   
-            }
+            try {
+                int v_RowPlayed = v_Puissance4.PlacePawn(v_ColumnPlayed);
+                AddPawnOnBoard(v_PlayerPawn, v_ColumnPlayed, v_RowPlayed);   
+            } catch (Exception e) { }
 
-            if (Puissance4Manager.CheckIfWin(v_Puissance4))
+            if (v_Puissance4.v_Winner != -1)
             {
                 m_Timer.Stop();
-                string v_PseudoPlayerWinner = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur2() : v_Puissance4.getJoueur1();
-                string v_PseudoPlayerLose = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur1() : v_Puissance4.getJoueur2();
+                string v_PseudoPlayerWinner = v_Puissance4.v_Winner == 1 ? v_Puissance4.v_Joueur2 : v_Puissance4.v_Joueur1;
+                string v_PseudoPlayerLose = v_Puissance4.v_Winner == 1 ? v_Puissance4.v_Joueur1 : v_Puissance4.v_Joueur2;
                 AddPlayer(true, v_PseudoPlayerWinner);
                 AddPlayer(false, v_PseudoPlayerLose);
                 EnableEndScreen(v_PseudoPlayerWinner, false);
             }
 
-            if (Puissance4Manager.CheckIfDraw(v_Puissance4.getBoard()))
+            if (v_Puissance4.CheckIfDraw())
             {
                 m_Timer.Stop();
-                AddPlayer(false, v_Puissance4.getJoueur2());
-                AddPlayer(false, v_Puissance4.getJoueur1());
+                AddPlayer(false, v_Puissance4.v_Joueur2);
+                AddPlayer(false, v_Puissance4.v_Joueur1);
                 EnableEndScreen("égalité", true);
             }
 
-            lblPlayerToPlay.Text = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur1() : v_Puissance4.getJoueur2();
+            lblPlayerToPlay.Text = v_Puissance4.GetPlayerToPlay();
 
-            if(!v_Puissance4.isPlayerVSPlayerMode())
+            if(v_Puissance4.v_difficulty >= 0)
             {
                 aiPlay();
 
-                if (Puissance4Manager.CheckIfWin(v_Puissance4))
+                if (v_Puissance4.v_Winner != -1)
                 {
                     m_Timer.Stop();
-                    string v_PseudoPlayerWinner = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur2() : v_Puissance4.getJoueur1();
-                    string v_PseudoPlayerLose = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur1() : v_Puissance4.getJoueur2();
+                    string v_PseudoPlayerWinner = v_Puissance4.v_Winner == 1 ? v_Puissance4.v_Joueur2 : v_Puissance4.v_Joueur1;
+                    string v_PseudoPlayerLose = v_Puissance4.v_Winner == 1 ? v_Puissance4.v_Joueur1 : v_Puissance4.v_Joueur2;
                     AddPlayer(true, v_PseudoPlayerWinner);
                     AddPlayer(false, v_PseudoPlayerLose);
                     EnableEndScreen(v_PseudoPlayerWinner, false);
                 }
 
-                if (Puissance4Manager.CheckIfDraw(v_Puissance4.getBoard()))
+                if (v_Puissance4.CheckIfDraw())
                 {
                     m_Timer.Stop();
-                    AddPlayer(false, v_Puissance4.getJoueur2());
-                    AddPlayer(false, v_Puissance4.getJoueur1());
+                    AddPlayer(false, v_Puissance4.v_Joueur2);
+                    AddPlayer(false, v_Puissance4.v_Joueur1);
                     EnableEndScreen("égalité", true);
                 }
 
-                lblPlayerToPlay.Text = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur1() : v_Puissance4.getJoueur2();
+                lblPlayerToPlay.Text = v_Puissance4.GetPlayerToPlay();
 
             }
         }
@@ -245,7 +239,7 @@ namespace ProjetForm
 
         private void btnPlateauAbandon_Click(object p_Sender, EventArgs p_EventArgs)
         {
-            String playerWinner = v_Puissance4.isRedPlayerToPlay() ? v_Puissance4.getJoueur2() : v_Puissance4.getJoueur1();
+            String playerWinner = v_Puissance4.GetPlayerToPlay();
             EnableEndScreen(playerWinner, false);
         }
 
@@ -269,7 +263,11 @@ namespace ProjetForm
             Hide();
 
             // Ouverture du plateau de jeu
-            Puissance4 newPuissance4 = new Puissance4(v_Puissance4.getJoueur1(), v_Puissance4.getJoueur2(), v_Puissance4.isPlayerVSPlayerMode()); ;
+            puissance4 newPuissance4 = new puissance4();
+            newPuissance4.v_Joueur1 = v_Puissance4.v_Joueur1;
+            newPuissance4.v_Joueur2 = v_Puissance4.v_Joueur2;
+            newPuissance4.v_difficulty = v_Puissance4.v_difficulty;
+
             PlateauForm v_PlateauForm = new PlateauForm(newPuissance4);
             v_PlateauForm.ShowDialog();
         }

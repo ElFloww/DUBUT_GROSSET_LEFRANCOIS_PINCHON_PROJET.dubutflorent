@@ -1,6 +1,12 @@
-﻿using R5._08.Project.Forms.Models;
+﻿using test.Models;
 
-// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
-Grid g = new Grid();
-g.print();
+puissance4 p = new puissance4();
+
+while (p.v_Winner == -1)
+{
+    p.grid.print();
+    Console.Write("à joueur " + p.v_CurrentPlayer.ToString() + " de jouer > ");
+    string ColIndex = Console.ReadLine();
+    p.PlacePawn(Convert.ToInt32(ColIndex));
+}
+

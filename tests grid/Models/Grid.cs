@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R5._08.Project.Forms.Models
+namespace test.Models
 {
     public class Grid
     {
@@ -18,6 +18,8 @@ namespace R5._08.Project.Forms.Models
 
         public int c_GridId;
 
+        public List<Vecteur> v_WinVectors = new List<Vecteur>();
+
         public Grid()
         {
             this.c_GridId = Grid.ALL_GRIDS.Count;
@@ -28,7 +30,7 @@ namespace R5._08.Project.Forms.Models
             {
                 for (int col_index = 0; col_index < NUMBER_OF_COLS; col_index++)
                 {
-                    AddTile(row_index, col_index);
+                    AddTile(col_index, row_index);
                 }
             }
         }
@@ -36,6 +38,15 @@ namespace R5._08.Project.Forms.Models
         public Tile Get(int x, int y)
         {
             return v_GridTiles[(x, y)];
+        }
+
+        public void Play(int x, int y, int player)
+        {
+            Tile tile = Get(x, y);
+            tile.UpdateTilePlayer(player);
+
+            this.v_WinVectors.AddRange(tile.v_WinVectors);
+            Console.WriteLine(v_WinVectors.Count);
         }
 
         public void AddTile(int x, int y)
@@ -49,9 +60,9 @@ namespace R5._08.Project.Forms.Models
 
         public void print()
         {
-            for (int x = Grid.NUMBER_OF_ROWS - 1; x >= 0; x--)
+            for (int y = Grid.NUMBER_OF_ROWS - 1; y >= 0; y--)
             {
-                for (int y = 0;  y < Grid.NUMBER_OF_COLS; y++)
+                for (int x = 0;  x < Grid.NUMBER_OF_COLS; x++)
                 {
                     Tile tile = v_GridTiles[(x, y)];
                     Console.Write("[" + tile.v_Player.ToString() + "]");

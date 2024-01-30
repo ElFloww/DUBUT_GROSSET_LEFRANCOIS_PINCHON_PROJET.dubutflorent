@@ -4,17 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R5._08.Project.Forms.Models
+namespace test.Models
 {
-    internal class puissance4
+    public class puissance4
     {
-        private Grid grid = new Grid();
+        public Grid grid = new Grid();
 
         public List<int> v_NbPawnByRow = new List<int>();
+        
+        public int v_CurrentPlayer = 0;
+
+        public int v_Winner = -1;
 
         public puissance4()
         {
-
             // Initialiser les colonnes
             for (int row_index = 0; row_index < Grid.NUMBER_OF_ROWS; row_index++)
             {
@@ -47,8 +50,14 @@ namespace R5._08.Project.Forms.Models
                 throw new ArgumentException("Plus de place dans la colonne choisie");
             }
 
+            this.grid.Play(col_index, v_NbPawnByRow[col_index], this.v_CurrentPlayer);
             v_NbPawnByRow[col_index]++;
-            this.grid.
+
+            if (grid.v_WinVectors.Count > 0 && v_Winner == -1)
+            {
+                this.v_Winner = v_CurrentPlayer;
+            }
+            this.v_CurrentPlayer = (this.v_CurrentPlayer + 1) % 2;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R5._08.Project.Forms.Models
+namespace test.Models
 {
     internal class IntArrayEqualityComparator : IEqualityComparer<int[]>
     {

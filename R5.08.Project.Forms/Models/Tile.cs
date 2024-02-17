@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace R5._08.Project.Forms.Models
 {
-    public class Tile
+    public class Tile: ICloneable
     {
         public List<Vecteur> v_Vectors = new List<Vecteur>();
         public List<Vecteur> v_WinVectors = new List<Vecteur>();
@@ -44,7 +44,7 @@ namespace R5._08.Project.Forms.Models
             {
                 v_Direction = "Horizontale";
 
-            } else if (v_XDirection == -1 && v_XDirection == 1 || v_XDirection == 1 && v_XDirection == -1)
+            } else if (v_XDirection == -1 && v_YDirection == 1 || v_XDirection == 1 && v_XDirection == -1)
             {
                 v_Direction = "Diagonale-Droite";
 
@@ -197,6 +197,23 @@ namespace R5._08.Project.Forms.Models
                 }
             }
             Console.WriteLine("+-------------------------------+");
+        }
+
+        public object Clone()
+        {
+            Tile tile = (Tile)MemberwiseClone();
+            tile.v_WinVectors = new List<Vecteur>();
+            foreach (Vecteur v_Vector in this.v_WinVectors)
+            {
+                tile.v_WinVectors.Add((Vecteur)v_Vector.Clone());
+            }
+
+            tile.v_Vectors = new List<Vecteur>();
+            foreach (Vecteur v_Vector in this.v_Vectors)
+            {
+                tile.v_Vectors.Add((Vecteur)v_Vector.Clone());
+            }
+            return tile;
         }
     }
 }

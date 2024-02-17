@@ -37,8 +37,16 @@ namespace R5._08.Project.Forms.Models
 
         public object Clone()
         {
-            Grid grid = new Grid();
-            grid.v_GridTiles = new Dictionary<(int x, int y), Tile>(v_GridTiles);
+            Grid grid = (Grid)MemberwiseClone();
+            grid.v_GridTiles = new Dictionary<(int x, int y), Tile>();
+            grid.v_WinVectors = new List<Vecteur>();
+            foreach ((int, int) v_Coo in v_GridTiles.Keys)
+            {
+                grid.v_GridTiles[v_Coo] = (Tile)v_GridTiles[v_Coo].Clone();
+            }
+            grid.c_GridId = -1;
+            Grid.ALL_GRIDS.Add(-1, grid);
+
             return grid;
         }
 

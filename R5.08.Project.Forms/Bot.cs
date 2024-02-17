@@ -44,21 +44,18 @@ namespace R5._08.Project.Forms
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
                 for (int grid_number = 0; grid_number <= 100; grid_number++)
                 {
-                    puissance4 tmp_grid = (puissance4)v_Puissance4.Clone();
+                    puissance4 tmp_grid = new puissance4();
 
-                    List<int> v_AvailablesColumnsTmpGrid = v_Puissance4.GetAvailableCols();
-                    while (v_AvailablesColumnsTmpGrid.Count > 0 && v_Puissance4.v_Winner == -1 )
+                    List<int> v_AvailablesColumnsTmpGrid = tmp_grid.GetAvailableCols();
+                    while (v_AvailablesColumnsTmpGrid.Count > 0 && tmp_grid.v_Winner == -1 )
                     {
-                        PictureBox v_Pawn = Puissance4Manager.CreatePawn(v_Puissance4);
-
                         int v_ColIndex = rd.Next(v_AvailablesColumnsTmpGrid.Count);
                         int v_Col = v_AvailablesColumnsTmpGrid[v_ColIndex];
 
                         tmp_grid.PlacePawn(v_Col);
 
                         // Mettre à jour la liste des colonnes disponibles
-                        v_AvailablesColumnsTmpGrid = v_Puissance4.GetAvailableCols();
-
+                        v_AvailablesColumnsTmpGrid = tmp_grid.GetAvailableCols();
                     }
 
                     if (tmp_grid.v_Winner != -1)
@@ -78,7 +75,10 @@ namespace R5._08.Project.Forms
                         // Égalitée
                         v_WinrateForAi.Add(40);
                     }
-
+                    puissance4.Delete(tmp_grid);
+                    tmp_grid = null;
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                 }
 
                 // Regarder si jouer ce coup est mieux que le meilleur coup déjà trouvé
@@ -89,7 +89,6 @@ namespace R5._08.Project.Forms
                     v_BestScoreForAi = v_AvgWinrate;
                 }
             }
-;           
 
             return v_BestColumnForAi;
         }

@@ -34,8 +34,28 @@ namespace R5._08.Project.Forms.Models
         {
             puissance4 v_Puissance4 = (puissance4)MemberwiseClone();
             v_Puissance4.grid = (Grid)grid.Clone();
+            v_Puissance4.v_NbPawnByRow = new List<int>(v_Puissance4.v_NbPawnByRow);
 
             return v_Puissance4;
+        }
+
+        static public void Delete(puissance4 v_Puissance4)
+        {
+            Grid.ALL_GRIDS.Remove(v_Puissance4.grid.c_GridId);
+            
+            foreach (Tile v_Tile in v_Puissance4.grid.v_GridTiles.Values)
+            {
+                v_Tile.v_Vectors.Clear();
+                v_Tile.v_WinVectors.Clear();
+            }
+            v_Puissance4.grid.v_GridTiles.Clear();
+            v_Puissance4.grid.v_GridTiles = null;
+            v_Puissance4.grid.v_WinVectors.Clear();
+            v_Puissance4.grid.v_WinVectors = null;
+            v_Puissance4.grid = null;
+            v_Puissance4.grid = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         public string GetPlayerToPlay()
@@ -54,7 +74,7 @@ namespace R5._08.Project.Forms.Models
             List<int> cols = new List<int>();
             for (int row_index = 0; row_index < Grid.NUMBER_OF_ROWS; row_index ++)
             {
-                if (v_NbPawnByRow[row_index] < Grid.NUMBER_OF_ROWS - 1)
+                if (v_NbPawnByRow[row_index] < Grid.NUMBER_OF_COLS - 1)
                 {
                     cols.Add(row_index);
                 }

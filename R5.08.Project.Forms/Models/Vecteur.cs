@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace R5._08.Project.Forms.Models
 {
-    public class Vecteur
+    public class Vecteur: ICloneable
     {
         public int v_Lenght = 0;
         public List<int[]> v_Coo;// ex. { { 1, 2 }, { 2, 3 }, ... } : les coordonnées que traversent le vecteur (pour être efficace en temps d'execution)
@@ -21,6 +21,18 @@ namespace R5._08.Project.Forms.Models
 
             this.v_Lenght = p_Lenght;
             this.v_Direction = p_Direction;
+        }
+
+        public object Clone()
+        {
+            Vecteur vector = (Vecteur)MemberwiseClone();
+            vector.v_Coo = new List<int[]>();
+
+            foreach (int[] coo in v_Coo)
+            {
+                vector.AddCoo(coo[0], coo[1]);
+            }
+            return vector;
         }
 
         public void AddCoo(int x, int y)

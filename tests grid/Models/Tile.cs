@@ -28,7 +28,8 @@ namespace test.Models
 
         /** Permet de mettre à jour un les vecteurs de la tailles selon ses voisins; on passe en paramètre la nouvelle tile **/
         public void UpdateVector(Tile p_tile)
-        {   
+        {
+            Console.WriteLine("try update: " + this.x + ", " + this.y + " to " + p_tile.x + ", " + p_tile.y);
             if (p_tile.v_Player != v_Player || p_tile.v_Player == -1 || v_Player == -1) { return; }
             int v_XDirection = p_tile.x - this.x; // -1: à gauche  | 0: même niveau | 1: à droite
             int v_YDirection = p_tile.y - this.y; // -1: au dessus | 0: même niveau | 1: en dessous
@@ -44,7 +45,7 @@ namespace test.Models
             {
                 v_Direction = "Horizontale";
 
-            } else if (v_XDirection == -1 && v_XDirection == 1 || v_XDirection == 1 && v_XDirection == -1)
+            } else if (v_XDirection == -1 && v_YDirection == 1 || v_XDirection == 1 && v_XDirection == -1)
             {
                 v_Direction = "Diagonale-Droite";
 
@@ -52,7 +53,7 @@ namespace test.Models
             {
                 v_Direction = "Verticale";
 
-            } else { return; }
+            } else { Console.WriteLine("mmm -> " + v_XDirection + ", " + v_YDirection); return; }
             Console.WriteLine(v_Direction + ": " + v_XDirection + ", " + v_YDirection);
             Console.WriteLine("Update direction " +  v_Direction);
 
@@ -86,7 +87,7 @@ namespace test.Models
         {
             this.v_Player = player;
             List<Tile> neighbors = GetNeighbors();
-            Console.WriteLine(neighbors.Count);
+
             foreach (Tile neighbor in neighbors) 
             {
                 neighbor.UpdateVector(this);

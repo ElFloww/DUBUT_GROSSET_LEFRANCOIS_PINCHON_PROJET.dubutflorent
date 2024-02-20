@@ -44,7 +44,7 @@ namespace R5._08.Project.Forms
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
                 for (int grid_number = 0; grid_number <= 100; grid_number++)
                 {
-                    puissance4 tmp_grid = new puissance4();
+                    puissance4 tmp_grid = (puissance4)v_Puissance4.Clone();
 
                     List<int> v_AvailablesColumnsTmpGrid = tmp_grid.GetAvailableCols();
                     while (v_AvailablesColumnsTmpGrid.Count > 0 && tmp_grid.v_Winner == -1 )
@@ -61,7 +61,7 @@ namespace R5._08.Project.Forms
                     if (tmp_grid.v_Winner != -1)
                     {
                         string v_PseudoPlayerWinner = tmp_grid.GetWinnerName();
-                        if (v_PseudoPlayerWinner == "Bot")
+                        if (v_PseudoPlayerWinner == "Le Bot")
                         {
                             v_WinrateForAi.Add(120);
                         }

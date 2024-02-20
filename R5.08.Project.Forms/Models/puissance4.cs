@@ -32,7 +32,14 @@ namespace R5._08.Project.Forms.Models
 
         public object Clone()
         {
-            puissance4 v_Puissance4 = (puissance4)MemberwiseClone();
+            //puissance4 v_Puissance4 = (puissance4)MemberwiseClone();
+            puissance4 v_Puissance4 = new puissance4();
+
+            v_Puissance4.v_Joueur1 = v_Joueur1;
+            v_Puissance4.v_Joueur2 = v_Joueur2;
+            v_Puissance4.v_difficulty = v_difficulty;
+            v_Puissance4.v_Winner = v_Winner;
+            v_Puissance4.v_CurrentPlayer = v_CurrentPlayer;
             v_Puissance4.grid = (Grid)grid.Clone();
             v_Puissance4.v_NbPawnByRow = new List<int>(v_Puissance4.v_NbPawnByRow);
 

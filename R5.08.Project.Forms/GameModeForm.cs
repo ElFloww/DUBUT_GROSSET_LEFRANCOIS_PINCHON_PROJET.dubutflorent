@@ -162,7 +162,7 @@ namespace ProjetForm
                 else
                 {
                     v_Puissance4.v_Joueur1 = inputPseudoPlayer1.Text.StartsWith("IA ") ? inputPseudoPlayer1.Text.Replace("IA ", "ia") : inputPseudoPlayer1.Text;
-                    v_Puissance4.v_Joueur2 = v_NiveauIa == 0 ? "IA Facile" : (v_NiveauIa == 1 ? "IA Normal" : "IA Difficile");
+                    v_Puissance4.v_Joueur2 = v_NiveauIa == 0 ? "IA Facile" : (v_NiveauIa == 1 ? "IA Normale" : "IA Difficile");
                 }
                 v_Puissance4.v_difficulty = v_NiveauIa;
             }

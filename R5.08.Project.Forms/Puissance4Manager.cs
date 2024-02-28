@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.CompilerServices;
+using R5._08.Project.Forms.Models;
 
 namespace ProjetForm
 {
@@ -19,11 +21,11 @@ namespace ProjetForm
         /// </summary>
         /// <param name="p_Puissance4"> La partie de puissance4</param>
         /// <returns>Le pion</returns>
-        public static PictureBox CreatePawn(Puissance4 p_Puissance4)
+        public static PictureBox CreatePawn(puissance4 p_Puissance4)
         {
-            if (p_Puissance4.isRedPlayerToPlay())
-                return CreatePawn(p_Puissance4, Color.Red);
-            return CreatePawn(p_Puissance4, Color.Yellow);
+            if (p_Puissance4.v_CurrentPlayer == 0)
+                return CreatePawn(Color.Red);
+            return CreatePawn(Color.Yellow);
         }
 
         /// <summary>
@@ -32,7 +34,7 @@ namespace ProjetForm
         /// <param name="p_Puissance4">La partie de puissance4</param>
         /// <param name="p_Color">La couleur du pion</param>
         /// <returns>Le pion</returns>
-        private static PictureBox CreatePawn(Puissance4 p_Puissance4, Color p_Color)
+        private static PictureBox CreatePawn(Color p_Color)
         {
             PictureBox v_PBBoxPawn = new PictureBox();
 
@@ -262,6 +264,35 @@ namespace ProjetForm
             }
 
             return true;
+        }
+
+        public static List<bool> GetAvailablesColumns(Puissance4 p_Puissance4)
+        {
+            List<bool> v_AvailableColumns = new List<bool>();
+            
+
+            for (int column = 1; column <= Puissance4Manager.BOARD_NUMBER_COLUMN; column++)
+            {
+                v_AvailableColumns.Add(Puissance4Manager.GetPawnPosition(p_Puissance4, column).X != -1);
+            }
+
+            return v_AvailableColumns;
+        }
+
+        public static int[] GetAvailablesColumnsId(Puissance4 p_Puissance4)
+        {
+            List<int> v_AvailableColumns = new List<int>();
+
+            for (int column = 1; column <= Puissance4Manager.BOARD_NUMBER_COLUMN; column++)
+            {
+                Point v_Post = Puissance4Manager.GetPawnPosition(p_Puissance4, column);
+                if (v_Post.X != -1 && v_Post.Y != -1)
+                {
+                    v_AvailableColumns.Add(column);
+                }
+            }
+
+            return v_AvailableColumns.ToArray();
         }
     }
 }

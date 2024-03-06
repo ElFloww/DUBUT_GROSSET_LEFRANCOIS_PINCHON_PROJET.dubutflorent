@@ -23,10 +23,10 @@ namespace ProjetForm
         private void ScoresForm_Load(object sender, EventArgs e)
         {
             /*Upgrade this initialisaiton*/
-            this.scoresGridView.Columns.Add("Nom","Nom");
-            this.scoresGridView.Columns.Add("Nombre de parties", "Nombre de parties");
-            this.scoresGridView.Columns.Add("Nombre de parties gagnées", "Nombre de parties gagnées");
-            this.scoresGridView.Columns.Add("Temps de jeu moyen", "Temps de jeu moyen");
+            this.m_ScoresGridView.Columns.Add("Nom","Nom");
+            this.m_ScoresGridView.Columns.Add("Nombre de parties", "Nombre de parties");
+            this.m_ScoresGridView.Columns.Add("Nombre de parties gagnées", "Nombre de parties gagnées");
+            this.m_ScoresGridView.Columns.Add("Temps de jeu moyen", "Temps de jeu moyen");
             try
             {
                 string v_Query = $"SELECT * FROM Scoreboard";
@@ -34,7 +34,7 @@ namespace ProjetForm
                 MySqlDataReader v_DataReader = v_Command.ExecuteReader();
                 while(v_DataReader.Read())
                 {
-                    this.scoresGridView.Rows.Add(v_DataReader.GetString(1), v_DataReader.GetInt32(2), v_DataReader.GetInt32(3), v_DataReader.GetInt32(4));
+                    this.m_ScoresGridView.Rows.Add(v_DataReader.GetString(1), v_DataReader.GetInt32(2), v_DataReader.GetInt32(3), v_DataReader.GetInt32(4));
                 }
                 v_DataReader.Close();
                 v_Command.Dispose();

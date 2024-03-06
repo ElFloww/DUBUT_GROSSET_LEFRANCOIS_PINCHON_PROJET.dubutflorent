@@ -29,343 +29,344 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            lblGameModeTitle = new Label();
-            radioButtonPlayerVSPlayer = new RadioButton();
-            radioButtonPlayerVSAi = new RadioButton();
-            btnGameModeBack = new Button();
-            lblJoueurInput1 = new Label();
-            lblJoueurInput2 = new Label();
-            inputPseudoPlayer1 = new TextBox();
-            inputPseudoPlayer2 = new TextBox();
-            groupBoxGameModePlayerVSPlayerInput1 = new GroupBox();
-            lblJoueurInput = new Label();
-            lblNiveauIA = new Label();
-            inputPseudoPlayer = new TextBox();
-            groupBoxGameModePlayerVSPlayerInput2 = new GroupBox();
-            checkBoxIaStart = new CheckBox();
-            radioButtonModeHard = new RadioButton();
-            radioButtonModeNormal = new RadioButton();
-            radioButtonModeEasy = new RadioButton();
-            btnGameModePlay = new Button();
-            errorProviderInputPseudoPlayer1 = new ErrorProvider(components);
-            errorProviderInputPseudoPlayer2 = new ErrorProvider(components);
-            errorProviderInputPseudoPlayer = new ErrorProvider(components);
-            groupBoxGameModePlayerVSPlayerInput1.SuspendLayout();
-            groupBoxGameModePlayerVSPlayerInput2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)errorProviderInputPseudoPlayer1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)errorProviderInputPseudoPlayer2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)errorProviderInputPseudoPlayer).BeginInit();
+            m_LblGameModeTitle = new Label();
+            m_RadioButtonPlayerVSPlayer = new RadioButton();
+            m_RadioButtonPlayerVSAi = new RadioButton();
+            m_BtnGameModeBack = new Button();
+            m_LblJoueurInput1 = new Label();
+            m_LblJoueurInput2 = new Label();
+            m_InputPseudoPlayer1 = new TextBox();
+            m_InputPseudoPlayer2 = new TextBox();
+            m_GroupBoxGameModePlayerVSPlayerInput1 = new GroupBox();
+            m_LblJoueurInput = new Label();
+            m_LblNiveauIA = new Label();
+            m_InputPseudoPlayer = new TextBox();
+            m_GroupBoxGameModePlayerVSPlayerInput2 = new GroupBox();
+            m_RadioButtonModeHard = new RadioButton();
+            m_RadioButtonModeNormal = new RadioButton();
+            m_RadioButtonModeEasy = new RadioButton();
+            m_CheckBoxIaStart = new CheckBox();
+            m_BtnGameModePlay = new Button();
+            m_ErrorProviderInputPseudoPlayer1 = new ErrorProvider(components);
+            m_ErrorProviderInputPseudoPlayer2 = new ErrorProvider(components);
+            m_ErrorProviderInputPseudoPlayer = new ErrorProvider(components);
+            m_GroupBoxGameModePlayerVSPlayerInput1.SuspendLayout();
+            m_GroupBoxGameModePlayerVSPlayerInput2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)m_ErrorProviderInputPseudoPlayer1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)m_ErrorProviderInputPseudoPlayer2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)m_ErrorProviderInputPseudoPlayer).BeginInit();
             SuspendLayout();
             // 
             // lblGameModeTitle
             // 
-            lblGameModeTitle.AutoSize = true;
-            lblGameModeTitle.Font = new Font("Verdana", 30F, FontStyle.Regular, GraphicsUnit.Point);
-            lblGameModeTitle.Location = new Point(345, 78);
-            lblGameModeTitle.Margin = new Padding(4, 0, 4, 0);
-            lblGameModeTitle.Name = "lblGameModeTitle";
-            lblGameModeTitle.Size = new Size(334, 60);
-            lblGameModeTitle.TabIndex = 1;
-            lblGameModeTitle.Text = "Mode de jeu";
+            m_LblGameModeTitle.AutoSize = true;
+            m_LblGameModeTitle.Font = new Font("Verdana", 30F, FontStyle.Regular, GraphicsUnit.Point);
+            m_LblGameModeTitle.Location = new Point(302, 58);
+            m_LblGameModeTitle.Margin = new Padding(4, 0, 4, 0);
+            m_LblGameModeTitle.Name = "lblGameModeTitle";
+            m_LblGameModeTitle.Size = new Size(267, 48);
+            m_LblGameModeTitle.TabIndex = 1;
+            m_LblGameModeTitle.Text = "Mode de jeu";
             // 
             // radioButtonPlayerVSPlayer
             // 
-            radioButtonPlayerVSPlayer.AutoSize = true;
-            radioButtonPlayerVSPlayer.Checked = true;
-            radioButtonPlayerVSPlayer.Font = new Font("Verdana", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            radioButtonPlayerVSPlayer.Location = new Point(55, 278);
-            radioButtonPlayerVSPlayer.Margin = new Padding(4, 5, 4, 5);
-            radioButtonPlayerVSPlayer.Name = "radioButtonPlayerVSPlayer";
-            radioButtonPlayerVSPlayer.Size = new Size(302, 40);
-            radioButtonPlayerVSPlayer.TabIndex = 2;
-            radioButtonPlayerVSPlayer.TabStop = true;
-            radioButtonPlayerVSPlayer.Text = "Joueur VS Joueur";
-            radioButtonPlayerVSPlayer.UseVisualStyleBackColor = true;
-            radioButtonPlayerVSPlayer.CheckedChanged += radioButtonPlayerVsPlayer_CheckedChanged;
+            m_RadioButtonPlayerVSPlayer.AutoSize = true;
+            m_RadioButtonPlayerVSPlayer.Checked = true;
+            m_RadioButtonPlayerVSPlayer.Font = new Font("Verdana", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            m_RadioButtonPlayerVSPlayer.Location = new Point(48, 208);
+            m_RadioButtonPlayerVSPlayer.Margin = new Padding(4, 4, 4, 4);
+            m_RadioButtonPlayerVSPlayer.Name = "radioButtonPlayerVSPlayer";
+            m_RadioButtonPlayerVSPlayer.Size = new Size(239, 33);
+            m_RadioButtonPlayerVSPlayer.TabIndex = 2;
+            m_RadioButtonPlayerVSPlayer.TabStop = true;
+            m_RadioButtonPlayerVSPlayer.Text = "Joueur VS Joueur";
+            m_RadioButtonPlayerVSPlayer.UseVisualStyleBackColor = true;
+            m_RadioButtonPlayerVSPlayer.CheckedChanged += radioButtonPlayerVsPlayer_CheckedChanged;
             // 
             // radioButtonPlayerVSAi
             // 
-            radioButtonPlayerVSAi.AutoSize = true;
-            radioButtonPlayerVSAi.Font = new Font("Verdana", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            radioButtonPlayerVSAi.Location = new Point(55, 398);
-            radioButtonPlayerVSAi.Margin = new Padding(4, 5, 4, 5);
-            radioButtonPlayerVSAi.Name = "radioButtonPlayerVSAi";
-            radioButtonPlayerVSAi.Size = new Size(235, 40);
-            radioButtonPlayerVSAi.TabIndex = 3;
-            radioButtonPlayerVSAi.Text = "Joueur VS IA";
-            radioButtonPlayerVSAi.UseVisualStyleBackColor = true;
-            radioButtonPlayerVSAi.CheckedChanged += radioButtonPlayerVsIA_CheckedChanged;
+            m_RadioButtonPlayerVSAi.AutoSize = true;
+            m_RadioButtonPlayerVSAi.Font = new Font("Verdana", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            m_RadioButtonPlayerVSAi.Location = new Point(48, 298);
+            m_RadioButtonPlayerVSAi.Margin = new Padding(4, 4, 4, 4);
+            m_RadioButtonPlayerVSAi.Name = "radioButtonPlayerVSAi";
+            m_RadioButtonPlayerVSAi.Size = new Size(185, 33);
+            m_RadioButtonPlayerVSAi.TabIndex = 3;
+            m_RadioButtonPlayerVSAi.Text = "Joueur VS IA";
+            m_RadioButtonPlayerVSAi.UseVisualStyleBackColor = true;
+            m_RadioButtonPlayerVSAi.CheckedChanged += radioButtonPlayerVsIA_CheckedChanged;
             // 
             // btnGameModeBack
             // 
-            btnGameModeBack.AutoSize = true;
-            btnGameModeBack.BackColor = Color.LightCoral;
-            btnGameModeBack.Cursor = Cursors.Hand;
-            btnGameModeBack.FlatAppearance.BorderSize = 0;
-            btnGameModeBack.FlatStyle = FlatStyle.Flat;
-            btnGameModeBack.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            btnGameModeBack.ImageAlign = ContentAlignment.MiddleRight;
-            btnGameModeBack.Location = new Point(860, 19);
-            btnGameModeBack.Margin = new Padding(4, 5, 4, 5);
-            btnGameModeBack.Name = "btnGameModeBack";
-            btnGameModeBack.Padding = new Padding(40, 0, 40, 0);
-            btnGameModeBack.Size = new Size(169, 41);
-            btnGameModeBack.TabIndex = 5;
-            btnGameModeBack.Text = "Retour";
-            btnGameModeBack.UseVisualStyleBackColor = false;
-            btnGameModeBack.Click += btnGameModeBack_Click;
+            m_BtnGameModeBack.AutoSize = true;
+            m_BtnGameModeBack.BackColor = Color.LightCoral;
+            m_BtnGameModeBack.Cursor = Cursors.Hand;
+            m_BtnGameModeBack.FlatAppearance.BorderSize = 0;
+            m_BtnGameModeBack.FlatStyle = FlatStyle.Flat;
+            m_BtnGameModeBack.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            m_BtnGameModeBack.ImageAlign = ContentAlignment.MiddleRight;
+            m_BtnGameModeBack.Location = new Point(752, 14);
+            m_BtnGameModeBack.Margin = new Padding(4, 4, 4, 4);
+            m_BtnGameModeBack.Name = "btnGameModeBack";
+            m_BtnGameModeBack.Padding = new Padding(35, 0, 35, 0);
+            m_BtnGameModeBack.Size = new Size(148, 31);
+            m_BtnGameModeBack.TabIndex = 5;
+            m_BtnGameModeBack.Text = "Retour";
+            m_BtnGameModeBack.UseVisualStyleBackColor = false;
+            m_BtnGameModeBack.Click += btnGameModeBack_Click;
             // 
             // lblJoueurInput1
             // 
-            lblJoueurInput1.AutoSize = true;
-            lblJoueurInput1.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblJoueurInput1.Location = new Point(25, 85);
-            lblJoueurInput1.Margin = new Padding(4, 0, 4, 0);
-            lblJoueurInput1.Name = "lblJoueurInput1";
-            lblJoueurInput1.Size = new Size(192, 25);
-            lblJoueurInput1.TabIndex = 0;
-            lblJoueurInput1.Text = "Pseudo joueur 1 :";
+            m_LblJoueurInput1.AutoSize = true;
+            m_LblJoueurInput1.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            m_LblJoueurInput1.Location = new Point(22, 64);
+            m_LblJoueurInput1.Margin = new Padding(4, 0, 4, 0);
+            m_LblJoueurInput1.Name = "lblJoueurInput1";
+            m_LblJoueurInput1.Size = new Size(154, 18);
+            m_LblJoueurInput1.TabIndex = 0;
+            m_LblJoueurInput1.Text = "Pseudo joueur 1 :";
             // 
             // lblJoueurInput2
             // 
-            lblJoueurInput2.AutoSize = true;
-            lblJoueurInput2.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblJoueurInput2.Location = new Point(25, 168);
-            lblJoueurInput2.Margin = new Padding(4, 0, 4, 0);
-            lblJoueurInput2.Name = "lblJoueurInput2";
-            lblJoueurInput2.Size = new Size(192, 25);
-            lblJoueurInput2.TabIndex = 1;
-            lblJoueurInput2.Text = "Pseudo joueur 2 :";
+            m_LblJoueurInput2.AutoSize = true;
+            m_LblJoueurInput2.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            m_LblJoueurInput2.Location = new Point(22, 126);
+            m_LblJoueurInput2.Margin = new Padding(4, 0, 4, 0);
+            m_LblJoueurInput2.Name = "lblJoueurInput2";
+            m_LblJoueurInput2.Size = new Size(154, 18);
+            m_LblJoueurInput2.TabIndex = 1;
+            m_LblJoueurInput2.Text = "Pseudo joueur 2 :";
             // 
             // inputPseudoPlayer1
             // 
-            inputPseudoPlayer1.BorderStyle = BorderStyle.FixedSingle;
-            inputPseudoPlayer1.Font = new Font("Verdana", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            inputPseudoPlayer1.Location = new Point(239, 79);
-            inputPseudoPlayer1.Margin = new Padding(4, 5, 4, 5);
-            inputPseudoPlayer1.Name = "inputPseudoPlayer1";
-            inputPseudoPlayer1.Size = new Size(234, 34);
-            inputPseudoPlayer1.TabIndex = 2;
-            inputPseudoPlayer1.Text = "Joueur 1";
-            inputPseudoPlayer1.Enter += inputPseudoPlayer1_Enter;
+            m_InputPseudoPlayer1.BorderStyle = BorderStyle.FixedSingle;
+            m_InputPseudoPlayer1.Font = new Font("Verdana", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            m_InputPseudoPlayer1.Location = new Point(209, 59);
+            m_InputPseudoPlayer1.Margin = new Padding(4, 4, 4, 4);
+            m_InputPseudoPlayer1.Name = "inputPseudoPlayer1";
+            m_InputPseudoPlayer1.Size = new Size(205, 29);
+            m_InputPseudoPlayer1.TabIndex = 2;
+            m_InputPseudoPlayer1.Text = "Joueur 1";
+            m_InputPseudoPlayer1.Enter += inputPseudoPlayer1_Enter;
             // 
             // inputPseudoPlayer2
             // 
-            inputPseudoPlayer2.BorderStyle = BorderStyle.FixedSingle;
-            inputPseudoPlayer2.Font = new Font("Verdana", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            inputPseudoPlayer2.Location = new Point(239, 161);
-            inputPseudoPlayer2.Margin = new Padding(4, 5, 4, 5);
-            inputPseudoPlayer2.Name = "inputPseudoPlayer2";
-            inputPseudoPlayer2.Size = new Size(234, 34);
-            inputPseudoPlayer2.TabIndex = 3;
-            inputPseudoPlayer2.Text = "Joueur 2";
-            inputPseudoPlayer2.Enter += inputPseudoPlayer2_Enter;
+            m_InputPseudoPlayer2.BorderStyle = BorderStyle.FixedSingle;
+            m_InputPseudoPlayer2.Font = new Font("Verdana", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            m_InputPseudoPlayer2.Location = new Point(209, 121);
+            m_InputPseudoPlayer2.Margin = new Padding(4, 4, 4, 4);
+            m_InputPseudoPlayer2.Name = "inputPseudoPlayer2";
+            m_InputPseudoPlayer2.Size = new Size(205, 29);
+            m_InputPseudoPlayer2.TabIndex = 3;
+            m_InputPseudoPlayer2.Text = "Joueur 2";
+            m_InputPseudoPlayer2.Enter += inputPseudoPlayer2_Enter;
             // 
             // groupBoxGameModePlayerVSPlayerInput1
             // 
-            groupBoxGameModePlayerVSPlayerInput1.Controls.Add(inputPseudoPlayer2);
-            groupBoxGameModePlayerVSPlayerInput1.Controls.Add(inputPseudoPlayer1);
-            groupBoxGameModePlayerVSPlayerInput1.Controls.Add(lblJoueurInput2);
-            groupBoxGameModePlayerVSPlayerInput1.Controls.Add(lblJoueurInput1);
-            groupBoxGameModePlayerVSPlayerInput1.Font = new Font("Verdana", 15F, FontStyle.Regular, GraphicsUnit.Point);
-            groupBoxGameModePlayerVSPlayerInput1.Location = new Point(0, 0);
-            groupBoxGameModePlayerVSPlayerInput1.Margin = new Padding(4, 5, 4, 5);
-            groupBoxGameModePlayerVSPlayerInput1.Name = "groupBoxGameModePlayerVSPlayerInput1";
-            groupBoxGameModePlayerVSPlayerInput1.Padding = new Padding(4, 5, 4, 5);
-            groupBoxGameModePlayerVSPlayerInput1.Size = new Size(499, 329);
-            groupBoxGameModePlayerVSPlayerInput1.TabIndex = 4;
-            groupBoxGameModePlayerVSPlayerInput1.TabStop = false;
-            groupBoxGameModePlayerVSPlayerInput1.Text = "Saisir les informations";
+            m_GroupBoxGameModePlayerVSPlayerInput1.Controls.Add(m_InputPseudoPlayer2);
+            m_GroupBoxGameModePlayerVSPlayerInput1.Controls.Add(m_InputPseudoPlayer1);
+            m_GroupBoxGameModePlayerVSPlayerInput1.Controls.Add(m_LblJoueurInput2);
+            m_GroupBoxGameModePlayerVSPlayerInput1.Controls.Add(m_LblJoueurInput1);
+            m_GroupBoxGameModePlayerVSPlayerInput1.Font = new Font("Verdana", 15F, FontStyle.Regular, GraphicsUnit.Point);
+            m_GroupBoxGameModePlayerVSPlayerInput1.Location = new Point(433, 174);
+            m_GroupBoxGameModePlayerVSPlayerInput1.Margin = new Padding(4, 4, 4, 4);
+            m_GroupBoxGameModePlayerVSPlayerInput1.Name = "groupBoxGameModePlayerVSPlayerInput1";
+            m_GroupBoxGameModePlayerVSPlayerInput1.Padding = new Padding(4, 4, 4, 4);
+            m_GroupBoxGameModePlayerVSPlayerInput1.Size = new Size(437, 247);
+            m_GroupBoxGameModePlayerVSPlayerInput1.TabIndex = 4;
+            m_GroupBoxGameModePlayerVSPlayerInput1.TabStop = false;
+            m_GroupBoxGameModePlayerVSPlayerInput1.Text = "Saisir les informations";
             // 
             // lblJoueurInput
             // 
-            lblJoueurInput.AutoSize = true;
-            lblJoueurInput.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblJoueurInput.Location = new Point(25, 85);
-            lblJoueurInput.Margin = new Padding(4, 0, 4, 0);
-            lblJoueurInput.Name = "lblJoueurInput";
-            lblJoueurInput.Size = new Size(172, 25);
-            lblJoueurInput.TabIndex = 0;
-            lblJoueurInput.Text = "Pseudo joueur :";
+            m_LblJoueurInput.AutoSize = true;
+            m_LblJoueurInput.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            m_LblJoueurInput.Location = new Point(22, 64);
+            m_LblJoueurInput.Margin = new Padding(4, 0, 4, 0);
+            m_LblJoueurInput.Name = "lblJoueurInput";
+            m_LblJoueurInput.Size = new Size(138, 18);
+            m_LblJoueurInput.TabIndex = 0;
+            m_LblJoueurInput.Text = "Pseudo joueur :";
             // 
             // lblNiveauIA
             // 
-            lblNiveauIA.AutoSize = true;
-            lblNiveauIA.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblNiveauIA.Location = new Point(25, 168);
-            lblNiveauIA.Margin = new Padding(4, 0, 4, 0);
-            lblNiveauIA.Name = "lblNiveauIA";
-            lblNiveauIA.Size = new Size(169, 25);
-            lblNiveauIA.TabIndex = 1;
-            lblNiveauIA.Text = "Niveau de l'IA :";
+            m_LblNiveauIA.AutoSize = true;
+            m_LblNiveauIA.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            m_LblNiveauIA.Location = new Point(22, 126);
+            m_LblNiveauIA.Margin = new Padding(4, 0, 4, 0);
+            m_LblNiveauIA.Name = "lblNiveauIA";
+            m_LblNiveauIA.Size = new Size(136, 18);
+            m_LblNiveauIA.TabIndex = 1;
+            m_LblNiveauIA.Text = "Niveau de l'IA :";
             // 
             // inputPseudoPlayer
             // 
-            inputPseudoPlayer.BorderStyle = BorderStyle.FixedSingle;
-            inputPseudoPlayer.Font = new Font("Verdana", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            inputPseudoPlayer.Location = new Point(239, 79);
-            inputPseudoPlayer.Margin = new Padding(4, 5, 4, 5);
-            inputPseudoPlayer.Name = "inputPseudoPlayer";
-            inputPseudoPlayer.Size = new Size(234, 34);
-            inputPseudoPlayer.TabIndex = 2;
-            inputPseudoPlayer.Text = "Pseudo";
-            inputPseudoPlayer.Enter += inputPseudoPlayer_Enter;
+            m_InputPseudoPlayer.BorderStyle = BorderStyle.FixedSingle;
+            m_InputPseudoPlayer.Font = new Font("Verdana", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            m_InputPseudoPlayer.Location = new Point(209, 59);
+            m_InputPseudoPlayer.Margin = new Padding(4, 4, 4, 4);
+            m_InputPseudoPlayer.Name = "inputPseudoPlayer";
+            m_InputPseudoPlayer.Size = new Size(205, 29);
+            m_InputPseudoPlayer.TabIndex = 2;
+            m_InputPseudoPlayer.Text = "Pseudo";
+            m_InputPseudoPlayer.Enter += inputPseudoPlayer_Enter;
             // 
             // groupBoxGameModePlayerVSPlayerInput2
             // 
-            groupBoxGameModePlayerVSPlayerInput2.Controls.Add(radioButtonModeHard);
-            groupBoxGameModePlayerVSPlayerInput2.Controls.Add(groupBoxGameModePlayerVSPlayerInput1);
-            groupBoxGameModePlayerVSPlayerInput2.Controls.Add(radioButtonModeNormal);
-            groupBoxGameModePlayerVSPlayerInput2.Controls.Add(radioButtonModeEasy);
-            groupBoxGameModePlayerVSPlayerInput2.Controls.Add(inputPseudoPlayer);
-            groupBoxGameModePlayerVSPlayerInput2.Controls.Add(lblNiveauIA);
-            groupBoxGameModePlayerVSPlayerInput2.Controls.Add(lblJoueurInput);
-            groupBoxGameModePlayerVSPlayerInput2.Controls.Add(checkBoxIaStart);
-            groupBoxGameModePlayerVSPlayerInput2.Font = new Font("Verdana", 15F, FontStyle.Regular, GraphicsUnit.Point);
-            groupBoxGameModePlayerVSPlayerInput2.Location = new Point(495, 232);
-            groupBoxGameModePlayerVSPlayerInput2.Margin = new Padding(4, 5, 4, 5);
-            groupBoxGameModePlayerVSPlayerInput2.Name = "groupBoxGameModePlayerVSPlayerInput2";
-            groupBoxGameModePlayerVSPlayerInput2.Padding = new Padding(4, 5, 4, 5);
-            groupBoxGameModePlayerVSPlayerInput2.Size = new Size(499, 329);
-            groupBoxGameModePlayerVSPlayerInput2.TabIndex = 5;
-            groupBoxGameModePlayerVSPlayerInput2.TabStop = false;
-            groupBoxGameModePlayerVSPlayerInput2.Text = "Saisir les informations";
-            groupBoxGameModePlayerVSPlayerInput2.Visible = false;
-            // 
-            // checkBoxIaStart
-            // 
-            checkBoxIaStart.Appearance = Appearance.Button;
-            checkBoxIaStart.AutoSize = true;
-            checkBoxIaStart.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            checkBoxIaStart.Location = new Point(25, 290);
-            checkBoxIaStart.Name = "checkBoxIaStart";
-            checkBoxIaStart.Size = new Size(202, 30);
-            checkBoxIaStart.TabIndex = 6;
-            checkBoxIaStart.Text = "Faire commencer l'IA";
-            checkBoxIaStart.UseVisualStyleBackColor = true;
+            m_GroupBoxGameModePlayerVSPlayerInput2.Controls.Add(m_RadioButtonModeHard);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Controls.Add(m_RadioButtonModeNormal);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Controls.Add(m_RadioButtonModeEasy);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Controls.Add(m_InputPseudoPlayer);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Controls.Add(m_LblNiveauIA);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Controls.Add(m_LblJoueurInput);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Controls.Add(m_CheckBoxIaStart);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Font = new Font("Verdana", 15F, FontStyle.Regular, GraphicsUnit.Point);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Location = new Point(433, 174);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Margin = new Padding(4, 4, 4, 4);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Name = "groupBoxGameModePlayerVSPlayerInput2";
+            m_GroupBoxGameModePlayerVSPlayerInput2.Padding = new Padding(4, 4, 4, 4);
+            m_GroupBoxGameModePlayerVSPlayerInput2.Size = new Size(437, 247);
+            m_GroupBoxGameModePlayerVSPlayerInput2.TabIndex = 5;
+            m_GroupBoxGameModePlayerVSPlayerInput2.TabStop = false;
+            m_GroupBoxGameModePlayerVSPlayerInput2.Text = "Saisir les informations";
+            m_GroupBoxGameModePlayerVSPlayerInput2.Visible = false;
             // 
             // radioButtonModeHard
             // 
-            radioButtonModeHard.AutoSize = true;
-            radioButtonModeHard.Cursor = Cursors.Hand;
-            radioButtonModeHard.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            radioButtonModeHard.Location = new Point(379, 219);
-            radioButtonModeHard.Margin = new Padding(4, 5, 4, 5);
-            radioButtonModeHard.Name = "radioButtonModeHard";
-            radioButtonModeHard.Size = new Size(94, 24);
-            radioButtonModeHard.TabIndex = 5;
-            radioButtonModeHard.Text = "Difficile";
-            radioButtonModeHard.UseVisualStyleBackColor = true;
+            m_RadioButtonModeHard.AutoSize = true;
+            m_RadioButtonModeHard.Cursor = Cursors.Hand;
+            m_RadioButtonModeHard.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            m_RadioButtonModeHard.Location = new Point(332, 164);
+            m_RadioButtonModeHard.Margin = new Padding(4, 4, 4, 4);
+            m_RadioButtonModeHard.Name = "radioButtonModeHard";
+            m_RadioButtonModeHard.Size = new Size(74, 21);
+            m_RadioButtonModeHard.TabIndex = 5;
+            m_RadioButtonModeHard.Text = "Difficile";
+            m_RadioButtonModeHard.UseVisualStyleBackColor = true;
             // 
             // radioButtonModeNormal
             // 
-            radioButtonModeNormal.AutoSize = true;
-            radioButtonModeNormal.Checked = true;
-            radioButtonModeNormal.Cursor = Cursors.Hand;
-            radioButtonModeNormal.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            radioButtonModeNormal.Location = new Point(203, 219);
-            radioButtonModeNormal.Margin = new Padding(4, 5, 4, 5);
-            radioButtonModeNormal.Name = "radioButtonModeNormal";
-            radioButtonModeNormal.Size = new Size(92, 24);
-            radioButtonModeNormal.TabIndex = 4;
-            radioButtonModeNormal.TabStop = true;
-            radioButtonModeNormal.Text = "Normal";
-            radioButtonModeNormal.UseVisualStyleBackColor = true;
+            m_RadioButtonModeNormal.AutoSize = true;
+            m_RadioButtonModeNormal.Checked = true;
+            m_RadioButtonModeNormal.Cursor = Cursors.Hand;
+            m_RadioButtonModeNormal.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            m_RadioButtonModeNormal.Location = new Point(178, 164);
+            m_RadioButtonModeNormal.Margin = new Padding(4, 4, 4, 4);
+            m_RadioButtonModeNormal.Name = "radioButtonModeNormal";
+            m_RadioButtonModeNormal.Size = new Size(75, 21);
+            m_RadioButtonModeNormal.TabIndex = 4;
+            m_RadioButtonModeNormal.TabStop = true;
+            m_RadioButtonModeNormal.Text = "Normal";
+            m_RadioButtonModeNormal.UseVisualStyleBackColor = true;
             // 
             // radioButtonModeEasy
             // 
-            radioButtonModeEasy.AutoSize = true;
-            radioButtonModeEasy.Cursor = Cursors.Hand;
-            radioButtonModeEasy.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            radioButtonModeEasy.Location = new Point(29, 219);
-            radioButtonModeEasy.Margin = new Padding(4, 5, 4, 5);
-            radioButtonModeEasy.Name = "radioButtonModeEasy";
-            radioButtonModeEasy.Size = new Size(78, 24);
-            radioButtonModeEasy.TabIndex = 3;
-            radioButtonModeEasy.Text = "Facile";
-            radioButtonModeEasy.UseVisualStyleBackColor = true;
+            m_RadioButtonModeEasy.AutoSize = true;
+            m_RadioButtonModeEasy.Cursor = Cursors.Hand;
+            m_RadioButtonModeEasy.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            m_RadioButtonModeEasy.Location = new Point(25, 164);
+            m_RadioButtonModeEasy.Margin = new Padding(4, 4, 4, 4);
+            m_RadioButtonModeEasy.Name = "radioButtonModeEasy";
+            m_RadioButtonModeEasy.Size = new Size(62, 21);
+            m_RadioButtonModeEasy.TabIndex = 3;
+            m_RadioButtonModeEasy.Text = "Facile";
+            m_RadioButtonModeEasy.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxIaStart
+            // 
+            m_CheckBoxIaStart.Appearance = Appearance.Button;
+            m_CheckBoxIaStart.AutoSize = true;
+            m_CheckBoxIaStart.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            m_CheckBoxIaStart.Location = new Point(22, 218);
+            m_CheckBoxIaStart.Margin = new Padding(3, 2, 3, 2);
+            m_CheckBoxIaStart.Name = "checkBoxIaStart";
+            m_CheckBoxIaStart.Size = new Size(162, 27);
+            m_CheckBoxIaStart.TabIndex = 6;
+            m_CheckBoxIaStart.Text = "Faire commencer l'IA";
+            m_CheckBoxIaStart.UseVisualStyleBackColor = true;
             // 
             // btnGameModePlay
             // 
-            btnGameModePlay.AutoSize = true;
-            btnGameModePlay.BackColor = Color.LightGreen;
-            btnGameModePlay.Cursor = Cursors.Hand;
-            btnGameModePlay.FlatAppearance.BorderSize = 0;
-            btnGameModePlay.FlatStyle = FlatStyle.Flat;
-            btnGameModePlay.Font = new Font("Verdana", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            btnGameModePlay.ImageAlign = ContentAlignment.MiddleRight;
-            btnGameModePlay.Location = new Point(245, 601);
-            btnGameModePlay.Margin = new Padding(4, 5, 4, 5);
-            btnGameModePlay.Name = "btnGameModePlay";
-            btnGameModePlay.Padding = new Padding(107, 0, 107, 0);
-            btnGameModePlay.Size = new Size(556, 65);
-            btnGameModePlay.TabIndex = 6;
-            btnGameModePlay.Text = "Lancer la partie !";
-            btnGameModePlay.UseVisualStyleBackColor = false;
-            btnGameModePlay.Click += btnGameModePlay_Click;
+            m_BtnGameModePlay.AutoSize = true;
+            m_BtnGameModePlay.BackColor = Color.LightGreen;
+            m_BtnGameModePlay.Cursor = Cursors.Hand;
+            m_BtnGameModePlay.FlatAppearance.BorderSize = 0;
+            m_BtnGameModePlay.FlatStyle = FlatStyle.Flat;
+            m_BtnGameModePlay.Font = new Font("Verdana", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            m_BtnGameModePlay.ImageAlign = ContentAlignment.MiddleRight;
+            m_BtnGameModePlay.Location = new Point(214, 451);
+            m_BtnGameModePlay.Margin = new Padding(4, 4, 4, 4);
+            m_BtnGameModePlay.Name = "btnGameModePlay";
+            m_BtnGameModePlay.Padding = new Padding(94, 0, 94, 0);
+            m_BtnGameModePlay.Size = new Size(486, 49);
+            m_BtnGameModePlay.TabIndex = 6;
+            m_BtnGameModePlay.Text = "Lancer la partie !";
+            m_BtnGameModePlay.UseVisualStyleBackColor = false;
+            m_BtnGameModePlay.Click += btnGameModePlay_Click;
             // 
             // errorProviderInputPseudoPlayer1
             // 
-            errorProviderInputPseudoPlayer1.ContainerControl = this;
+            m_ErrorProviderInputPseudoPlayer1.ContainerControl = this;
             // 
             // errorProviderInputPseudoPlayer2
             // 
-            errorProviderInputPseudoPlayer2.ContainerControl = this;
+            m_ErrorProviderInputPseudoPlayer2.ContainerControl = this;
             // 
             // errorProviderInputPseudoPlayer
             // 
-            errorProviderInputPseudoPlayer.ContainerControl = this;
+            m_ErrorProviderInputPseudoPlayer.ContainerControl = this;
             // 
             // GameModeForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1045, 709);
-            Controls.Add(btnGameModePlay);
-            Controls.Add(btnGameModeBack);
-            Controls.Add(radioButtonPlayerVSAi);
-            Controls.Add(groupBoxGameModePlayerVSPlayerInput2);
-            Controls.Add(radioButtonPlayerVSPlayer);
-            Controls.Add(lblGameModeTitle);
-            Margin = new Padding(4, 5, 4, 5);
+            ClientSize = new Size(914, 532);
+            Controls.Add(m_BtnGameModePlay);
+            Controls.Add(m_GroupBoxGameModePlayerVSPlayerInput1);
+            Controls.Add(m_BtnGameModeBack);
+            Controls.Add(m_RadioButtonPlayerVSAi);
+            Controls.Add(m_GroupBoxGameModePlayerVSPlayerInput2);
+            Controls.Add(m_RadioButtonPlayerVSPlayer);
+            Controls.Add(m_LblGameModeTitle);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "GameModeForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Puissance 4";
-            groupBoxGameModePlayerVSPlayerInput1.ResumeLayout(false);
-            groupBoxGameModePlayerVSPlayerInput1.PerformLayout();
-            groupBoxGameModePlayerVSPlayerInput2.ResumeLayout(false);
-            groupBoxGameModePlayerVSPlayerInput2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)errorProviderInputPseudoPlayer1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)errorProviderInputPseudoPlayer2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)errorProviderInputPseudoPlayer).EndInit();
+            m_GroupBoxGameModePlayerVSPlayerInput1.ResumeLayout(false);
+            m_GroupBoxGameModePlayerVSPlayerInput1.PerformLayout();
+            m_GroupBoxGameModePlayerVSPlayerInput2.ResumeLayout(false);
+            m_GroupBoxGameModePlayerVSPlayerInput2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)m_ErrorProviderInputPseudoPlayer1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)m_ErrorProviderInputPseudoPlayer2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)m_ErrorProviderInputPseudoPlayer).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label lblGameModeTitle;
-        private RadioButton radioButtonPlayerVSPlayer;
-        private RadioButton radioButtonPlayerVSAi;
-        private Button btnGameModeBack;
-        private Label lblJoueurInput1;
-        private Label lblJoueurInput2;
-        private TextBox inputPseudoPlayer1;
-        private TextBox inputPseudoPlayer2;
-        private GroupBox groupBoxGameModePlayerVSPlayerInput1;
-        private Label lblJoueurInput;
-        private Label lblNiveauIA;
-        private TextBox inputPseudoPlayer;
-        private GroupBox groupBoxGameModePlayerVSPlayerInput2;
-        private RadioButton radioButtonModeHard;
-        private RadioButton radioButtonModeNormal;
-        private RadioButton radioButtonModeEasy;
-        private Button btnGameModePlay;
-        private ErrorProvider errorProviderInputPseudoPlayer1;
-        private ErrorProvider errorProviderInputPseudoPlayer2;
-        private ErrorProvider errorProviderInputPseudoPlayer;
-        private RadioButton radioButtonBotStart;
-        private CheckBox checkBox1;
-        private CheckBox checkBoxIaStart;
+        private Label m_LblGameModeTitle;
+        private RadioButton m_RadioButtonPlayerVSPlayer;
+        private RadioButton m_RadioButtonPlayerVSAi;
+        private Button m_BtnGameModeBack;
+        private Label m_LblJoueurInput1;
+        private Label m_LblJoueurInput2;
+        private TextBox m_InputPseudoPlayer1;
+        private TextBox m_InputPseudoPlayer2;
+        private GroupBox m_GroupBoxGameModePlayerVSPlayerInput1;
+        private Label m_LblJoueurInput;
+        private Label m_LblNiveauIA;
+        private TextBox m_InputPseudoPlayer;
+        private GroupBox m_GroupBoxGameModePlayerVSPlayerInput2;
+        private RadioButton m_RadioButtonModeHard;
+        private RadioButton m_RadioButtonModeNormal;
+        private RadioButton m_RadioButtonModeEasy;
+        private Button m_BtnGameModePlay;
+        private ErrorProvider m_ErrorProviderInputPseudoPlayer1;
+        private ErrorProvider m_ErrorProviderInputPseudoPlayer2;
+        private ErrorProvider m_ErrorProviderInputPseudoPlayer;
+        private RadioButton m_RadioButtonBotStart;
+        private CheckBox m_CheckBox1;
+        private CheckBox m_CheckBoxIaStart;
     }
 }

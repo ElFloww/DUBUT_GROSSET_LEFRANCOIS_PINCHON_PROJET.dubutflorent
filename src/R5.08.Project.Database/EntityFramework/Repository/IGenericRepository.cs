@@ -2,7 +2,7 @@
 using R5._08.Project.Database.Interface;
 using System.Linq.Expressions;
 
-namespace R5._08.Project.Database.Repository
+namespace R5._08.Project.Database.EntityFramework.Repository
 {
     public interface IGenericRepository<T> : IGenericRepository
         where T : class, IEntity

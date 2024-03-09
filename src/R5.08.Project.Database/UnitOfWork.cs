@@ -1,7 +1,7 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using R5._08.Project.Database.EntityFramework.Repository;
 using R5._08.Project.Database.Interface;
-using R5._08.Project.Database.Repository;
 
 namespace R5._08.Project.Database
 {

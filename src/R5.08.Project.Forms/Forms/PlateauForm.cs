@@ -1,5 +1,4 @@
-﻿using R5._08.Project.Forms;
-using Timer = System.Windows.Forms.Timer;
+﻿using Timer = System.Windows.Forms.Timer;
 using R5._08.Project.Forms.Models;
 using R5._08.Project.Database.Interface;
 using R5._08.Project.Database.Entities;
@@ -53,7 +52,7 @@ namespace ProjetForm
             else
                 v_Col = Bot.HardModePlay(m_Puissance4);
 
-            PictureBox v_AiPawn = Puissance4Manager.CreatePawn(m_Puissance4);
+            PictureBox v_AiPawn = m_Puissance4.CreatePawn();
             
             int v_Row = m_Puissance4.PlacePawn(v_Col);
             AddPawnOnBoard(v_AiPawn, v_Col, v_Row);
@@ -125,7 +124,7 @@ namespace ProjetForm
             v_ColumnPlayed -= 1;
 
             // Crée un nouveau pion à ajouter
-            v_PlayerPawn = Puissance4Manager.CreatePawn(m_Puissance4);
+            v_PlayerPawn = m_Puissance4.CreatePawn();
 
 
             try

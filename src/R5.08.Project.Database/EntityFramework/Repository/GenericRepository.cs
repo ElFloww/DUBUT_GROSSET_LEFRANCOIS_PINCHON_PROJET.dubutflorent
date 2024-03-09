@@ -4,7 +4,7 @@ using R5._08.Project.Database.Interface;
 using System.Linq.Expressions;
 using System.Linq;
 
-namespace R5._08.Project.Database.Repository
+namespace R5._08.Project.Database.EntityFramework.Repository
 {
     /// <summary>
     /// Generic repository for each entity of the DbContext
@@ -115,7 +115,7 @@ namespace R5._08.Project.Database.Repository
             if (p_Entity == null)
                 throw new ArgumentNullException(nameof(p_Entity), "Entity cannot be null");
 
-            if (((int)m_DbContext.Entry(p_Entity).State) < 2)
+            if ((int)m_DbContext.Entry(p_Entity).State < 2)
                 m_DbContext.Entry(p_Entity).State = EntityState.Modified;
             m_DbSet.Update(p_Entity);
             return Task.CompletedTask;
@@ -131,7 +131,7 @@ namespace R5._08.Project.Database.Repository
         }
         public void Dispose()
         {
-            
+
         }
     }
 }

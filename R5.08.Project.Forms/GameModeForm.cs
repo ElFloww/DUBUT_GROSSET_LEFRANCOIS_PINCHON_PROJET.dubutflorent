@@ -1,13 +1,13 @@
-﻿using R5._08.Project.Forms.Models;
-using System;
-using System.Windows.Forms;
+﻿using R5._08.Project.Database.Interface;
 
 namespace ProjetForm
 {
     public partial class GameModeForm : Form
     {
-        public GameModeForm()
+        private IUnitOfWork m_UnitOfWork;
+        public GameModeForm(IUnitOfWork p_UnitOfWork)
         {
+            m_UnitOfWork = p_UnitOfWork;
             InitializeComponent();
         }
 
@@ -31,7 +31,7 @@ namespace ProjetForm
             Hide();
 
             // Réouvre la page Home
-            HomeForm v_HomeForm = new HomeForm();
+            HomeForm v_HomeForm = new HomeForm(m_UnitOfWork);
             v_HomeForm.ShowDialog();
         }
 
@@ -156,19 +156,19 @@ namespace ProjetForm
                 v_Puissance4.m_IaStart = m_CheckBoxIaStart.Checked;
                 if (m_CheckBoxIaStart.Checked)
                 {
-                    v_Puissance4.m_Joueur2 = m_InputPseudoPlayer1.Text.StartsWith("IA ") ? m_InputPseudoPlayer1.Text.Replace("IA ", "ia") : m_InputPseudoPlayer1.Text;
+                    v_Puissance4.m_Joueur2 = m_InputPseudoPlayer1.Text.StartsWith("IA ") ? m_InputPseudoPlayer1.Text.Replace("IA ", "ia") : m_InputPseudoPlayer.Text;
                     v_Puissance4.m_Joueur1 = v_NiveauIa == 0 ? "IA Facile" : (v_NiveauIa == 1 ? "IA Normale" : "IA Difficile");
                 }
                 else
                 {
-                    v_Puissance4.m_Joueur1 = m_InputPseudoPlayer1.Text.StartsWith("IA ") ? m_InputPseudoPlayer1.Text.Replace("IA ", "ia") : m_InputPseudoPlayer1.Text;
+                    v_Puissance4.m_Joueur1 = m_InputPseudoPlayer1.Text.StartsWith("IA ") ? m_InputPseudoPlayer1.Text.Replace("IA ", "ia") : m_InputPseudoPlayer.Text;
                     v_Puissance4.m_Joueur2 = v_NiveauIa == 0 ? "IA Facile" : (v_NiveauIa == 1 ? "IA Normale" : "IA Difficile");
                 }
                 v_Puissance4.m_difficulty = v_NiveauIa;
             }
 
             // Ouverture du plateau de jeu
-            PlateauForm v_PlateauForm = new PlateauForm(v_Puissance4);
+            PlateauForm v_PlateauForm = new PlateauForm(v_Puissance4, m_UnitOfWork);
             v_PlateauForm.ShowDialog();
         }
     }

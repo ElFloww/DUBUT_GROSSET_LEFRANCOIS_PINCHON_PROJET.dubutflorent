@@ -1,12 +1,15 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using R5._08.Project.Database;
+using R5._08.Project.Database.Interface;
+using R5._08.Project.Forms;
 
 namespace ProjetForm
 {
     public partial class HomeForm : Form
     {
-        public HomeForm()
+        private IUnitOfWork m_UnitOfWork;
+        public HomeForm(IUnitOfWork p_UnitOfWork)
         {
+            m_UnitOfWork = p_UnitOfWork;
             InitializeComponent();
         }
 
@@ -14,7 +17,7 @@ namespace ProjetForm
         {
             // Cache l'écran principal pour se rediriger vers les modes de jeu
             Hide();
-            GameModeForm v_GameModeForm = new GameModeForm();
+            GameModeForm v_GameModeForm = new(m_UnitOfWork);
             v_GameModeForm.ShowDialog();
         }
 
@@ -30,7 +33,7 @@ namespace ProjetForm
             Hide();
 
             // Ouverture de la page de scores
-            ScoresForm v_ScoresForm = new ScoresForm();
+            ScoresForm v_ScoresForm = new(m_UnitOfWork);
             v_ScoresForm.ShowDialog();
         }
     }

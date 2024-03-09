@@ -1,43 +1,41 @@
-﻿using DB = R5._08.Project.Database.DatabaseConnection;
-using MySqlConnector;
+﻿using R5._08.Project.Database.Entities;
+using R5._08.Project.Database.Interface;
 
 namespace ProjetForm
 {
     public partial class ScoresForm : Form
     {
-        public ScoresForm()
+        private IUnitOfWork m_UnitOfWork;
+        public ScoresForm(IUnitOfWork p_UnitOfWork)
         {
+            m_UnitOfWork = p_UnitOfWork;
             InitializeComponent();
         }
 
-        private void btnGameModeBack_Click(object p_Sender, EventArgs p_EventArgs)
+        public void BtnGameModeBack_Click(object p_Sender, EventArgs p_EventArgs)
         {
             
             Hide();
 
             // Ouverture de la page Home
-            HomeForm v_HomeForm = new();
+            HomeForm v_HomeForm = new(m_UnitOfWork);
             v_HomeForm.ShowDialog();
         }
 
-        private void ScoresForm_Load(object sender, EventArgs e)
+        public async void ScoresForm_Load(object p_Sender, EventArgs p_EventArgs)
         {
             /*Upgrade this initialisaiton*/
-            this.m_ScoresGridView.Columns.Add("Nom","Nom");
-            this.m_ScoresGridView.Columns.Add("Nombre de parties", "Nombre de parties");
-            this.m_ScoresGridView.Columns.Add("Nombre de parties gagnées", "Nombre de parties gagnées");
-            this.m_ScoresGridView.Columns.Add("Temps de jeu moyen", "Temps de jeu moyen");
+            m_ScoresGridView.Columns.Add("Nom","Nom");
+            m_ScoresGridView.Columns.Add("Nombre de parties", "Nombre de parties");
+            m_ScoresGridView.Columns.Add("Nombre de parties gagnées", "Nombre de parties gagnées");
+            m_ScoresGridView.Columns.Add("Temps de jeu moyen", "Temps de jeu moyen");
             try
             {
-                string v_Query = $"SELECT * FROM Scoreboard";
-                MySqlCommand v_Command = new(v_Query, DB.m_DBConnection);
-                MySqlDataReader v_DataReader = v_Command.ExecuteReader();
-                while(v_DataReader.Read())
+                IEnumerable<Scoreboard> v_Entities = await m_UnitOfWork.ScoreboardRepository.GetAllScoreboards();
+                foreach (Scoreboard v_Entity in v_Entities)
                 {
-                    this.m_ScoresGridView.Rows.Add(v_DataReader.GetString(1), v_DataReader.GetInt32(2), v_DataReader.GetInt32(3), v_DataReader.GetInt32(4));
-                }
-                v_DataReader.Close();
-                v_Command.Dispose();
+                    m_ScoresGridView.Rows.Add(v_Entity.Name, v_Entity.NumberOfGames, v_Entity.NumberOfWins, v_Entity.AverageTime);
+                } 
             }
             catch(Exception v_Ex)
             {

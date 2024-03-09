@@ -14,15 +14,15 @@ namespace ProjetForm
         private void radioButtonPlayerVsPlayer_CheckedChanged(object p_Sender, EventArgs p_EventArgs)
         {
             // Affichage (ou non) des groupBox en fonction des radioButtons
-            groupBoxGameModePlayerVSPlayerInput1.Visible = true;
-            groupBoxGameModePlayerVSPlayerInput2.Visible = false;
+            m_GroupBoxGameModePlayerVSPlayerInput1.Visible = true;
+            m_GroupBoxGameModePlayerVSPlayerInput2.Visible = false;
         }
 
         private void radioButtonPlayerVsIA_CheckedChanged(object p_Sender, EventArgs p_EventArgs)
         {
             // Affichage (ou non) des groupBox en fonction des radioButtons
-            groupBoxGameModePlayerVSPlayerInput1.Visible = false;
-            groupBoxGameModePlayerVSPlayerInput2.Visible = true;
+            m_GroupBoxGameModePlayerVSPlayerInput1.Visible = false;
+            m_GroupBoxGameModePlayerVSPlayerInput2.Visible = true;
         }
 
         private void btnGameModeBack_Click(object p_Sender, EventArgs p_EventArgs)
@@ -37,32 +37,32 @@ namespace ProjetForm
 
         private void inputPseudoPlayer1_Enter(object p_Sender, EventArgs p_EventArgs)
         {
-            if (inputPseudoPlayer1.Text.Equals("Joueur 1"))
+            if (m_InputPseudoPlayer1.Text.Equals("Joueur 1"))
             {
-                inputPseudoPlayer1.Clear();
+                m_InputPseudoPlayer1.Clear();
             }
         }
 
         private void inputPseudoPlayer2_Enter(object p_Sender, EventArgs p_EventArgs)
         {
-            if (inputPseudoPlayer2.Text.Equals("Joueur 2"))
+            if (m_InputPseudoPlayer2.Text.Equals("Joueur 2"))
             {
-                inputPseudoPlayer2.Clear();
+                m_InputPseudoPlayer2.Clear();
             }
         }
 
         private void inputPseudoPlayer_Enter(object p_Sender, EventArgs p_EventArgs)
         {
-            if (inputPseudoPlayer.Text.Equals("Pseudo"))
+            if (m_InputPseudoPlayer.Text.Equals("Pseudo"))
             {
-                inputPseudoPlayer.Clear();
+                m_InputPseudoPlayer.Clear();
             }
         }
 
         private void btnGameModePlay_Click(object p_Sender, EventArgs p_EventArgs)
         {
 
-            if (radioButtonPlayerVSPlayer.Checked)
+            if (m_RadioButtonPlayerVSPlayer.Checked)
             {
                 bool v_PseudoAreCorrect = CheckPseudoPlayerVSPlayer();
                 if (v_PseudoAreCorrect)
@@ -70,7 +70,7 @@ namespace ProjetForm
                     StartGame();
                 }
             }
-            else if (radioButtonPlayerVSAi.Checked)
+            else if (m_RadioButtonPlayerVSAi.Checked)
             {
                 bool v_PseudoAreCorrect = CheckPseudoPlayerVSAi();
                 if (v_PseudoAreCorrect)
@@ -84,34 +84,34 @@ namespace ProjetForm
         {
             bool v_PseudoAreCorrect = true;
 
-            if (inputPseudoPlayer1.Text.Length <= 0)
+            if (m_InputPseudoPlayer1.Text.Length <= 0)
             {
-                errorProviderInputPseudoPlayer1.SetError(inputPseudoPlayer1, "Le pseudo ne peut pas être vide !");
+                m_ErrorProviderInputPseudoPlayer1.SetError(m_InputPseudoPlayer1, "Le pseudo ne peut pas être vide !");
                 v_PseudoAreCorrect = false;
             }
-            else if (inputPseudoPlayer1.Text.Length > 10)
+            else if (m_InputPseudoPlayer1.Text.Length > 10)
             {
-                errorProviderInputPseudoPlayer1.SetError(inputPseudoPlayer1, "Le pseudo ne peut pas excéder 10 caractères !");
+                m_ErrorProviderInputPseudoPlayer1.SetError(m_InputPseudoPlayer1, "Le pseudo ne peut pas excéder 10 caractères !");
                 v_PseudoAreCorrect = false;
             }
             else
             {
-                errorProviderInputPseudoPlayer1.SetError(inputPseudoPlayer1, "");
+                m_ErrorProviderInputPseudoPlayer1.SetError(m_InputPseudoPlayer1, "");
             }
 
-            if (inputPseudoPlayer2.Text.Length <= 0)
+            if (m_InputPseudoPlayer2.Text.Length <= 0)
             {
-                errorProviderInputPseudoPlayer2.SetError(inputPseudoPlayer2, "Le pseudo ne peut pas être vide !");
+                m_ErrorProviderInputPseudoPlayer2.SetError(m_InputPseudoPlayer2, "Le pseudo ne peut pas être vide !");
                 v_PseudoAreCorrect = false;
             }
-            else if (inputPseudoPlayer2.Text.Length > 10)
+            else if (m_InputPseudoPlayer2.Text.Length > 10)
             {
-                errorProviderInputPseudoPlayer2.SetError(inputPseudoPlayer2, "Le pseudo ne peut pas excéder 10 caractères !");
+                m_ErrorProviderInputPseudoPlayer2.SetError(m_InputPseudoPlayer2, "Le pseudo ne peut pas excéder 10 caractères !");
                 v_PseudoAreCorrect = false;
             }
             else
             {
-                errorProviderInputPseudoPlayer2.SetError(inputPseudoPlayer2, "");
+                m_ErrorProviderInputPseudoPlayer2.SetError(m_InputPseudoPlayer2, "");
             }
 
             return v_PseudoAreCorrect;
@@ -121,19 +121,19 @@ namespace ProjetForm
         {
             bool v_PseudoAreCorrect = true;
 
-            if (inputPseudoPlayer.Text.Length <= 0)
+            if (m_InputPseudoPlayer.Text.Length <= 0)
             {
-                errorProviderInputPseudoPlayer.SetError(inputPseudoPlayer, "Le pseudo ne peut pas être vide !");
+                m_ErrorProviderInputPseudoPlayer.SetError(m_InputPseudoPlayer, "Le pseudo ne peut pas être vide !");
                 v_PseudoAreCorrect = false;
             }
-            else if (inputPseudoPlayer.Text.Length > 10)
+            else if (m_InputPseudoPlayer.Text.Length > 10)
             {
-                errorProviderInputPseudoPlayer.SetError(inputPseudoPlayer, "Le pseudo ne peut pas excéder 10 caractères !");
+                m_ErrorProviderInputPseudoPlayer.SetError(m_InputPseudoPlayer, "Le pseudo ne peut pas excéder 10 caractères !");
                 v_PseudoAreCorrect = false;
             }
             else
             {
-                errorProviderInputPseudoPlayer.SetError(inputPseudoPlayer, "");
+                m_ErrorProviderInputPseudoPlayer.SetError(m_InputPseudoPlayer, "");
             }
 
             return v_PseudoAreCorrect;
@@ -143,28 +143,28 @@ namespace ProjetForm
         {
             Hide();
 
-            puissance4 v_Puissance4 = new puissance4();
-            if (radioButtonPlayerVSPlayer.Checked)
+            R5._08.Project.Forms.Models.Puissance4 v_Puissance4 = new R5._08.Project.Forms.Models.Puissance4();
+            if (m_RadioButtonPlayerVSPlayer.Checked)
             {
-                v_Puissance4.v_Joueur1 = inputPseudoPlayer1.Text;
-                v_Puissance4.v_Joueur2 = inputPseudoPlayer2.Text;
+                v_Puissance4.m_Joueur1 = m_InputPseudoPlayer1.Text;
+                v_Puissance4.m_Joueur2 = m_InputPseudoPlayer2.Text;
             }
             else
             {
                 // Récupérer le niveau de difficulté de l'IA, 0 -> Easy, 1 -> Normal, 2 -> Hard
-                int v_NiveauIa = radioButtonModeEasy.Checked ? 0 : (radioButtonModeNormal.Checked ? 1 : 2);
-                v_Puissance4.v_IaStart = checkBoxIaStart.Checked;
-                if (checkBoxIaStart.Checked)
+                int v_NiveauIa = m_RadioButtonModeEasy.Checked ? 0 : (m_RadioButtonModeNormal.Checked ? 1 : 2);
+                v_Puissance4.m_IaStart = m_CheckBoxIaStart.Checked;
+                if (m_CheckBoxIaStart.Checked)
                 {
-                    v_Puissance4.v_Joueur2 = inputPseudoPlayer1.Text.StartsWith("IA ") ? inputPseudoPlayer1.Text.Replace("IA ", "ia") : inputPseudoPlayer1.Text;
-                    v_Puissance4.v_Joueur1 = v_NiveauIa == 0 ? "IA Facile" : (v_NiveauIa == 1 ? "IA Normale" : "IA Difficile");
+                    v_Puissance4.m_Joueur2 = m_InputPseudoPlayer1.Text.StartsWith("IA ") ? m_InputPseudoPlayer1.Text.Replace("IA ", "ia") : m_InputPseudoPlayer1.Text;
+                    v_Puissance4.m_Joueur1 = v_NiveauIa == 0 ? "IA Facile" : (v_NiveauIa == 1 ? "IA Normale" : "IA Difficile");
                 }
                 else
                 {
-                    v_Puissance4.v_Joueur1 = inputPseudoPlayer1.Text.StartsWith("IA ") ? inputPseudoPlayer1.Text.Replace("IA ", "ia") : inputPseudoPlayer1.Text;
-                    v_Puissance4.v_Joueur2 = v_NiveauIa == 0 ? "IA Facile" : (v_NiveauIa == 1 ? "IA Normale" : "IA Difficile");
+                    v_Puissance4.m_Joueur1 = m_InputPseudoPlayer1.Text.StartsWith("IA ") ? m_InputPseudoPlayer1.Text.Replace("IA ", "ia") : m_InputPseudoPlayer1.Text;
+                    v_Puissance4.m_Joueur2 = v_NiveauIa == 0 ? "IA Facile" : (v_NiveauIa == 1 ? "IA Normale" : "IA Difficile");
                 }
-                v_Puissance4.v_difficulty = v_NiveauIa;
+                v_Puissance4.m_difficulty = v_NiveauIa;
             }
 
             // Ouverture du plateau de jeu

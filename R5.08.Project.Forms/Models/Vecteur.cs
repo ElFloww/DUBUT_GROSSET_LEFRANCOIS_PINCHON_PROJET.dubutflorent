@@ -1,69 +1,65 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace R5._08.Project.Forms.Models
+﻿namespace R5._08.Project.Forms.Models
 {
-    public class Vecteur: ICloneable
+    public class Vecteur : ICloneable
     {
-        public int v_Lenght = 0;
-        public List<int[]> v_Coo;// ex. { { 1, 2 }, { 2, 3 }, ... } : les coordonnées que traversent le vecteur (pour être efficace en temps d'execution)
-        public string v_Direction;
-        public string[] v_AllDirections = { "Verticale", "Horizontale", "Diagonale-Gauche", "Diagonale-Droite", "---" };
+        public int m_Lenght = 0;
+        public List<int[]> m_Coo = new();// ex. { { 1, 2 }, { 2, 3 }, ... } : les coordonnées que traversent le vecteur (pour être efficace en temps d'execution)
+        public string m_Direction;
+        public string[] m_AllDirections = { "Verticale", "Horizontale", "Diagonale-Gauche", "Diagonale-Droite", "---" };
 
-        public Vecteur(int p_Lenght, string p_Direction) {
-            if (!v_AllDirections.Contains(p_Direction)) {
-                throw new ArgumentException(p_Direction + " Invalide; Choix possibles: " + v_AllDirections.ToString());
+        public Vecteur(int p_Lenght, string p_Direction)
+        {
+            if (!m_AllDirections.Contains(p_Direction))
+            {
+                throw new ArgumentException(p_Direction + " Invalide; Choix possibles: " + m_AllDirections.ToString());
             }
 
-            this.v_Lenght = p_Lenght;
-            this.v_Direction = p_Direction;
+            m_Lenght = p_Lenght;
+            m_Direction = p_Direction;
         }
 
         public object Clone()
         {
-            Vecteur vector = (Vecteur)MemberwiseClone();
-            vector.v_Coo = new List<int[]>();
+            Vecteur v_Vector = (Vecteur)MemberwiseClone();
+            v_Vector.m_Coo = new List<int[]>();
 
-            foreach (int[] coo in v_Coo)
+            foreach (int[] v_Coo in m_Coo)
             {
-                vector.AddCoo(coo[0], coo[1]);
+                v_Vector.AddCoo(v_Coo[0], v_Coo[1]);
             }
-            return vector;
+            return v_Vector;
         }
 
-        public void AddCoo(int x, int y)
+        public void AddCoo(int p_X, int p_Y)
         {
-            int[] tmp = new int[2];
-            tmp[0] = x;
-            tmp[1] = y;
-            this.v_Coo.Add(tmp);
-            this.v_Lenght = this.v_Coo.Count;
+            int[] v_Tmp = new int[2];
+            v_Tmp[0] = p_X;
+            v_Tmp[1] = p_Y;
+            m_Coo.Add(v_Tmp);
+            m_Lenght = m_Coo.Count;
         }
 
-        public void MergeCoo(List<int[]> p_Coo) {
-            if (p_Coo == null) { return; }
+        public void MergeCoo(List<int[]> p_Coo)
+        {
+            if (p_Coo is null) { return; }
 
             // Utilisation d'un HashSet pour éviter les duplications
-            HashSet<int[]> v_MergedSet = new HashSet<int[]>(new IntArrayEqualityComparator());
-            if (this.v_Coo == null)
+            HashSet<int[]> v_MergedSet = new(new IntArrayEqualityComparator());
+            if (m_Coo is null)
             {
-                this.v_Coo = new List<int[]>(p_Coo);
+                m_Coo = new List<int[]>(p_Coo);
             }
             // Merger les éléments des listes
-            foreach (var v_Array in this.v_Coo)
+            foreach (int[] v_Array in m_Coo)
             {
                 v_MergedSet.Add(v_Array);
             }
-            foreach (var v_Array in p_Coo)
+            foreach (int[] v_Array in p_Coo)
             {
                 v_MergedSet.Add(v_Array);
             }
 
-            this.v_Coo = new List<int[]>(v_MergedSet);
+            m_Coo = new List<int[]>(v_MergedSet);
         }
     }
 }

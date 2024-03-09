@@ -1,31 +1,25 @@
-﻿using ProjetForm;
-using R5._08.Project.Forms.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using R5._08.Project.Forms.Models;
 
 namespace R5._08.Project.Forms
 {
     internal class Bot
     {
-        private static void AddPawnOnCustomBoard(PictureBox p_PlayerPawn, Point p_PawnPosition, Puissance4 p_Board)
+        private static void AddPawnOnCustomBoard(PictureBox p_PlayerPawn, Point p_PawnPosition, ProjetForm.Puissance4 p_Board)
         {
             p_Board.setOnBoard(p_PawnPosition.Y, p_PawnPosition.X, true);
-            if (p_Board.isRedPlayerToPlay())
+            if (p_Board.IsRedPlayerToPlay())
             {
                 p_Board.setRedPawnOnBoard(p_PawnPosition.Y, p_PawnPosition.X, true);
-                p_Board.setRedPlayerToPlay(false);
+                p_Board.SetRedPlayerToPlay(false);
             }
             else
             {
                 p_Board.setYellowPawnOnBoard(p_PawnPosition.Y, p_PawnPosition.X, true);
-                p_Board.setRedPlayerToPlay(true);
+                p_Board.SetRedPlayerToPlay(true);
             }
         }
 
-        public static int EasyModePlay(puissance4 v_Puissance4)
+        public static int EasyModePlay(Models.Puissance4 v_Puissance4)
         {
             List<int> v_AvailablesColumns = v_Puissance4.GetAvailableCols();
             double v_BestScore = -1;
@@ -49,7 +43,7 @@ namespace R5._08.Project.Forms
             return v_BestCol;
         }
 
-        public static int NormalModePlay(puissance4 v_Puissance4)
+        public static int NormalModePlay(Models.Puissance4 v_Puissance4)
         {
             // Faire jouer l'IA.
             List<int> v_AvailablesColumns = v_Puissance4.GetAvailableCols();
@@ -68,11 +62,11 @@ namespace R5._08.Project.Forms
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
                 for (int grid_number = 0; grid_number < 80; grid_number++)
                 {
-                    puissance4 tmp_grid = (puissance4)v_Puissance4.Clone();
+                    Models.Puissance4 tmp_grid = (Models.Puissance4)v_Puissance4.Clone();
                     tmp_grid.PlacePawn(MainColToTry);
                     List<int> v_AvailablesColumnsTmpGrid = tmp_grid.GetAvailableCols();
 
-                    while (v_AvailablesColumnsTmpGrid.Count > 0 && tmp_grid.v_Winner == -1 )
+                    while (v_AvailablesColumnsTmpGrid.Count > 0 && tmp_grid.m_Winner == -1)
                     {
                         int v_ColIndex = rd.Next(v_AvailablesColumnsTmpGrid.Count);
                         int v_Col = v_AvailablesColumnsTmpGrid[v_ColIndex];
@@ -83,27 +77,29 @@ namespace R5._08.Project.Forms
                         v_AvailablesColumnsTmpGrid = tmp_grid.GetAvailableCols();
                     }
 
-                    if (tmp_grid.v_Winner != -1)
+                    if (tmp_grid.m_Winner != -1)
                     {
                         string v_PseudoPlayerWinner = tmp_grid.GetWinnerName();
                         if (v_PseudoPlayerWinner == "IA Normale")
                         {
-                            if (tmp_grid.v_NbPawn - v_Puissance4.v_NbPawn == 1)
+                            if (tmp_grid.m_NbPawn - v_Puissance4.m_NbPawn == 1)
                             {
                                 v_WinrateForAi.Add(10000);
-                            } else {
-                                v_WinrateForAi.Add(200 / tmp_grid.v_NbPawn); 
+                            }
+                            else
+                            {
+                                v_WinrateForAi.Add(200 / tmp_grid.m_NbPawn);
                             }
                         }
                         else
                         {
-                            if (tmp_grid.v_NbPawn - v_Puissance4.v_NbPawn == 2)
+                            if (tmp_grid.m_NbPawn - v_Puissance4.m_NbPawn == 2)
                             {
                                 v_WinrateForAi.Add(-8000);
                             }
                             else
                             {
-                                v_WinrateForAi.Add(-50 + tmp_grid.v_NbPawn);
+                                v_WinrateForAi.Add(-50 + tmp_grid.m_NbPawn);
                             }
                         }
                     }
@@ -112,9 +108,9 @@ namespace R5._08.Project.Forms
                         // Égalitée
                         v_WinrateForAi.Add(20);
                     }
-                    string grids = tmp_grid.grid.printstring();
+                    string grids = tmp_grid.m_Grid.PrintString();
 
-                    Grid.ALL_GRIDS.Remove(tmp_grid.grid.c_GridId);
+                    Grid.m_AllGrids.Remove(tmp_grid.m_Grid.m_GridId);
                 }
 
                 // Regarder si jouer ce coup est mieux que le meilleur coup déjà trouvé
@@ -129,7 +125,7 @@ namespace R5._08.Project.Forms
             return v_BestColumnForAi;
         }
 
-        public static int HardModePlay(puissance4 v_Puissance4)
+        public static int HardModePlay(Models.Puissance4 v_Puissance4)
         {
             List<int> v_AvailablesColumns = v_Puissance4.GetAvailableCols();
 
@@ -147,11 +143,11 @@ namespace R5._08.Project.Forms
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
                 for (int grid_number = 0; grid_number < 300; grid_number++)
                 {
-                    puissance4 tmp_grid = (puissance4)v_Puissance4.Clone();
+                    Models.Puissance4 tmp_grid = (Models.Puissance4)v_Puissance4.Clone();
                     tmp_grid.PlacePawn(MainColToTry);
                     List<int> v_AvailablesColumnsTmpGrid = tmp_grid.GetAvailableCols();
 
-                    while (v_AvailablesColumnsTmpGrid.Count > 0 && tmp_grid.v_Winner == -1)
+                    while (v_AvailablesColumnsTmpGrid.Count > 0 && tmp_grid.m_Winner == -1)
                     {
                         double v_TotalScore = 0;
                         List<double> v_AllScore = new List<double>();
@@ -180,29 +176,29 @@ namespace R5._08.Project.Forms
                         v_AvailablesColumnsTmpGrid = tmp_grid.GetAvailableCols();
                     }
 
-                    if (tmp_grid.v_Winner != -1)
+                    if (tmp_grid.m_Winner != -1)
                     {
                         string v_PseudoPlayerWinner = tmp_grid.GetWinnerName();
                         if (v_PseudoPlayerWinner == "IA Difficile")
                         {
-                            if (tmp_grid.v_NbPawn - v_Puissance4.v_NbPawn == 1)
+                            if (tmp_grid.m_NbPawn - v_Puissance4.m_NbPawn == 1)
                             {
                                 v_WinrateForAi.Add(10000);
                             }
                             else
                             {
-                                v_WinrateForAi.Add(200 / tmp_grid.v_NbPawn);
+                                v_WinrateForAi.Add(200 / tmp_grid.m_NbPawn);
                             }
                         }
                         else
                         {
-                            if (tmp_grid.v_NbPawn - v_Puissance4.v_NbPawn == 2)
+                            if (tmp_grid.m_NbPawn - v_Puissance4.m_NbPawn == 2)
                             {
                                 v_WinrateForAi.Add(-8000);
                             }
                             else
                             {
-                                v_WinrateForAi.Add(-50 + tmp_grid.v_NbPawn);
+                                v_WinrateForAi.Add(-50 + tmp_grid.m_NbPawn);
                             }
                         }
                     }
@@ -212,7 +208,7 @@ namespace R5._08.Project.Forms
                         v_WinrateForAi.Add(20);
                     }
 
-                    Grid.ALL_GRIDS.Remove(tmp_grid.grid.c_GridId);
+                    Grid.m_AllGrids.Remove(tmp_grid.m_Grid.m_GridId);
                 }
 
                 // Regarder si jouer ce coup est mieux que le meilleur coup déjà trouvé

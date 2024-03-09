@@ -9,17 +9,17 @@ namespace ProjetForm
 {
     public partial class PlateauForm : Form
     {
-        private puissance4 v_Puissance4;
+        private R5._08.Project.Forms.Models.Puissance4 v_Puissance4;
         private Timer m_Timer;
         private int m_ElapsedTime = 0;
 
-        public PlateauForm(puissance4 p_Puissance4)
+        public PlateauForm(R5._08.Project.Forms.Models.Puissance4 p_Puissance4)
         {
             InitializeComponent();
             this.v_Puissance4 = p_Puissance4;
-            lblPlayerToPlay.Text = p_Puissance4.GetPlayerToPlay();
+            m_LblPlayerToPlay.Text = p_Puissance4.GetPlayerToPlay();
 
-            if (p_Puissance4.v_IaStart)
+            if (p_Puissance4.m_IaStart)
             {
                 aiPlay();
             }
@@ -33,7 +33,7 @@ namespace ProjetForm
         private void AddPawnOnBoard(PictureBox v_PlayerPawn, int v_ColumnPlayed, int v_RowPlayed)
         {
             // Ajout du pion sur le plateau
-            plateauJeu.Controls.Add(v_PlayerPawn, v_ColumnPlayed, Grid.NUMBER_OF_ROWS - v_RowPlayed - 1);
+            m_PlateauJeu.Controls.Add(v_PlayerPawn, v_ColumnPlayed, Grid.NUMBER_OF_ROWS - v_RowPlayed - 1);
         }
 
         /// <summary>
@@ -42,8 +42,8 @@ namespace ProjetForm
         private void aiPlay()
         {
             int v_Col = 0;
-            if (v_Puissance4.v_difficulty == 0) { v_Col = Bot.EasyModePlay(v_Puissance4); }
-            else if (v_Puissance4.v_difficulty == 1) { v_Col = Bot.NormalModePlay(v_Puissance4); } 
+            if (v_Puissance4.m_difficulty == 0) { v_Col = Bot.EasyModePlay(v_Puissance4); }
+            else if (v_Puissance4.m_difficulty == 1) { v_Col = Bot.NormalModePlay(v_Puissance4); } 
             else { v_Col = Bot.HardModePlay(v_Puissance4); }
 
             PictureBox v_AiPawn = Puissance4Manager.CreatePawn(v_Puissance4);
@@ -63,21 +63,21 @@ namespace ProjetForm
         private void EnableEndScreen(String p_PseudoPlayerWinner, bool p_Draw)
         {
             // Affichage de la group Box pour montrer le gagnant
-            groupBoxWinner.Visible = true;
+            m_GroupBoxWinner.Visible = true;
 
             // Desactivation des boutons
-            List<Button> v_BtnColList = new List<Button> { btnCol1, btnCol2, btnCol3, btnCol4, btnCol5, btnCol6, btnCol7 };
+            List<Button> v_BtnColList = new List<Button> { m_BtnCol1, m_BtnCol2, m_BtnCol3, m_BtnCol4, m_BtnCol5, m_BtnCol6, m_BtnCol7 };
 
             v_BtnColList.ForEach((btn) => btn.Enabled = false);
-            btnPlateauAbandon.Enabled = false;
+            m_BtnPlateauAbandon.Enabled = false;
 
             if (p_Draw)
             {
-                lblWinner.Text = "Égalité !";
+                m_LblWinner.Text = "Égalité !";
             }
             else
             {
-                lblWinner.Text = p_PseudoPlayerWinner + " a gagné !";
+                m_LblWinner.Text = p_PseudoPlayerWinner + " a gagné !";
             }
         }
 
@@ -131,11 +131,11 @@ namespace ProjetForm
                 int v_RowPlayed = v_Puissance4.PlacePawn(v_ColumnPlayed);
                 AddPawnOnBoard(v_PlayerPawn, v_ColumnPlayed, v_RowPlayed);
 
-                if (v_Puissance4.v_Winner != -1)
+                if (v_Puissance4.m_Winner != -1)
                 {
                     m_Timer.Stop();
-                    string v_PseudoPlayerWinner = v_Puissance4.v_Winner == 1 ? v_Puissance4.v_Joueur2 : v_Puissance4.v_Joueur1;
-                    string v_PseudoPlayerLose = v_Puissance4.v_Winner == 1 ? v_Puissance4.v_Joueur1 : v_Puissance4.v_Joueur2;
+                    string v_PseudoPlayerWinner = v_Puissance4.m_Winner == 1 ? v_Puissance4.m_Joueur2 : v_Puissance4.m_Joueur1;
+                    string v_PseudoPlayerLose = v_Puissance4.m_Winner == 1 ? v_Puissance4.m_Joueur1 : v_Puissance4.m_Joueur2;
                     AddPlayer(true, v_PseudoPlayerWinner);
                     AddPlayer(false, v_PseudoPlayerLose);
                     EnableEndScreen(v_PseudoPlayerWinner, false);
@@ -144,22 +144,22 @@ namespace ProjetForm
                 if (v_Puissance4.CheckIfDraw())
                 {
                     m_Timer.Stop();
-                    AddPlayer(false, v_Puissance4.v_Joueur2);
-                    AddPlayer(false, v_Puissance4.v_Joueur1);
+                    AddPlayer(false, v_Puissance4.m_Joueur2);
+                    AddPlayer(false, v_Puissance4.m_Joueur1);
                     EnableEndScreen("égalité", true);
                 }
 
-                lblPlayerToPlay.Text = v_Puissance4.GetPlayerToPlay();
+                m_LblPlayerToPlay.Text = v_Puissance4.GetPlayerToPlay();
 
-                if (v_Puissance4.v_difficulty >= 0)
+                if (v_Puissance4.m_difficulty >= 0)
                 {
                     aiPlay();
 
-                    if (v_Puissance4.v_Winner != -1)
+                    if (v_Puissance4.m_Winner != -1)
                     {
                         m_Timer.Stop();
-                        string v_PseudoPlayerWinner = v_Puissance4.v_Winner == 1 ? v_Puissance4.v_Joueur2 : v_Puissance4.v_Joueur1;
-                        string v_PseudoPlayerLose = v_Puissance4.v_Winner == 1 ? v_Puissance4.v_Joueur1 : v_Puissance4.v_Joueur2;
+                        string v_PseudoPlayerWinner = v_Puissance4.m_Winner == 1 ? v_Puissance4.m_Joueur2 : v_Puissance4.m_Joueur1;
+                        string v_PseudoPlayerLose = v_Puissance4.m_Winner == 1 ? v_Puissance4.m_Joueur1 : v_Puissance4.m_Joueur2;
                         AddPlayer(true, v_PseudoPlayerWinner);
                         AddPlayer(false, v_PseudoPlayerLose);
                         EnableEndScreen(v_PseudoPlayerWinner, false);
@@ -168,12 +168,12 @@ namespace ProjetForm
                     if (v_Puissance4.CheckIfDraw())
                     {
                         m_Timer.Stop();
-                        AddPlayer(false, v_Puissance4.v_Joueur2);
-                        AddPlayer(false, v_Puissance4.v_Joueur1);
+                        AddPlayer(false, v_Puissance4.m_Joueur2);
+                        AddPlayer(false, v_Puissance4.m_Joueur1);
                         EnableEndScreen("égalité", true);
                     }
 
-                    lblPlayerToPlay.Text = v_Puissance4.GetPlayerToPlay();
+                    m_LblPlayerToPlay.Text = v_Puissance4.GetPlayerToPlay();
 
                 }
             }
@@ -270,10 +270,10 @@ namespace ProjetForm
             Hide();
 
             // Ouverture du plateau de jeu
-            puissance4 newPuissance4 = new puissance4();
-            newPuissance4.v_Joueur1 = v_Puissance4.v_Joueur1;
-            newPuissance4.v_Joueur2 = v_Puissance4.v_Joueur2;
-            newPuissance4.v_difficulty = v_Puissance4.v_difficulty;
+            R5._08.Project.Forms.Models.Puissance4 newPuissance4 = new R5._08.Project.Forms.Models.Puissance4();
+            newPuissance4.m_Joueur1 = v_Puissance4.m_Joueur1;
+            newPuissance4.m_Joueur2 = v_Puissance4.m_Joueur2;
+            newPuissance4.m_difficulty = v_Puissance4.m_difficulty;
 
             PlateauForm v_PlateauForm = new PlateauForm(newPuissance4);
             v_PlateauForm.ShowDialog();

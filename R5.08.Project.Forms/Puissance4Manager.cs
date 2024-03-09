@@ -1,29 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Runtime.CompilerServices;
-using R5._08.Project.Forms.Models;
+﻿using System.Drawing.Drawing2D;
+using Model = R5._08.Project.Forms.Models;
 
 namespace ProjetForm
 {
     public static class Puissance4Manager
     {
-        public static int BOARD_NUMBER_LINE = 6;
-        public static int BOARD_NUMBER_COLUMN = 7;
+        public const int BOARD_NUMBER_LINE = 6;
+        public const int BOARD_NUMBER_COLUMN = 7;
 
         /// <summary>
         /// Crée un pion
         /// </summary>
         /// <param name="p_Puissance4"> La partie de puissance4</param>
         /// <returns>Le pion</returns>
-        public static PictureBox CreatePawn(puissance4 p_Puissance4)
+        public static PictureBox CreatePawn(Model.Puissance4 p_Puissance4)
         {
-            if (p_Puissance4.v_CurrentPlayer == 0)
+            if (p_Puissance4.m_CurrentPlayer == 0)
                 return CreatePawn(Color.Red);
             return CreatePawn(Color.Yellow);
         }
@@ -31,21 +23,20 @@ namespace ProjetForm
         /// <summary>
         /// Crée un pion
         /// </summary>
-        /// <param name="p_Puissance4">La partie de puissance4</param>
         /// <param name="p_Color">La couleur du pion</param>
         /// <returns>Le pion</returns>
         private static PictureBox CreatePawn(Color p_Color)
         {
-            PictureBox v_PBBoxPawn = new PictureBox();
+            PictureBox v_PBBoxPawn = new();
 
             // Création d'une bitmap
-            Bitmap v_Bitmap = new Bitmap(32, 32);
+            Bitmap v_Bitmap = new(32, 32);
 
             // Création d'un objet graphics pour dessiner dessus
             Graphics v_Graphics = Graphics.FromImage(v_Bitmap);
-            ;
+
             // Ecriture sur l'objet
-            LinearGradientBrush v_LinearGradientBrush = new LinearGradientBrush(new Rectangle(0, 0, 40, 30), p_Color, Color.White, -45, false);
+            LinearGradientBrush v_LinearGradientBrush = new(new Rectangle(0, 0, 40, 30), p_Color, Color.White, -45, false);
 
             // Remplissage
             v_Graphics.FillEllipse(v_LinearGradientBrush, 0, 0, v_Bitmap.Size.Width, v_Bitmap.Size.Height);
@@ -61,58 +52,42 @@ namespace ProjetForm
         /// Retour la position du pion
         /// </summary>
         /// <param name="p_Puissance4">La partie de puissance4</param>
-        /// <param name="p_pawnColmunPosition">La colonne choisi par le joueur</param>
+        /// <param name="p_PawnColmunPosition">La colonne choisi par le joueur</param>
         /// <returns>La position du pion (retourn (-1, -1) s'il n'y a pas d'emplacement libre)</returns>
-        public static Point GetPawnPosition(Puissance4 p_Puissance4, int p_pawnColmunPosition)
+        public static Point GetPawnPosition(Puissance4 p_Puissance4, int p_PawnColmunPosition)
         {
-            int v_pawnLinePosition = 5;
-            bool v_pawnLinePositionFind = false;
-            int v_pawnColmunPosition = p_pawnColmunPosition - 1;
+            int v_PawnLinePosition = 5;
+            bool v_PawnLinePositionFind = false;
+            int v_PawnColmunPosition = p_PawnColmunPosition - 1;
 
-            while (!v_pawnLinePositionFind && v_pawnLinePosition >= 0)
+            while (!v_PawnLinePositionFind && v_PawnLinePosition >= 0)
             {
-                if (p_Puissance4.getBoard()[v_pawnLinePosition, v_pawnColmunPosition])
+                if (p_Puissance4.GetBoard()[v_PawnLinePosition, v_PawnColmunPosition])
                 {
-                    v_pawnLinePosition--;
+                    v_PawnLinePosition--;
                 }
                 else
                 {
-                    v_pawnLinePositionFind = true;
+                    v_PawnLinePositionFind = true;
                 }
             }
 
-            if (v_pawnLinePositionFind)
-                return new Point(v_pawnColmunPosition, v_pawnLinePosition);
+            if (v_PawnLinePositionFind)
+                return new Point(v_PawnColmunPosition, v_PawnLinePosition);
 
             return new Point(-1, -1);
         }
 
         /// <summary>
-        /// Retourne s'il y a eu un gagnant ou non.
-        /// </summary>
-        /// <param name="p_Puissance4">La partie de puissance4</param>
-        /// <returns>Vrai ou faux selon s'il y a un gagnant</returns>
-        public static bool CheckIfWin(Puissance4 p_Puissance4)
-        {
-            // Si c'est au rouge de jouer, c'est que le jaune vient de jouer, donc on vérifie s'il à gagné
-            bool v_playerWin;
-            if (p_Puissance4.isRedPlayerToPlay())
-                v_playerWin = CheckIfWin(p_Puissance4.getYellowPawnOnBoard());
-            else v_playerWin = CheckIfWin(p_Puissance4.getRedPawnOnBoard());
-
-            return v_playerWin;
-        }
-
-        /// <summary>
         /// Retourne vrai ou faux si le joueur a gagné ou non
         /// </summary>
-        /// <param name="p_pawnOnBoard">Les pions posés par le joueur</param>
+        /// <param name="p_PawnOnBoard">Les pions posés par le joueur</param>
         /// <returns>Vrai ou faux si le joueur a gagné ou non</returns>
-        private static bool CheckIfWin(bool[,] p_pawnOnBoard)
+        private static bool CheckIfWin(bool[,] p_PawnOnBoard)
         {
-            if (CheckIfWinLine(p_pawnOnBoard)) return true;
-            if (CheckIfWinColumn(p_pawnOnBoard)) return true;
-            if (CheckIfWinDiagonal(p_pawnOnBoard)) return true;
+            if (CheckIfWinLine(p_PawnOnBoard)) return true;
+            if (CheckIfWinColumn(p_PawnOnBoard)) return true;
+            if (CheckIfWinDiagonal(p_PawnOnBoard)) return true;
 
             return false;
         }
@@ -120,179 +95,133 @@ namespace ProjetForm
         /// <summary>
         /// Retourne vrai ou faux si le joueur a alligner 4 pions sur une ligne
         /// </summary>
-        /// <param name="p_pawnOnBoard">Les pions posés par le joueur</param>
+        /// <param name="p_PawnOnBoard">Les pions posés par le joueur</param>
         /// <returns> Vrai ou faux si le joueur a alligner 4 pions sur une ligne </returns>
-        private static bool CheckIfWinLine(bool[,] p_pawnOnBoard)
+        private static bool CheckIfWinLine(bool[,] p_PawnOnBoard)
         {
-            bool v_playerWin = false;
+            bool v_PlayerWin = false;
 
-            for (int v_line = BOARD_NUMBER_LINE - 1; v_line >= 0 && !v_playerWin; v_line--)
+            for (int v_Line = BOARD_NUMBER_LINE - 1; v_Line >= 0 && !v_PlayerWin; v_Line--)
             {
-                int v_nbrOfPawnInARow = 0;
+                int v_NbrOfPawnInARow = 0;
 
-                for (int v_column = 0; v_column < BOARD_NUMBER_COLUMN && !v_playerWin; v_column++)
+                for (int v_Column = 0; v_Column < BOARD_NUMBER_COLUMN && !v_PlayerWin; v_Column++)
                 {
-                    if (p_pawnOnBoard[v_line, v_column])
+                    if (p_PawnOnBoard[v_Line, v_Column])
                     {
-                        v_nbrOfPawnInARow++;
-                        if (v_nbrOfPawnInARow == 4)
-                            v_playerWin = true;
+                        v_NbrOfPawnInARow++;
+                        if (v_NbrOfPawnInARow == 4)
+                            v_PlayerWin = true;
                     }
                     else
                     {
-                        v_nbrOfPawnInARow = 0;
+                        v_NbrOfPawnInARow = 0;
                     }
                 }
             }
 
-            return v_playerWin;
+            return v_PlayerWin;
         }
 
         /// <summary>
         /// Retourne vrai ou faux si le joueur a alligner 4 pions sur une colonne
         /// </summary>
-        /// <param name="p_pawnOnBoard">Les pions posés par le joueur</param>
+        /// <param name="p_PawnOnBoard">Les pions posés par le joueur</param>
         /// <returns> Vrai ou faux si le joueur a alligner 4 pions sur une colonne </returns>
-        private static bool CheckIfWinColumn(bool[,] p_pawnOnBoard)
+        private static bool CheckIfWinColumn(bool[,] p_PawnOnBoard)
         {
-            bool v_playerWin = false;
+            bool v_PlayerWin = false;
 
-            for (int v_column = 0; v_column < BOARD_NUMBER_COLUMN && !v_playerWin; v_column++)
+            for (int v_Column = 0; v_Column < BOARD_NUMBER_COLUMN && !v_PlayerWin; v_Column++)
             {
-                int v_nbrOfPawnInARow = 0;
+                int v_NbrOfPawnInARow = 0;
 
-                for (int v_line = BOARD_NUMBER_LINE - 1; v_line >= 0 && !v_playerWin; v_line--)
+                for (int v_Line = BOARD_NUMBER_LINE - 1; v_Line >= 0 && !v_PlayerWin; v_Line--)
                 {
-                    if (p_pawnOnBoard[v_line, v_column])
+                    if (p_PawnOnBoard[v_Line, v_Column])
                     {
-                        v_nbrOfPawnInARow++;
-                        if (v_nbrOfPawnInARow == 4)
-                            v_playerWin = true;
+                        v_NbrOfPawnInARow++;
+                        if (v_NbrOfPawnInARow == 4)
+                            v_PlayerWin = true;
                     }
                     else
                     {
-                        v_nbrOfPawnInARow = 0;
+                        v_NbrOfPawnInARow = 0;
                     }
                 }
             }
 
-            return v_playerWin;
+            return v_PlayerWin;
         }
 
         /// <summary>
         /// Retourne vrai ou faux si le joueur a alligner 4 pions sur une diagonale
         /// </summary>
-        /// <param name="p_pawnOnBoard">Les pions posés par le joueur</param>
+        /// <param name="p_PawnOnBoard">Les pions posés par le joueur</param>
         /// <returns> Vrai ou faux si le joueur a alligner 4 pions sur une diagonale </returns>
-        private static bool CheckIfWinDiagonal(bool[,] p_pawnOnBoard)
+        private static bool CheckIfWinDiagonal(bool[,] p_PawnOnBoard)
         {
-            bool v_playerWin = false;
+            bool v_PlayerWin = false;
 
-            for (int v_line = BOARD_NUMBER_LINE - 1; v_line >= 0 && !v_playerWin; v_line--)
+            for (int v_Line = BOARD_NUMBER_LINE - 1; v_Line >= 0 && !v_PlayerWin; v_Line--)
             {
-
-                for (int v_column = 0; v_column < BOARD_NUMBER_COLUMN && !v_playerWin; v_column++)
+                for (int v_Column = 0; v_Column < BOARD_NUMBER_COLUMN && !v_PlayerWin; v_Column++)
                 {
-                    v_playerWin = CheckIfWinDiagonalBotLeftToTopRight(p_pawnOnBoard, v_line, v_column);
-                    if (!v_playerWin)
-                        v_playerWin = CheckIfWinDiagonalBotRightToTopLeft(p_pawnOnBoard, v_line, v_column);
+                    v_PlayerWin = CheckIfWinDiagonalBotLeftToTopRight(p_PawnOnBoard, v_Line, v_Column);
+                    if (!v_PlayerWin)
+                        v_PlayerWin = CheckIfWinDiagonalBotRightToTopLeft(p_PawnOnBoard, v_Line, v_Column);
                 }
             }
 
-            return v_playerWin;
+            return v_PlayerWin;
         }
 
         /// <summary>
-        /// Retourne vrai ou faux si le joueur a alligner 4 pions sur une diagonale 
+        /// Retourne vrai ou faux si le joueur a alligner 4 pions sur une diagonale
         /// (vérifie les diagonales qui commencent en bas à gauche et finissent en haut à droite)
         /// </summary>
-        /// <param name="p_pawnOnBoard">Les pions posés par le joueur</param>
+        /// <param name="p_PawnOnBoard">Les pions posés par le joueur</param>
         /// <returns> Vrai ou faux si le joueur a alligner 4 pions sur une diagonale </returns>
-        private static bool CheckIfWinDiagonalBotLeftToTopRight(bool[,] p_pawnOnBoard, int p_line, int p_column)
+        private static bool CheckIfWinDiagonalBotLeftToTopRight(bool[,] p_PawnOnBoard, int p_Line, int p_Column)
         {
-            int v_nbrOfPawnInARow = 0;
+            int v_NbrOfPawnInARow = 0;
 
-            for (int v_diagonal = 0; v_diagonal < 4; v_diagonal++)
+            for (int v_Diagonal = 0; v_Diagonal < 4; v_Diagonal++)
             {
-                if (p_line - v_diagonal > -1 && p_column + v_diagonal < 7)
+                if (p_Line - v_Diagonal > -1 && p_Column + v_Diagonal < 7)
                 {
-                    if (p_pawnOnBoard[p_line - v_diagonal, p_column + v_diagonal])
+                    if (p_PawnOnBoard[p_Line - v_Diagonal, p_Column + v_Diagonal])
                     {
-                        v_nbrOfPawnInARow++;
+                        v_NbrOfPawnInARow++;
                     }
                 }
             }
 
-            return v_nbrOfPawnInARow == 4;
+            return v_NbrOfPawnInARow == 4;
         }
 
         /// <summary>
-        /// Retourne vrai ou faux si le joueur a alligner 4 pions sur une diagonale 
+        /// Retourne vrai ou faux si le joueur a alligner 4 pions sur une diagonale
         /// (vérifie les diagonales qui commencent en bas à droite et finissent en haut à gauche)
         /// </summary>
-        /// <param name="p_pawnOnBoard">Les pions posés par le joueur</param>
+        /// <param name="p_PawnOnBoard">Les pions posés par le joueur</param>
         /// <returns> Vrai ou faux si le joueur a alligner 4 pions sur une diagonale </returns>
-        private static bool CheckIfWinDiagonalBotRightToTopLeft(bool[,] p_pawnOnBoard, int p_line, int p_column)
+        private static bool CheckIfWinDiagonalBotRightToTopLeft(bool[,] p_PawnOnBoard, int p_Line, int p_Column)
         {
-            int v_nbrOfPawnInARow = 0;
+            int v_NbrOfPawnInARow = 0;
 
-            for (int v_diagonal = 0; v_diagonal < 4; v_diagonal++)
+            for (int v_Diagonal = 0; v_Diagonal < 4; v_Diagonal++)
             {
-                if (p_line - v_diagonal > -1 && p_column - v_diagonal > -1)
+                if (p_Line - v_Diagonal > -1 && p_Column - v_Diagonal > -1)
                 {
-                    if (p_pawnOnBoard[p_line - v_diagonal, p_column - v_diagonal])
+                    if (p_PawnOnBoard[p_Line - v_Diagonal, p_Column - v_Diagonal])
                     {
-                        v_nbrOfPawnInARow++;
+                        v_NbrOfPawnInARow++;
                     }
                 }
             }
 
-            return v_nbrOfPawnInARow == 4;
-        }
-
-        public static bool CheckIfDraw(bool[,] p_pawnOnBoard)
-        {
-            for(int v_line = 0; v_line < p_pawnOnBoard.GetLength(0); v_line++)
-            {
-                for(int v_column = 0; v_column < p_pawnOnBoard.GetLength(1); v_column++)
-                {
-                    if (!p_pawnOnBoard[v_line, v_column])
-                    {
-                        return false;
-                    }
-                } 
-            }
-
-            return true;
-        }
-
-        public static List<bool> GetAvailablesColumns(Puissance4 p_Puissance4)
-        {
-            List<bool> v_AvailableColumns = new List<bool>();
-            
-
-            for (int column = 1; column <= Puissance4Manager.BOARD_NUMBER_COLUMN; column++)
-            {
-                v_AvailableColumns.Add(Puissance4Manager.GetPawnPosition(p_Puissance4, column).X != -1);
-            }
-
-            return v_AvailableColumns;
-        }
-
-        public static int[] GetAvailablesColumnsId(Puissance4 p_Puissance4)
-        {
-            List<int> v_AvailableColumns = new List<int>();
-
-            for (int column = 1; column <= Puissance4Manager.BOARD_NUMBER_COLUMN; column++)
-            {
-                Point v_Post = Puissance4Manager.GetPawnPosition(p_Puissance4, column);
-                if (v_Post.X != -1 && v_Post.Y != -1)
-                {
-                    v_AvailableColumns.Add(column);
-                }
-            }
-
-            return v_AvailableColumns.ToArray();
+            return v_NbrOfPawnInARow == 4;
         }
     }
 }

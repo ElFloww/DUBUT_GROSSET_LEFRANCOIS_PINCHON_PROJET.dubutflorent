@@ -1,25 +1,8 @@
-﻿using R5._08.Project.Forms.Models;
-
-namespace R5._08.Project.Forms
+﻿namespace R5._08.Project.Forms.Models
 {
     internal class Bot
     {
-        private static void AddPawnOnCustomBoard(PictureBox p_PlayerPawn, Point p_PawnPosition, ProjetForm.Puissance4 p_Board)
-        {
-            p_Board.setOnBoard(p_PawnPosition.Y, p_PawnPosition.X, true);
-            if (p_Board.IsRedPlayerToPlay())
-            {
-                p_Board.setRedPawnOnBoard(p_PawnPosition.Y, p_PawnPosition.X, true);
-                p_Board.SetRedPlayerToPlay(false);
-            }
-            else
-            {
-                p_Board.setYellowPawnOnBoard(p_PawnPosition.Y, p_PawnPosition.X, true);
-                p_Board.SetRedPlayerToPlay(true);
-            }
-        }
-
-        public static int EasyModePlay(Models.Puissance4 v_Puissance4)
+        public static int EasyModePlay(Puissance4 v_Puissance4)
         {
             List<int> v_AvailablesColumns = v_Puissance4.GetAvailableCols();
             double v_BestScore = -1;
@@ -43,7 +26,7 @@ namespace R5._08.Project.Forms
             return v_BestCol;
         }
 
-        public static int NormalModePlay(Models.Puissance4 v_Puissance4)
+        public static int NormalModePlay(Puissance4 v_Puissance4)
         {
             // Faire jouer l'IA.
             List<int> v_AvailablesColumns = v_Puissance4.GetAvailableCols();
@@ -62,7 +45,7 @@ namespace R5._08.Project.Forms
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
                 for (int grid_number = 0; grid_number < 80; grid_number++)
                 {
-                    Models.Puissance4 tmp_grid = (Models.Puissance4)v_Puissance4.Clone();
+                    Puissance4 tmp_grid = (Puissance4)v_Puissance4.Clone();
                     tmp_grid.PlacePawn(MainColToTry);
                     List<int> v_AvailablesColumnsTmpGrid = tmp_grid.GetAvailableCols();
 
@@ -125,7 +108,7 @@ namespace R5._08.Project.Forms
             return v_BestColumnForAi;
         }
 
-        public static int HardModePlay(Models.Puissance4 v_Puissance4)
+        public static int HardModePlay(Puissance4 v_Puissance4)
         {
             List<int> v_AvailablesColumns = v_Puissance4.GetAvailableCols();
 
@@ -143,7 +126,7 @@ namespace R5._08.Project.Forms
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
                 for (int grid_number = 0; grid_number < 300; grid_number++)
                 {
-                    Models.Puissance4 tmp_grid = (Models.Puissance4)v_Puissance4.Clone();
+                    Puissance4 tmp_grid = (Puissance4)v_Puissance4.Clone();
                     tmp_grid.PlacePawn(MainColToTry);
                     List<int> v_AvailablesColumnsTmpGrid = tmp_grid.GetAvailableCols();
 

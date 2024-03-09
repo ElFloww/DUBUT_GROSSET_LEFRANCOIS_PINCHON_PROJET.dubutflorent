@@ -19,10 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="GameModeForm.cs" />
-    <Compile Update="HomeForm.cs" />
-    <Compile Update="PlateauForm.cs" />
-    <Compile Update="ScoresForm.cs" />
+    <Compile Update="Forms\GameModeForm.cs" />
+    <Compile Update="Forms\HomeForm.cs" />
+    <Compile Update="Forms\PlateauForm.cs" />
+    <Compile Update="Forms\ScoresForm.cs" />
   </ItemGroup>
 
 </Project>

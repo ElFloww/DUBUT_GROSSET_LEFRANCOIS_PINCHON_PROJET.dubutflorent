@@ -2,7 +2,7 @@
 using R5._08.Project.Database.Entities;
 using R5._08.Project.Database.Interface;
 
-namespace R5._08.Project.Database.Repository
+namespace R5._08.Project.Database.EntityFramework.Repository
 {
     internal class ScoreboardRepository : GenericRepository<Scoreboard>, IScoreboardRepository
     {

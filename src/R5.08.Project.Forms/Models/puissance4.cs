@@ -1,4 +1,6 @@
-﻿namespace R5._08.Project.Forms.Models
+﻿using System.Drawing.Drawing2D;
+
+namespace R5._08.Project.Forms.Models
 {
     public class Puissance4 : ICloneable
     {
@@ -171,6 +173,48 @@
         {
             int v_TotalPawn = m_NbPawnByCol.Count;
             return v_TotalPawn >= Grid.NUMBER_OF_COLS * Grid.NUMBER_OF_ROWS;
+        }
+
+
+
+        /// <summary>
+        /// Crée un pion
+        /// </summary>
+        /// <param name="p_Puissance4"> La partie de puissance4</param>
+        /// <returns>Le pion</returns>
+        public PictureBox CreatePawn()
+        {
+            if (m_CurrentPlayer == 0)
+                return CreatePawn(Color.Red);
+            return CreatePawn(Color.Yellow);
+        }
+
+        /// <summary>
+        /// Crée un pion
+        /// </summary>
+        /// <param name="p_Color">La couleur du pion</param>
+        /// <returns>Le pion</returns>
+        private static PictureBox CreatePawn(Color p_Color)
+        {
+            PictureBox v_PBBoxPawn = new();
+
+            // Création d'une bitmap
+            Bitmap v_Bitmap = new(32, 32);
+
+            // Création d'un objet graphics pour dessiner dessus
+            Graphics v_Graphics = Graphics.FromImage(v_Bitmap);
+
+            // Ecriture sur l'objet
+            LinearGradientBrush v_LinearGradientBrush = new(new Rectangle(0, 0, 40, 30), p_Color, Color.White, -45, false);
+
+            // Remplissage
+            v_Graphics.FillEllipse(v_LinearGradientBrush, 0, 0, v_Bitmap.Size.Width, v_Bitmap.Size.Height);
+
+            // Attribution
+            v_PBBoxPawn.Image = v_Bitmap;
+            v_PBBoxPawn.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            return v_PBBoxPawn;
         }
     }
 }

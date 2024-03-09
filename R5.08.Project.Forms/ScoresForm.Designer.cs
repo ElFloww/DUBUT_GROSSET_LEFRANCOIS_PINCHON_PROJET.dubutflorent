@@ -62,7 +62,7 @@
             this.m_BtnGameModeBack.TabIndex = 6;
             this.m_BtnGameModeBack.Text = "Retour";
             this.m_BtnGameModeBack.UseVisualStyleBackColor = false;
-            this.m_BtnGameModeBack.Click += new System.EventHandler(this.btnGameModeBack_Click);
+            this.m_BtnGameModeBack.Click += new System.EventHandler(this.BtnGameModeBack_Click);
             // 
             // scoresGridView
             // 
@@ -89,7 +89,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Puissance 4";
-            this.Load += new System.EventHandler(this.ScoresForm_Load);
+            this.Load += new System.EventHandler(ScoresForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.m_ScoresGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

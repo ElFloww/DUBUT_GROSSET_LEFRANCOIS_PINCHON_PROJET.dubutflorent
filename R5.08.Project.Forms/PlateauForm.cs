@@ -1,66 +1,69 @@
-﻿using MySqlConnector;
-using R5._08.Project.Forms;
-using DB = R5._08.Project.Database.DatabaseConnection;
-using System.Windows.Forms;
+﻿using R5._08.Project.Forms;
 using Timer = System.Windows.Forms.Timer;
 using R5._08.Project.Forms.Models;
+using R5._08.Project.Database.Interface;
+using R5._08.Project.Database.Entities;
 
 namespace ProjetForm
 {
     public partial class PlateauForm : Form
     {
-        private R5._08.Project.Forms.Models.Puissance4 v_Puissance4;
+        private IUnitOfWork m_UnitOfWork;
+        private R5._08.Project.Forms.Models.Puissance4 m_Puissance4;
         private Timer m_Timer;
         private int m_ElapsedTime = 0;
 
-        public PlateauForm(R5._08.Project.Forms.Models.Puissance4 p_Puissance4)
+        public PlateauForm(R5._08.Project.Forms.Models.Puissance4 p_Puissance4, IUnitOfWork p_UnitOfWork)
         {
+            m_UnitOfWork = p_UnitOfWork;
+            m_Timer = new Timer();
+            m_Puissance4 = p_Puissance4;
+
             InitializeComponent();
-            this.v_Puissance4 = p_Puissance4;
+
             m_LblPlayerToPlay.Text = p_Puissance4.GetPlayerToPlay();
 
             if (p_Puissance4.m_IaStart)
             {
-                aiPlay();
+                AiPlay();
             }
         }
 
         /// <summary>
         /// Ajout un pion sur le plateau
         /// </summary>
-        /// <param name="v_PlayerPawn">Le pion du joueur</param>
+        /// <param name="p_PlayerPawn">Le pion du joueur</param>
         /// <param name="v_PawnPosition">La position du pion</param>
-        private void AddPawnOnBoard(PictureBox v_PlayerPawn, int v_ColumnPlayed, int v_RowPlayed)
+        private void AddPawnOnBoard(PictureBox p_PlayerPawn, int p_ColumnPlayed, int p_RowPlayed)
         {
             // Ajout du pion sur le plateau
-            m_PlateauJeu.Controls.Add(v_PlayerPawn, v_ColumnPlayed, Grid.NUMBER_OF_ROWS - v_RowPlayed - 1);
+            m_PlateauJeu.Controls.Add(p_PlayerPawn, p_ColumnPlayed, Grid.NUMBER_OF_ROWS - p_RowPlayed - 1);
         }
 
         /// <summary>
         /// Fait jouer l'IA
         /// </summary>
-        private void aiPlay()
+        private void AiPlay()
         {
-            int v_Col = 0;
-            if (v_Puissance4.m_difficulty == 0) { v_Col = Bot.EasyModePlay(v_Puissance4); }
-            else if (v_Puissance4.m_difficulty == 1) { v_Col = Bot.NormalModePlay(v_Puissance4); } 
-            else { v_Col = Bot.HardModePlay(v_Puissance4); }
+            int v_Col;
+            if (m_Puissance4.m_difficulty == 0)
+                v_Col = Bot.EasyModePlay(m_Puissance4);
+            else if (m_Puissance4.m_difficulty == 1)
+                v_Col = Bot.NormalModePlay(m_Puissance4);
+            else
+                v_Col = Bot.HardModePlay(m_Puissance4);
 
-            PictureBox v_AiPawn = Puissance4Manager.CreatePawn(v_Puissance4);
-
-            try
-            {
-                int v_Row = v_Puissance4.PlacePawn(v_Col);
-                AddPawnOnBoard(v_AiPawn, v_Col, v_Row);
-            }
-            catch (Exception e) { }
+            PictureBox v_AiPawn = Puissance4Manager.CreatePawn(m_Puissance4);
+            
+            int v_Row = m_Puissance4.PlacePawn(v_Col);
+            AddPawnOnBoard(v_AiPawn, v_Col, v_Row);
         }
 
         /// <summary>
         /// Active l'écran de fin
         /// </summary>
         /// <param name="p_PseudoPlayerWinner">Le pseudo du joueur qui a gagné</param>
-        private void EnableEndScreen(String p_PseudoPlayerWinner, bool p_Draw)
+        private void EnableEndScreen(string p_PseudoPlayerWinner, bool p_Draw)
         {
             // Affichage de la group Box pour montrer le gagnant
             m_GroupBoxWinner.Visible = true;
@@ -81,9 +84,8 @@ namespace ProjetForm
             }
         }
 
-        private void buttonColonne_Click(object p_Sender, EventArgs p_EventArgs)
+        private async void buttonColonne_Click(object p_Sender, EventArgs p_EventArgs)
         {
-            Point v_PawnPosition;  // Position du pion sur le palteau de jeu
             PictureBox v_PlayerPawn; // Pion a ajouter
 
             int v_ColumnPlayed;
@@ -123,57 +125,57 @@ namespace ProjetForm
             v_ColumnPlayed -= 1;
 
             // Crée un nouveau pion à ajouter
-            v_PlayerPawn = Puissance4Manager.CreatePawn(v_Puissance4);
+            v_PlayerPawn = Puissance4Manager.CreatePawn(m_Puissance4);
 
 
             try
             {
-                int v_RowPlayed = v_Puissance4.PlacePawn(v_ColumnPlayed);
+                int v_RowPlayed = m_Puissance4.PlacePawn(v_ColumnPlayed);
                 AddPawnOnBoard(v_PlayerPawn, v_ColumnPlayed, v_RowPlayed);
 
-                if (v_Puissance4.m_Winner != -1)
+                if (m_Puissance4.m_Winner != -1)
                 {
                     m_Timer.Stop();
-                    string v_PseudoPlayerWinner = v_Puissance4.m_Winner == 1 ? v_Puissance4.m_Joueur2 : v_Puissance4.m_Joueur1;
-                    string v_PseudoPlayerLose = v_Puissance4.m_Winner == 1 ? v_Puissance4.m_Joueur1 : v_Puissance4.m_Joueur2;
-                    AddPlayer(true, v_PseudoPlayerWinner);
-                    AddPlayer(false, v_PseudoPlayerLose);
+                    string v_PseudoPlayerWinner = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur2 : m_Puissance4.m_Joueur1;
+                    string v_PseudoPlayerLose = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur1 : m_Puissance4.m_Joueur2;
+                    await AddPlayer(true, v_PseudoPlayerWinner);
+                    await AddPlayer(false, v_PseudoPlayerLose);
                     EnableEndScreen(v_PseudoPlayerWinner, false);
                 }
 
-                if (v_Puissance4.CheckIfDraw())
+                if (m_Puissance4.CheckIfDraw())
                 {
                     m_Timer.Stop();
-                    AddPlayer(false, v_Puissance4.m_Joueur2);
-                    AddPlayer(false, v_Puissance4.m_Joueur1);
+                    await AddPlayer(false, m_Puissance4.m_Joueur2);
+                    await AddPlayer(false, m_Puissance4.m_Joueur1);
                     EnableEndScreen("égalité", true);
                 }
 
-                m_LblPlayerToPlay.Text = v_Puissance4.GetPlayerToPlay();
+                m_LblPlayerToPlay.Text = m_Puissance4.GetPlayerToPlay();
 
-                if (v_Puissance4.m_difficulty >= 0)
+                if (m_Puissance4.m_difficulty >= 0)
                 {
-                    aiPlay();
+                    AiPlay();
 
-                    if (v_Puissance4.m_Winner != -1)
+                    if (m_Puissance4.m_Winner != -1)
                     {
                         m_Timer.Stop();
-                        string v_PseudoPlayerWinner = v_Puissance4.m_Winner == 1 ? v_Puissance4.m_Joueur2 : v_Puissance4.m_Joueur1;
-                        string v_PseudoPlayerLose = v_Puissance4.m_Winner == 1 ? v_Puissance4.m_Joueur1 : v_Puissance4.m_Joueur2;
-                        AddPlayer(true, v_PseudoPlayerWinner);
-                        AddPlayer(false, v_PseudoPlayerLose);
+                        string v_PseudoPlayerWinner = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur2 : m_Puissance4.m_Joueur1;
+                        string v_PseudoPlayerLose = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur1 : m_Puissance4.m_Joueur2;
+                        await AddPlayer(true, v_PseudoPlayerWinner);
+                        await AddPlayer(false, v_PseudoPlayerLose);
                         EnableEndScreen(v_PseudoPlayerWinner, false);
                     }
 
-                    if (v_Puissance4.CheckIfDraw())
+                    if (m_Puissance4.CheckIfDraw())
                     {
                         m_Timer.Stop();
-                        AddPlayer(false, v_Puissance4.m_Joueur2);
-                        AddPlayer(false, v_Puissance4.m_Joueur1);
+                        await AddPlayer(false, m_Puissance4.m_Joueur2);
+                        await AddPlayer(false, m_Puissance4.m_Joueur1);
                         EnableEndScreen("égalité", true);
                     }
 
-                    m_LblPlayerToPlay.Text = v_Puissance4.GetPlayerToPlay();
+                    m_LblPlayerToPlay.Text = m_Puissance4.GetPlayerToPlay();
 
                 }
             }
@@ -181,61 +183,48 @@ namespace ProjetForm
 
         }
 
-        public void AddPlayer(bool p_IsWinner, string p_Name)
+        public async Task AddPlayer(bool p_IsWinner, string p_Name)
         {
             try
             {
-                //Create object to store data
-                Scoreboard v_Scoreboard = new();
+                // Check if the player already exists in the database
+                Scoreboard? v_Scoreboard = await m_UnitOfWork.ScoreboardRepository.GetScoreboardByName(p_Name);
 
-                //Check if the player already exists in the database
-                string v_Query = $"SELECT * FROM Scoreboard WHERE Name = '{p_Name}'";
-                MySqlCommand v_Command = new(v_Query, DB.m_DBConnection);
-                MySqlDataReader v_DataReader = v_Command.ExecuteReader();
-                while (v_DataReader.Read())
+                if (v_Scoreboard != null)
                 {
-                    v_Scoreboard = new Scoreboard() { Id = v_DataReader.GetInt32(0), Name = v_DataReader.GetString(1), NumberOfGames = v_DataReader.GetInt32(2), NumberOfWins = v_DataReader.GetInt32(3), AverageTime = v_DataReader.GetInt32(4) };
+                    // If exist update player data
+                    v_Scoreboard.AverageTime = 
+                        (v_Scoreboard.AverageTime * v_Scoreboard.NumberOfGames + m_ElapsedTime) / (v_Scoreboard.NumberOfGames + 1);
+                    
+                    v_Scoreboard.NumberOfGames++;
                 }
-                v_DataReader.Close();
-                v_Command.Dispose();
-
-                //If exist update data
-                if (v_Scoreboard.Name != null)
+                else 
                 {
-                    v_Scoreboard.AverageTime = (v_Scoreboard.AverageTime * v_Scoreboard.NumberOfGames + m_ElapsedTime) / (v_Scoreboard.NumberOfGames + 1);
-                    v_Scoreboard.NumberOfGames = v_Scoreboard.NumberOfGames + 1;
-                }
-                else //Create the data
-                {
-                    v_Scoreboard = new() { Name = p_Name, NumberOfGames = 1, AverageTime = m_ElapsedTime };
+                    // Create new player data
+                    v_Scoreboard = new() 
+                    { 
+                        Name = p_Name,
+                        NumberOfGames = 1,
+                        AverageTime = m_ElapsedTime,
+                        NumberOfWins = 0 
+                    };
                 }
 
-                //Check if the player is the winner
+                // Check if the player is the winner
                 if (p_IsWinner)
                 {
-                    v_Scoreboard.NumberOfWins = v_Scoreboard.NumberOfWins + 1;
+                    v_Scoreboard.NumberOfWins += 1;
 
+                }
+                if (v_Scoreboard.Id == default)
+                {
+                    await m_UnitOfWork.ScoreboardRepository.AddScoreboards(v_Scoreboard);
                 }
                 else
                 {
-                    v_Scoreboard.NumberOfWins = v_Scoreboard.NumberOfWins;
-
+                    await m_UnitOfWork.ScoreboardRepository.UpdateScoreboards(v_Scoreboard);
                 }
-
-                string v_UpsertQuery;
-                if (v_Scoreboard.Id == 0)
-                {
-                    v_UpsertQuery = $"INSERT INTO Scoreboard (Name, NumberOfGames, NumberOfWins, AverageTime) VALUES ('{v_Scoreboard.Name}',{v_Scoreboard.NumberOfGames},{v_Scoreboard.NumberOfWins},{v_Scoreboard.AverageTime})";
-
-                }
-                else
-                {
-                    v_UpsertQuery = $"UPDATE Scoreboard SET NumberOfGames = {v_Scoreboard.NumberOfGames}, NumberOfWins = {v_Scoreboard.NumberOfWins}, AverageTime = {v_Scoreboard.AverageTime} WHERE Id = {v_Scoreboard.Id}";
-                }
-                MySqlCommand v_InsertCommand = new(v_UpsertQuery, DB.m_DBConnection);
-                v_InsertCommand.ExecuteNonQuery();
-                v_DataReader.Close();
-                v_Command.Dispose();
+                _ = m_UnitOfWork.Save();
             }
             catch (Exception v_Ex)
             {
@@ -246,7 +235,7 @@ namespace ProjetForm
 
         private void btnPlateauAbandon_Click(object p_Sender, EventArgs p_EventArgs)
         {
-            String playerWinner = v_Puissance4.GetPlayerToPlay(true);
+            string playerWinner = m_Puissance4.GetPlayerToPlay(true);
             EnableEndScreen(playerWinner, false);
         }
 
@@ -255,7 +244,7 @@ namespace ProjetForm
             Hide();
 
             // Réouverture de la fenêtre du menu principal
-            HomeForm v_HomeForm = new HomeForm();
+            HomeForm v_HomeForm = new HomeForm(m_UnitOfWork);
             v_HomeForm.ShowDialog();
         }
 
@@ -271,11 +260,11 @@ namespace ProjetForm
 
             // Ouverture du plateau de jeu
             R5._08.Project.Forms.Models.Puissance4 newPuissance4 = new R5._08.Project.Forms.Models.Puissance4();
-            newPuissance4.m_Joueur1 = v_Puissance4.m_Joueur1;
-            newPuissance4.m_Joueur2 = v_Puissance4.m_Joueur2;
-            newPuissance4.m_difficulty = v_Puissance4.m_difficulty;
+            newPuissance4.m_Joueur1 = m_Puissance4.m_Joueur1;
+            newPuissance4.m_Joueur2 = m_Puissance4.m_Joueur2;
+            newPuissance4.m_difficulty = m_Puissance4.m_difficulty;
 
-            PlateauForm v_PlateauForm = new PlateauForm(newPuissance4);
+            PlateauForm v_PlateauForm = new PlateauForm(newPuissance4, m_UnitOfWork);
             v_PlateauForm.ShowDialog();
         }
 
@@ -290,7 +279,7 @@ namespace ProjetForm
         private void TimerTick(object? p_Sender, EventArgs? p_EventArgs)
         {
             m_ElapsedTime++;
-            //lblPlateauTimer.Text = $"Temps écoulé : {m_ElapsedTime} secondes";
+            m_LblPlateauTimer.Text = $"Temps écoulé : {m_ElapsedTime} secondes";
         }
     }
 }

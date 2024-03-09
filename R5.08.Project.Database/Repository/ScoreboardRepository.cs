@@ -12,35 +12,29 @@ namespace R5._08.Project.Database.Repository
 
         public Task<IEnumerable<Scoreboard>> GetAllScoreboards()
         {
-
-            return Task.FromResult(m_DbSet.AsEnumerable());
+            return GetAllAsync();
         }
 
         public Task<Scoreboard?> GetScoreboardById(int p_Id)
         {
-            return Task.FromResult(m_DbSet.FirstOrDefault(p_Query => p_Query.Id == p_Id));
+            Scoreboard? v_Entity = FindBy(p_P => p_P.Id == p_Id).FirstOrDefault();
+            return Task.FromResult(v_Entity);
         }
 
         public Task<Scoreboard?> GetScoreboardByName(string p_Name)
         {
-            return Task.FromResult(m_DbSet.FirstOrDefault(p_Query => p_Query.Name == p_Name));
+            Scoreboard? v_Entity = FindBy(p_P => p_P.Name == p_Name).FirstOrDefault();
+            return Task.FromResult(v_Entity);
         }
 
         public async Task AddScoreboards(Scoreboard p_Scoreboard)
         {
-            if (p_Scoreboard == null)
-            {
-                throw new ArgumentNullException(nameof(p_Scoreboard), "Scoreboard cannot be null or empty");
-            }
-            await m_DbSet.AddAsync(p_Scoreboard);
+            await AddAsync(p_Scoreboard);
         }
 
-        public Task UpdateScoreboards(Scoreboard p_Scoreboard)
+        public async Task UpdateScoreboards(Scoreboard p_Scoreboard)
         {
-            if (((int)m_DbContext.Entry(p_Scoreboard).State) < 2)
-                m_DbContext.Entry(p_Scoreboard).State = EntityState.Modified;
-            m_DbSet.Update(p_Scoreboard);
-            return Task.CompletedTask;
+            await UpdateAsync(p_Scoreboard);
         }
     }
 }

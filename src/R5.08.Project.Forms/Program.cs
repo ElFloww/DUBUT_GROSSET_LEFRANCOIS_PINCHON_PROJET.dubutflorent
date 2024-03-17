@@ -3,9 +3,11 @@ using Autofac;
 using Microsoft.EntityFrameworkCore;
 using R5._08.Project.Database;
 using R5._08.Project.Database.Interface;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ProjetForm
 {
+    [ExcludeFromCodeCoverage]
     internal class Program
     {
         /// <summary>

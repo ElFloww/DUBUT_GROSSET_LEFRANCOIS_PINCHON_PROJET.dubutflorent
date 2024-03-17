@@ -64,7 +64,7 @@
             m_BtnHomePlay.TabIndex = 1;
             m_BtnHomePlay.Text = "Jouer";
             m_BtnHomePlay.UseVisualStyleBackColor = false;
-            m_BtnHomePlay.Click += btnHomePlay_Click;
+            m_BtnHomePlay.Click += BtnHomePlay_Click;
             // 
             // m_BtnHomeScores
             // 
@@ -84,7 +84,7 @@
             m_BtnHomeScores.TabIndex = 2;
             m_BtnHomeScores.Text = "Scores";
             m_BtnHomeScores.UseVisualStyleBackColor = false;
-            m_BtnHomeScores.Click += btnHomeScores_Click;
+            m_BtnHomeScores.Click += BtnHomeScores_Click;
             // 
             // m_BtnHomeQuit
             // 
@@ -104,7 +104,7 @@
             m_BtnHomeQuit.TabIndex = 3;
             m_BtnHomeQuit.Text = "Quitter";
             m_BtnHomeQuit.UseVisualStyleBackColor = false;
-            m_BtnHomeQuit.Click += btnHomeQuit_Click;
+            m_BtnHomeQuit.Click += BtnHomeQuit_Click;
             // 
             // HomeForm
             // 

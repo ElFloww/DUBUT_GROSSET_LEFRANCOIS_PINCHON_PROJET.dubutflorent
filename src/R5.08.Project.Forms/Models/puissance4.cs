@@ -1,4 +1,5 @@
-﻿using System.Drawing.Drawing2D;
+﻿using Microsoft.Extensions.Logging;
+using System.Drawing.Drawing2D;
 
 namespace R5._08.Project.Forms.Models
 {
@@ -73,14 +74,20 @@ namespace R5._08.Project.Forms.Models
 
         public int PlacePawn(int p_ColIndex)
         {
-            if (p_ColIndex < 0 || p_ColIndex >= Grid.NUMBER_OF_COLS)
+            try
             {
-                throw new ArgumentException("Index de colonne invalide");
-            }
+                if (p_ColIndex < 0 || p_ColIndex >= Grid.NUMBER_OF_COLS)
+                {
+                    throw new ArgumentException("Index de colonne invalide");
+                }
 
-            if (m_NbPawnByCol[p_ColIndex] - 1 >= Grid.NUMBER_OF_ROWS)
+                if (m_NbPawnByCol[p_ColIndex] - 1 >= Grid.NUMBER_OF_ROWS)
+                {
+                    throw new ArgumentException("Plus de place dans la colonne choisie");
+                }
+            }catch(ArgumentException v_Ex)
             {
-                throw new ArgumentException("Plus de place dans la colonne choisie");
+                Console.WriteLine(v_Ex.Message);
             }
 
             m_Grid.Play(p_ColIndex, m_NbPawnByCol[p_ColIndex], m_CurrentPlayer);
@@ -171,7 +178,7 @@ namespace R5._08.Project.Forms.Models
 
         public bool CheckIfDraw()
         {
-            int v_TotalPawn = m_NbPawnByCol.Count;
+            int v_TotalPawn = m_NbPawn;
             return v_TotalPawn >= Grid.NUMBER_OF_COLS * Grid.NUMBER_OF_ROWS;
         }
 

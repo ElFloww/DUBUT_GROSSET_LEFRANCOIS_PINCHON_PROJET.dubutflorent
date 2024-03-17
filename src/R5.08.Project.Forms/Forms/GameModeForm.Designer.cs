@@ -76,7 +76,7 @@
             m_BtnGameModeBack.TabIndex = 5;
             m_BtnGameModeBack.Text = "Retour";
             m_BtnGameModeBack.UseVisualStyleBackColor = false;
-            m_BtnGameModeBack.Click += btnGameModeBack_Click;
+            m_BtnGameModeBack.Click += BtnGameModeBack_Click;
             // 
             // m_LblGameModeTitle
             // 
@@ -104,7 +104,7 @@
             m_RadioButtonPlayerVSPlayer.TabStop = true;
             m_RadioButtonPlayerVSPlayer.Text = "Joueur VS Joueur";
             m_RadioButtonPlayerVSPlayer.UseVisualStyleBackColor = true;
-            m_RadioButtonPlayerVSPlayer.CheckedChanged += radioButtonPlayerVsPlayer_CheckedChanged;
+            m_RadioButtonPlayerVSPlayer.CheckedChanged += RadioButtonPlayerVsPlayer_CheckedChanged;
             // 
             // m_RadioButtonPlayerVSAi
             // 
@@ -118,7 +118,7 @@
             m_RadioButtonPlayerVSAi.TabIndex = 3;
             m_RadioButtonPlayerVSAi.Text = "Joueur VS IA";
             m_RadioButtonPlayerVSAi.UseVisualStyleBackColor = true;
-            m_RadioButtonPlayerVSAi.CheckedChanged += radioButtonPlayerVsIA_CheckedChanged;
+            m_RadioButtonPlayerVSAi.CheckedChanged += RadioButtonPlayerVsIA_CheckedChanged;
             // 
             // m_LblJoueurInput1
             // 
@@ -154,7 +154,7 @@
             m_InputPseudoPlayer1.Size = new Size(205, 29);
             m_InputPseudoPlayer1.TabIndex = 2;
             m_InputPseudoPlayer1.Text = "Joueur 1";
-            m_InputPseudoPlayer1.Enter += inputPseudoPlayer1_Enter;
+            m_InputPseudoPlayer1.Enter += InputPseudoPlayer1_Enter;
             // 
             // m_InputPseudoPlayer2
             // 
@@ -168,7 +168,7 @@
             m_InputPseudoPlayer2.Size = new Size(205, 29);
             m_InputPseudoPlayer2.TabIndex = 3;
             m_InputPseudoPlayer2.Text = "Joueur 2";
-            m_InputPseudoPlayer2.Enter += inputPseudoPlayer2_Enter;
+            m_InputPseudoPlayer2.Enter += InputPseudoPlayer2_Enter;
             // 
             // m_GroupBoxGameModePlayerVSPlayerInput1
             // 
@@ -221,7 +221,7 @@
             m_InputPseudoPlayer.Size = new Size(205, 29);
             m_InputPseudoPlayer.TabIndex = 2;
             m_InputPseudoPlayer.Text = "Pseudo";
-            m_InputPseudoPlayer.Enter += inputPseudoPlayer_Enter;
+            m_InputPseudoPlayer.Enter += InputPseudoPlayer_Enter;
             // 
             // m_GroupBoxGameModePlayerVSPlayerInput2
             // 
@@ -314,7 +314,7 @@
             m_BtnGameModePlay.TabIndex = 6;
             m_BtnGameModePlay.Text = "Lancer la partie !";
             m_BtnGameModePlay.UseVisualStyleBackColor = false;
-            m_BtnGameModePlay.Click += btnGameModePlay_Click;
+            m_BtnGameModePlay.Click += BtnGameModePlay_Click;
             // 
             // m_ErrorProviderInputPseudoPlayer1
             // 
@@ -358,28 +358,28 @@
 
         #endregion
 
-        private Label m_LblGameModeTitle;
-        private RadioButton m_RadioButtonPlayerVSPlayer;
-        private RadioButton m_RadioButtonPlayerVSAi;
-        private Button m_BtnGameModeBack;
-        private Label m_LblJoueurInput1;
-        private Label m_LblJoueurInput2;
-        private TextBox m_InputPseudoPlayer1;
-        private TextBox m_InputPseudoPlayer2;
-        private GroupBox m_GroupBoxGameModePlayerVSPlayerInput1;
-        private Label m_LblJoueurInput;
-        private Label m_LblNiveauIA;
-        private TextBox m_InputPseudoPlayer;
-        private GroupBox m_GroupBoxGameModePlayerVSPlayerInput2;
-        private RadioButton m_RadioButtonModeHard;
-        private RadioButton m_RadioButtonModeNormal;
-        private RadioButton m_RadioButtonModeEasy;
-        private Button m_BtnGameModePlay;
-        private ErrorProvider m_ErrorProviderInputPseudoPlayer1;
-        private ErrorProvider m_ErrorProviderInputPseudoPlayer2;
-        private ErrorProvider m_ErrorProviderInputPseudoPlayer;
-        private RadioButton m_RadioButtonBotStart;
-        private CheckBox m_CheckBox1;
-        private CheckBox m_CheckBoxIaStart;
+        public Label m_LblGameModeTitle;
+        public RadioButton m_RadioButtonPlayerVSPlayer;
+        public RadioButton m_RadioButtonPlayerVSAi;
+        public Button m_BtnGameModeBack;
+        public Label m_LblJoueurInput1;
+        public Label m_LblJoueurInput2;
+        public TextBox m_InputPseudoPlayer1;
+        public TextBox m_InputPseudoPlayer2;
+        public GroupBox m_GroupBoxGameModePlayerVSPlayerInput1;
+        public Label m_LblJoueurInput;
+        public Label m_LblNiveauIA;
+        public TextBox m_InputPseudoPlayer;
+        public GroupBox m_GroupBoxGameModePlayerVSPlayerInput2;
+        public RadioButton m_RadioButtonModeHard;
+        public RadioButton m_RadioButtonModeNormal;
+        public RadioButton m_RadioButtonModeEasy;
+        public Button m_BtnGameModePlay;
+        public ErrorProvider m_ErrorProviderInputPseudoPlayer1;
+        public ErrorProvider m_ErrorProviderInputPseudoPlayer2;
+        public ErrorProvider m_ErrorProviderInputPseudoPlayer;
+        public RadioButton m_RadioButtonBotStart;
+        public CheckBox m_CheckBox1;
+        public CheckBox m_CheckBoxIaStart;
     }
 }

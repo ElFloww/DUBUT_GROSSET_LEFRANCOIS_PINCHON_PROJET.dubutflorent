@@ -102,8 +102,8 @@
 
         #endregion
 
-        private Label m_LblHomeTitle;
-        private Button m_BtnGameModeBack;
-        private DataGridView m_ScoresGridView;
+        public Label m_LblHomeTitle;
+        public Button m_BtnGameModeBack;
+        public DataGridView m_ScoresGridView;
     }
 }

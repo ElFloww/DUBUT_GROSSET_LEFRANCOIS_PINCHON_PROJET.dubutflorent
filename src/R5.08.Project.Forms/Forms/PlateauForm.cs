@@ -8,11 +8,11 @@ namespace ProjetForm
     public partial class PlateauForm : Form
     {
         private IUnitOfWork m_UnitOfWork;
-        private R5._08.Project.Forms.Models.Puissance4 m_Puissance4;
+        private Puissance4 m_Puissance4;
         private Timer m_Timer;
         private int m_ElapsedTime = 0;
 
-        public PlateauForm(R5._08.Project.Forms.Models.Puissance4 p_Puissance4, IUnitOfWork p_UnitOfWork)
+        public PlateauForm(Puissance4 p_Puissance4, IUnitOfWork p_UnitOfWork)
         {
             m_UnitOfWork = p_UnitOfWork;
             m_Timer = new Timer();
@@ -33,7 +33,7 @@ namespace ProjetForm
         /// </summary>
         /// <param name="p_PlayerPawn">Le pion du joueur</param>
         /// <param name="v_PawnPosition">La position du pion</param>
-        private void AddPawnOnBoard(PictureBox p_PlayerPawn, int p_ColumnPlayed, int p_RowPlayed)
+        public void AddPawnOnBoard(PictureBox p_PlayerPawn, int p_ColumnPlayed, int p_RowPlayed)
         {
             // Ajout du pion sur le plateau
             m_PlateauJeu.Controls.Add(p_PlayerPawn, p_ColumnPlayed, Grid.NUMBER_OF_ROWS - p_RowPlayed - 1);
@@ -42,7 +42,7 @@ namespace ProjetForm
         /// <summary>
         /// Fait jouer l'IA
         /// </summary>
-        private void AiPlay()
+        public void AiPlay()
         {
             int v_Col;
             if (m_Puissance4.m_difficulty == 0)
@@ -62,7 +62,7 @@ namespace ProjetForm
         /// Active l'écran de fin
         /// </summary>
         /// <param name="p_PseudoPlayerWinner">Le pseudo du joueur qui a gagné</param>
-        private void EnableEndScreen(string p_PseudoPlayerWinner, bool p_Draw)
+        public void EnableEndScreen(string p_PseudoPlayerWinner, bool p_Draw)
         {
             // Affichage de la group Box pour montrer le gagnant
             m_GroupBoxWinner.Visible = true;
@@ -83,7 +83,7 @@ namespace ProjetForm
             }
         }
 
-        private async void buttonColonne_Click(object p_Sender, EventArgs p_EventArgs)
+        public async void buttonColonne_Click(object p_Sender, EventArgs p_EventArgs)
         {
             PictureBox v_PlayerPawn; // Pion a ajouter
 
@@ -119,67 +119,53 @@ namespace ProjetForm
                     break;
 
                 default:
-                    throw new Exception("Bouton inexistant");
+                    throw new ArgumentException("Bouton inexistant");
             }
             v_ColumnPlayed -= 1;
 
             // Crée un nouveau pion à ajouter
             v_PlayerPawn = m_Puissance4.CreatePawn();
 
+            int v_RowPlayed = m_Puissance4.PlacePawn(v_ColumnPlayed);
+            AddPawnOnBoard(v_PlayerPawn, v_ColumnPlayed, v_RowPlayed);
 
-            try
+            if(!await CheckIfWinOrDraw())
             {
-                int v_RowPlayed = m_Puissance4.PlacePawn(v_ColumnPlayed);
-                AddPawnOnBoard(v_PlayerPawn, v_ColumnPlayed, v_RowPlayed);
-
-                if (m_Puissance4.m_Winner != -1)
-                {
-                    m_Timer.Stop();
-                    string v_PseudoPlayerWinner = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur2 : m_Puissance4.m_Joueur1;
-                    string v_PseudoPlayerLose = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur1 : m_Puissance4.m_Joueur2;
-                    await AddPlayer(true, v_PseudoPlayerWinner);
-                    await AddPlayer(false, v_PseudoPlayerLose);
-                    EnableEndScreen(v_PseudoPlayerWinner, false);
-                }
-
-                if (m_Puissance4.CheckIfDraw())
-                {
-                    m_Timer.Stop();
-                    await AddPlayer(false, m_Puissance4.m_Joueur2);
-                    await AddPlayer(false, m_Puissance4.m_Joueur1);
-                    EnableEndScreen("égalité", true);
-                }
-
                 m_LblPlayerToPlay.Text = m_Puissance4.GetPlayerToPlay();
+
+                //On rafraîchit la fenêtre du jeu.
+                m_PlateauJeu.Refresh();
 
                 if (m_Puissance4.m_difficulty >= 0)
                 {
                     AiPlay();
-
-                    if (m_Puissance4.m_Winner != -1)
-                    {
-                        m_Timer.Stop();
-                        string v_PseudoPlayerWinner = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur2 : m_Puissance4.m_Joueur1;
-                        string v_PseudoPlayerLose = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur1 : m_Puissance4.m_Joueur2;
-                        await AddPlayer(true, v_PseudoPlayerWinner);
-                        await AddPlayer(false, v_PseudoPlayerLose);
-                        EnableEndScreen(v_PseudoPlayerWinner, false);
-                    }
-
-                    if (m_Puissance4.CheckIfDraw())
-                    {
-                        m_Timer.Stop();
-                        await AddPlayer(false, m_Puissance4.m_Joueur2);
-                        await AddPlayer(false, m_Puissance4.m_Joueur1);
-                        EnableEndScreen("égalité", true);
-                    }
-
+                    _ = await CheckIfWinOrDraw();
                     m_LblPlayerToPlay.Text = m_Puissance4.GetPlayerToPlay();
-
                 }
             }
-            catch (Exception e) { }
+        }
+        private async Task<bool> CheckIfWinOrDraw()
+        {
+            if (m_Puissance4.m_Winner != -1)
+            {
+                m_Timer.Stop();
+                string v_PseudoPlayerWinner = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur2 : m_Puissance4.m_Joueur1;
+                string v_PseudoPlayerLose = m_Puissance4.m_Winner == 1 ? m_Puissance4.m_Joueur1 : m_Puissance4.m_Joueur2;
+                await AddPlayer(true, v_PseudoPlayerWinner);
+                await AddPlayer(false, v_PseudoPlayerLose);
+                EnableEndScreen(v_PseudoPlayerWinner, false);
+                return true;
+            }
 
+            if (m_Puissance4.CheckIfDraw())
+            {
+                m_Timer.Stop();
+                await AddPlayer(false, m_Puissance4.m_Joueur2);
+                await AddPlayer(false, m_Puissance4.m_Joueur1);
+                EnableEndScreen("égalité", true);
+                return true;
+            }
+            return false;
         }
 
         public async Task AddPlayer(bool p_IsWinner, string p_Name)
@@ -232,13 +218,13 @@ namespace ProjetForm
         }
 
 
-        private void btnPlateauAbandon_Click(object p_Sender, EventArgs p_EventArgs)
+        public void btnPlateauAbandon_Click(object p_Sender, EventArgs p_EventArgs)
         {
             string playerWinner = m_Puissance4.GetPlayerToPlay(true);
             EnableEndScreen(playerWinner, false);
         }
 
-        private void btnWinnerHome_Click(object p_Sender, EventArgs p_EventArgs)
+        public void btnWinnerHome_Click(object p_Sender, EventArgs p_EventArgs)
         {
             Hide();
 
@@ -247,36 +233,40 @@ namespace ProjetForm
             v_HomeForm.ShowDialog();
         }
 
-        private void btnWinnerQuitter_Click(object p_Sender, EventArgs p_EventArgs)
+        public void btnWinnerQuitter_Click(object p_Sender, EventArgs p_EventArgs)
         {
             // Fermeture de l'application
             Application.Exit();
         }
 
-        private void btnWinnerPlay_Click(object p_Sender, EventArgs p_EventArgs)
+        public void btnWinnerPlay_Click(object p_Sender, EventArgs p_EventArgs)
         {
             Hide();
 
             // Ouverture du plateau de jeu
-            R5._08.Project.Forms.Models.Puissance4 newPuissance4 = new R5._08.Project.Forms.Models.Puissance4();
-            newPuissance4.m_Joueur1 = m_Puissance4.m_Joueur1;
-            newPuissance4.m_Joueur2 = m_Puissance4.m_Joueur2;
-            newPuissance4.m_difficulty = m_Puissance4.m_difficulty;
-            newPuissance4.m_IaStart = m_Puissance4.m_IaStart;
+            Puissance4 newPuissance4 = new()
+            {
+                m_Joueur1 = m_Puissance4.m_Joueur1,
+                m_Joueur2 = m_Puissance4.m_Joueur2,
+                m_difficulty = m_Puissance4.m_difficulty,
+                m_IaStart = m_Puissance4.m_IaStart
+            };
 
-            PlateauForm v_PlateauForm = new PlateauForm(newPuissance4, m_UnitOfWork);
+            PlateauForm v_PlateauForm = new (newPuissance4, m_UnitOfWork);
             v_PlateauForm.ShowDialog();
         }
 
-        private void PlateauForm_Load(object p_Sender, EventArgs p_EventArgs)
+        public void PlateauForm_Load(object p_Sender, EventArgs p_EventArgs)
         {
-            m_Timer = new();
-            m_Timer.Interval = 1000;
+            m_Timer = new()
+            {
+                Interval = 1000
+            };
             m_Timer.Tick += TimerTick;
             m_Timer.Start();
         }
 
-        private void TimerTick(object? p_Sender, EventArgs? p_EventArgs)
+        public void TimerTick(object? p_Sender, EventArgs? p_EventArgs)
         {
             m_ElapsedTime++;
             m_LblPlateauTimer.Text = $"Temps écoulé : {m_ElapsedTime} secondes";

@@ -375,23 +375,23 @@
 
         #endregion
 
-        private TableLayoutPanel m_PlateauJeu;
-        private Label m_LblPlateauTimer;
-        private Button m_BtnPlateauAbandon;
-        private Label m_LblPlateauTour;
-        private Label m_LblPlayerToPlay;
-        private Button m_BtnCol1;
-        private Button m_BtnCol2;
-        private Button m_BtnCol3;
-        private Button m_BtnCol6;
-        private Button m_BtnCol5;
-        private Button m_BtnCol4;
-        private Button m_BtnCol7;
-        private GroupBox m_GroupBoxWinner;
-        private Label m_LblWinner;
-        private Label m_LblCongrats;
-        private Button m_BtnWinnerPlay;
-        private Button m_BtnWinnerQuitter;
-        private Button m_BtnWinnerHome;
+        public TableLayoutPanel m_PlateauJeu;
+        public Label m_LblPlateauTimer;
+        public Button m_BtnPlateauAbandon;
+        public Label m_LblPlateauTour;
+        public Label m_LblPlayerToPlay;
+        public Button m_BtnCol1;
+        public Button m_BtnCol2;
+        public Button m_BtnCol3;
+        public Button m_BtnCol6;
+        public Button m_BtnCol5;
+        public Button m_BtnCol4;
+        public Button m_BtnCol7;
+        public GroupBox m_GroupBoxWinner;
+        public Label m_LblWinner;
+        public Label m_LblCongrats;
+        public Button m_BtnWinnerPlay;
+        public Button m_BtnWinnerQuitter;
+        public Button m_BtnWinnerHome;
     }
 }

@@ -51,6 +51,7 @@ namespace ProjetForm
                 v_Col = Bot.NormalModePlay(m_Puissance4);
             else
                 v_Col = Bot.HardModePlay(m_Puissance4);
+            
 
             PictureBox v_AiPawn = m_Puissance4.CreatePawn();
 

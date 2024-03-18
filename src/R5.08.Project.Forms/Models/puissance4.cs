@@ -236,7 +236,7 @@ namespace R5._08.Project.Forms.Models
             Graphics v_Graphics = Graphics.FromImage(v_Bitmap);
 
             // Ecriture sur l'objet
-            LinearGradientBrush v_LinearGradientBrush = new(new Rectangle(0, 0, 40, 30), p_Color, Color.White, -45, false);
+            LinearGradientBrush v_LinearGradientBrush = new(new Rectangle(0, 0, 40, 30), p_Color, p_Color, 0, false);
 
             // Remplissage
             v_Graphics.FillEllipse(v_LinearGradientBrush, 0, 0, v_Bitmap.Size.Width, v_Bitmap.Size.Height);

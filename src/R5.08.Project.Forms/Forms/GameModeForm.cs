@@ -1,4 +1,5 @@
 ﻿using R5._08.Project.Database.Interface;
+using R5._08.Project.Forms.Models;
 
 namespace ProjetForm
 {
@@ -11,21 +12,21 @@ namespace ProjetForm
             InitializeComponent();
         }
 
-        private void radioButtonPlayerVsPlayer_CheckedChanged(object p_Sender, EventArgs p_EventArgs)
+        public void RadioButtonPlayerVsPlayer_CheckedChanged(object p_Sender, EventArgs p_EventArgs)
         {
             // Affichage (ou non) des groupBox en fonction des radioButtons
             m_GroupBoxGameModePlayerVSPlayerInput1.Visible = true;
             m_GroupBoxGameModePlayerVSPlayerInput2.Visible = false;
         }
 
-        private void radioButtonPlayerVsIA_CheckedChanged(object p_Sender, EventArgs p_EventArgs)
+        public void RadioButtonPlayerVsIA_CheckedChanged(object p_Sender, EventArgs p_EventArgs)
         {
             // Affichage (ou non) des groupBox en fonction des radioButtons
             m_GroupBoxGameModePlayerVSPlayerInput1.Visible = false;
             m_GroupBoxGameModePlayerVSPlayerInput2.Visible = true;
         }
 
-        private void btnGameModeBack_Click(object p_Sender, EventArgs p_EventArgs)
+        public void BtnGameModeBack_Click(object p_Sender, EventArgs p_EventArgs)
         {
 
             Hide();
@@ -35,7 +36,7 @@ namespace ProjetForm
             v_HomeForm.ShowDialog();
         }
 
-        private void inputPseudoPlayer1_Enter(object p_Sender, EventArgs p_EventArgs)
+        public void InputPseudoPlayer1_Enter(object p_Sender, EventArgs p_EventArgs)
         {
             if (m_InputPseudoPlayer1.Text.Equals("Joueur 1"))
             {
@@ -43,7 +44,7 @@ namespace ProjetForm
             }
         }
 
-        private void inputPseudoPlayer2_Enter(object p_Sender, EventArgs p_EventArgs)
+        public void InputPseudoPlayer2_Enter(object p_Sender, EventArgs p_EventArgs)
         {
             if (m_InputPseudoPlayer2.Text.Equals("Joueur 2"))
             {
@@ -51,7 +52,7 @@ namespace ProjetForm
             }
         }
 
-        private void inputPseudoPlayer_Enter(object p_Sender, EventArgs p_EventArgs)
+        public void InputPseudoPlayer_Enter(object p_Sender, EventArgs p_EventArgs)
         {
             if (m_InputPseudoPlayer.Text.Equals("Pseudo"))
             {
@@ -59,7 +60,7 @@ namespace ProjetForm
             }
         }
 
-        private void btnGameModePlay_Click(object p_Sender, EventArgs p_EventArgs)
+        public void BtnGameModePlay_Click(object p_Sender, EventArgs p_EventArgs)
         {
 
             if (m_RadioButtonPlayerVSPlayer.Checked)
@@ -80,7 +81,7 @@ namespace ProjetForm
             }
         }
 
-        private bool CheckPseudoPlayerVSPlayer()
+        public bool CheckPseudoPlayerVSPlayer()
         {
             bool v_PseudoAreCorrect = true;
 
@@ -117,7 +118,7 @@ namespace ProjetForm
             return v_PseudoAreCorrect;
         }
 
-        private bool CheckPseudoPlayerVSAi()
+        public bool CheckPseudoPlayerVSAi()
         {
             bool v_PseudoAreCorrect = true;
 
@@ -139,11 +140,11 @@ namespace ProjetForm
             return v_PseudoAreCorrect;
         }
 
-        private void StartGame()
+        public void StartGame()
         {
             Hide();
 
-            R5._08.Project.Forms.Models.Puissance4 v_Puissance4 = new R5._08.Project.Forms.Models.Puissance4();
+            Puissance4 v_Puissance4 = new ();
             if (m_RadioButtonPlayerVSPlayer.Checked)
             {
                 v_Puissance4.m_Joueur1 = m_InputPseudoPlayer1.Text;
@@ -168,7 +169,7 @@ namespace ProjetForm
             }
 
             // Ouverture du plateau de jeu
-            PlateauForm v_PlateauForm = new PlateauForm(v_Puissance4, m_UnitOfWork);
+            PlateauForm v_PlateauForm = new(v_Puissance4, m_UnitOfWork);
             v_PlateauForm.ShowDialog();
         }
     }

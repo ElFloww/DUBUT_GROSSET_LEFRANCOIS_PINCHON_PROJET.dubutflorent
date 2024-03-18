@@ -1,6 +1,4 @@
-﻿using R5._08.Project.Database;
-using R5._08.Project.Database.Interface;
-using R5._08.Project.Forms;
+﻿using R5._08.Project.Database.Interface;
 
 namespace ProjetForm
 {
@@ -13,7 +11,7 @@ namespace ProjetForm
             InitializeComponent();
         }
 
-        private void btnHomePlay_Click(object p_Sender, EventArgs p_EventArgs)
+        public void BtnHomePlay_Click(object p_Sender, EventArgs p_EventArgs)
         {
             // Cache l'écran principal pour se rediriger vers les modes de jeu
             Hide();
@@ -21,13 +19,13 @@ namespace ProjetForm
             v_GameModeForm.ShowDialog();
         }
 
-        private void btnHomeQuit_Click(object p_Sender, EventArgs p_EventArgs)
+        public void BtnHomeQuit_Click(object p_Sender, EventArgs p_EventArgs)
         {
             // Fermeture de l'application
             Application.Exit();
         }
 
-        private void btnHomeScores_Click(object p_Sender, EventArgs p_EventArgs)
+        public void BtnHomeScores_Click(object p_Sender, EventArgs p_EventArgs)
         {
             // On cache la page
             Hide();

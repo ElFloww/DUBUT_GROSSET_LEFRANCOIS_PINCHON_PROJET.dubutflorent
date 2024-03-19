@@ -144,7 +144,7 @@ namespace ProjetForm
         {
             Hide();
 
-            Puissance4 v_Puissance4 = new ();
+            Puissance4 v_Puissance4 = new();
             if (m_RadioButtonPlayerVSPlayer.Checked)
             {
                 v_Puissance4.m_Joueur1 = m_InputPseudoPlayer1.Text;

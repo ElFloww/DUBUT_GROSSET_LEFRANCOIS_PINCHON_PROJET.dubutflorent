@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlateauForm));
             m_PlateauJeu = new TableLayoutPanel();
             m_LblPlateauTimer = new Label();
             m_BtnPlateauAbandon = new Button();
@@ -362,6 +363,8 @@
             Controls.Add(m_BtnPlateauAbandon);
             Controls.Add(m_LblPlateauTimer);
             Controls.Add(m_PlateauJeu);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             Name = "PlateauForm";
             StartPosition = FormStartPosition.CenterScreen;

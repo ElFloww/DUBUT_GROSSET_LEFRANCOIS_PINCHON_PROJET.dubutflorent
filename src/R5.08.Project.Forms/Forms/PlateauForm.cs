@@ -51,7 +51,7 @@ namespace ProjetForm
                 v_Col = Bot.NormalModePlay(m_Puissance4);
             else
                 v_Col = Bot.HardModePlay(m_Puissance4);
-            
+
 
             PictureBox v_AiPawn = m_Puissance4.CreatePawn();
 
@@ -130,7 +130,7 @@ namespace ProjetForm
             int v_RowPlayed = m_Puissance4.PlacePawn(v_ColumnPlayed);
             AddPawnOnBoard(v_PlayerPawn, v_ColumnPlayed, v_RowPlayed);
 
-            if(!await CheckIfWinOrDraw())
+            if (!await CheckIfWinOrDraw())
             {
                 m_LblPlayerToPlay.Text = m_Puissance4.GetPlayerToPlay();
 
@@ -253,7 +253,7 @@ namespace ProjetForm
                 m_IaStart = m_Puissance4.m_IaStart
             };
 
-            PlateauForm v_PlateauForm = new (newPuissance4, m_UnitOfWork);
+            PlateauForm v_PlateauForm = new(newPuissance4, m_UnitOfWork);
             v_PlateauForm.ShowDialog();
         }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeForm));
             m_LblHomeTitle = new Label();
             m_BtnHomePlay = new Button();
             m_BtnHomeScores = new Button();
@@ -108,6 +109,7 @@
             // 
             // HomeForm
             // 
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(16, 27, 39);
@@ -116,6 +118,7 @@
             Controls.Add(m_BtnHomeScores);
             Controls.Add(m_BtnHomePlay);
             Controls.Add(m_LblHomeTitle);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 3, 4, 3);
             Name = "HomeForm";
             StartPosition = FormStartPosition.CenterScreen;

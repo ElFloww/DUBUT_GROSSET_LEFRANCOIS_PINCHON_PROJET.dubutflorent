@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             Button m_BtnGameModeBack;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameModeForm));
             m_LblGameModeTitle = new Label();
             m_RadioButtonPlayerVSPlayer = new RadioButton();
             m_RadioButtonPlayerVSAi = new RadioButton();
@@ -341,6 +342,8 @@
             Controls.Add(m_GroupBoxGameModePlayerVSPlayerInput2);
             Controls.Add(m_RadioButtonPlayerVSPlayer);
             Controls.Add(m_LblGameModeTitle);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             Name = "GameModeForm";
             StartPosition = FormStartPosition.CenterScreen;

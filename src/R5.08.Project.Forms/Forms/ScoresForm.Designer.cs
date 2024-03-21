@@ -73,6 +73,8 @@
             // 
             m_ScoresGridView.AllowUserToAddRows = false;
             m_ScoresGridView.AllowUserToDeleteRows = false;
+            m_ScoresGridView.AllowUserToResizeColumns = false;
+            m_ScoresGridView.AllowUserToResizeRows = false;
             m_ScoresGridView.BackgroundColor = Color.FromArgb(16, 27, 39);
             m_ScoresGridView.BorderStyle = BorderStyle.None;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -92,6 +94,7 @@
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             m_ScoresGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            m_ScoresGridView.EnableHeadersVisualStyles = false;
             m_ScoresGridView.GridColor = Color.FromArgb(39, 56, 73);
             m_ScoresGridView.Location = new Point(37, 138);
             m_ScoresGridView.Margin = new Padding(4, 3, 4, 3);

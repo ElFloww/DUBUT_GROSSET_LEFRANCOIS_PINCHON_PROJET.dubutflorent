@@ -42,7 +42,7 @@
                 v_WinrateForAi = new List<float>();
 
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
-                for (int v_GridNumber = 0; v_GridNumber < 60; v_GridNumber++)
+                for (int v_GridNumber = 0; v_GridNumber < 100; v_GridNumber++)
                 {
                     Puissance4 v_TmpGrid = (Puissance4)p_Puissance4.Clone();
                     v_TmpGrid.PlacePawn(MainColToTry);
@@ -55,7 +55,7 @@
                         List<double> v_AllScore = new List<double>();
                         foreach (int v_ColToPlay in v_AvailablesColumnsTmpGrid)
                         {
-                            double v_Score = v_TmpGrid.GetScoreCol(v_ColToPlay, true);
+                            double v_Score = v_TmpGrid.GetScoreCol(v_ColToPlay, false) + v_Random.Next(v_TmpGrid.m_NbPawn);
                             v_AllScore.Add(v_Score);
 
                             if (v_Score < v_MinScore) { v_MinScore = v_Score;}
@@ -154,7 +154,7 @@
                 v_WinrateForAi = new List<float>();
 
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
-                for (int grid_number = 0; grid_number < 160; grid_number++)
+                for (int grid_number = 0; grid_number < 200; grid_number++)
                 {
                     Puissance4 v_TmpGrid = (Puissance4)p_Puissance4.Clone();
                     v_TmpGrid.PlacePawn(v_MainColToTry);
@@ -182,7 +182,7 @@
                             }
                             else
                             {
-                                v_WinrateForAi.Add(250 / (v_TmpGrid.m_NbPawn - p_Puissance4.m_NbPawn));
+                                v_WinrateForAi.Add(300 - (v_TmpGrid.m_NbPawn - p_Puissance4.m_NbPawn) * 3);
                             }
                         }
                         else
@@ -193,7 +193,7 @@
                             }
                             else
                             {
-                                v_WinrateForAi.Add(-150 + (v_TmpGrid.m_NbPawn - p_Puissance4.m_NbPawn));
+                                v_WinrateForAi.Add(-190 + (v_TmpGrid.m_NbPawn - p_Puissance4.m_NbPawn));
                             }
                         }
                     }
@@ -202,7 +202,6 @@
                         // Égalitée
                         v_WinrateForAi.Add(-20);
                     }
-                    string grids = v_TmpGrid.m_Grid.PrintString();
 
                     Grid.m_AllGrids.Remove(v_TmpGrid.m_Grid.m_GridId);
                 }

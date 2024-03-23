@@ -129,6 +129,7 @@
             m_LblPlayerToPlay.Size = new Size(190, 41);
             m_LblPlayerToPlay.TabIndex = 9;
             m_LblPlayerToPlay.Text = "JOUEUR 1";
+            m_LblPlayerToPlay.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // m_BtnCol1
             // 

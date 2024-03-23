@@ -126,22 +126,25 @@ namespace ProjetForm
 
             // Crée un nouveau pion à ajouter
             v_PlayerPawn = m_Puissance4.CreatePawn();
-
             int v_RowPlayed = m_Puissance4.PlacePawn(v_ColumnPlayed);
-            AddPawnOnBoard(v_PlayerPawn, v_ColumnPlayed, v_RowPlayed);
-
-            if (!await CheckIfWinOrDraw())
+            //If the column is not full
+            if(v_RowPlayed != -1) 
             {
-                m_LblPlayerToPlay.Text = m_Puissance4.GetPlayerToPlay();
+                AddPawnOnBoard(v_PlayerPawn, v_ColumnPlayed, v_RowPlayed);
 
-                //On rafraîchit la fenêtre du jeu.
-                m_PlateauJeu.Refresh();
-
-                if (m_Puissance4.m_difficulty >= 0)
+                if (!await CheckIfWinOrDraw())
                 {
-                    AiPlay();
-                    _ = await CheckIfWinOrDraw();
                     m_LblPlayerToPlay.Text = m_Puissance4.GetPlayerToPlay();
+
+                    //On rafraîchit la fenêtre du jeu.
+                    m_PlateauJeu.Refresh();
+
+                    if (m_Puissance4.m_difficulty >= 0)
+                    {
+                        AiPlay();
+                        _ = await CheckIfWinOrDraw();
+                        m_LblPlayerToPlay.Text = m_Puissance4.GetPlayerToPlay();
+                    }
                 }
             }
         }

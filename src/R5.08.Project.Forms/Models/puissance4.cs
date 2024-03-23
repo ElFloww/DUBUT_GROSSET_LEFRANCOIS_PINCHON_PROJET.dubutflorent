@@ -86,28 +86,30 @@ namespace R5._08.Project.Forms.Models
                     throw new ArgumentException("Index de colonne invalide");
                 }
 
-                if (m_NbPawnByCol[p_ColIndex] - 1 >= Grid.NUMBER_OF_ROWS)
+                if (m_NbPawnByCol[p_ColIndex] >= Grid.NUMBER_OF_ROWS)
                 {
                     throw new ArgumentException("Plus de place dans la colonne choisie");
                 }
-            }catch(ArgumentException v_Ex)
+
+                m_Grid.Play(p_ColIndex, m_NbPawnByCol[p_ColIndex], m_CurrentPlayer);
+                m_NbPawnByCol[p_ColIndex]++;
+
+                m_NbPawn++;
+
+                // Vérifier s'il y a un gagnant
+                if (m_Grid.m_WinVectors.Count > 0 && m_Winner == -1)
+                {
+                    m_Winner = m_CurrentPlayer;
+                }
+                m_CurrentPlayer = (m_CurrentPlayer + 1) % 2;
+
+                return m_NbPawnByCol[p_ColIndex] - 1;
+            }
+            catch(ArgumentException v_Ex)
             {
                 Console.WriteLine(v_Ex.Message);
+                return -1;
             }
-
-            m_Grid.Play(p_ColIndex, m_NbPawnByCol[p_ColIndex], m_CurrentPlayer);
-            m_NbPawnByCol[p_ColIndex]++;
-
-            m_NbPawn++;
-
-            // Vérifier s'il y a un gagnant
-            if (m_Grid.m_WinVectors.Count > 0 && m_Winner == -1)
-            {
-                m_Winner = m_CurrentPlayer;
-            }
-            m_CurrentPlayer = (m_CurrentPlayer + 1) % 2;
-
-            return m_NbPawnByCol[p_ColIndex] - 1;
         }
 
         public double GetScoreCol(int p_Col, bool p_Smart = false, int p_Player = -1, string v_XRayDirection = null, int v_Y=-1)

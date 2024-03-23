@@ -64,8 +64,8 @@ namespace R5._08.Project.Forms.Tests.Forms
             m_GameModeForm = new(m_UnitOfWorkMock.Object);
 
             // Act
-            m_GameModeForm.m_InputPseudoPlayer1.Text = m_Faker.Name.FirstName();
-            m_GameModeForm.m_InputPseudoPlayer2.Text = m_Faker.Name.FirstName();
+            m_GameModeForm.m_InputPseudoPlayer1.Text = m_Faker.Random.String(10);
+            m_GameModeForm.m_InputPseudoPlayer2.Text = m_Faker.Random.String(10);
 
             // Assert
             Assert.True(m_GameModeForm.CheckPseudoPlayerVSPlayer());

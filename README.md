@@ -2,6 +2,11 @@
 
 As part of this project, our development team of four students designed and implemented a Power 4 game.
 
+## Prerequisites
+Visual Studio : Min version 2022
+
+.NET SDK framework .NET  : v6.0.28
+
 ## How to start this project
 
 Clone this project to your computer

@@ -6,7 +6,7 @@ As part of this project, our development team of four students designed and impl
 
 Clone this project to your computer
 
-Set user secrets with these informations : 
+Set user secrets on R5.08.Project.Forms project with these informations : 
 ```bash
 {
   "ConnectionString": ""

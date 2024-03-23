@@ -154,7 +154,7 @@
                 v_WinrateForAi = new List<float>();
 
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
-                for (int grid_number = 0; grid_number < 200; grid_number++)
+                for (int grid_number = 0; grid_number < 250; grid_number++)
                 {
                     Puissance4 v_TmpGrid = (Puissance4)p_Puissance4.Clone();
                     v_TmpGrid.PlacePawn(v_MainColToTry);
@@ -162,8 +162,17 @@
 
                     while (v_AvailablesColumnsTmpGrid.Count > 0 && v_TmpGrid.m_Winner == -1)
                     {
-                        int v_ColIndex = v_Random.Next(v_AvailablesColumnsTmpGrid.Count);
-                        int v_Col = v_AvailablesColumnsTmpGrid[v_ColIndex];
+                        List<int> v_WinnableCols = v_TmpGrid.GetWinnableColumn(v_TmpGrid.m_CurrentPlayer);
+                        int v_Col;
+                        if (v_WinnableCols.Any())
+                        {
+                            v_Col = v_WinnableCols[0];
+                        }
+                        else
+                        {
+                            int v_ColIndex = v_Random.Next(v_AvailablesColumnsTmpGrid.Count);
+                            v_Col = v_AvailablesColumnsTmpGrid[v_ColIndex];
+                        }
 
                         v_TmpGrid.PlacePawn(v_Col);
 
@@ -178,7 +187,7 @@
                         {
                             if (v_TmpGrid.m_NbPawn - p_Puissance4.m_NbPawn == 1)
                             {
-                                v_WinrateForAi.Add(10000);
+                                v_WinrateForAi.Add(18000);
                             }
                             else
                             {
@@ -189,7 +198,7 @@
                         {
                             if (v_TmpGrid.m_NbPawn - p_Puissance4.m_NbPawn == 2)
                             {
-                                v_WinrateForAi.Add(-8000);
+                                v_WinrateForAi.Add(-15000);
                             }
                             else
                             {

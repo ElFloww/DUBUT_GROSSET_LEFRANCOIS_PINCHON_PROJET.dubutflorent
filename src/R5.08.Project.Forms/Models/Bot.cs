@@ -58,7 +58,7 @@
                             double v_Score = v_TmpGrid.GetScoreCol(v_ColToPlay, false) + v_Random.Next(v_TmpGrid.m_NbPawn);
                             v_AllScore.Add(v_Score);
 
-                            if (v_Score < v_MinScore) { v_MinScore = v_Score;}
+                            if (v_Score < v_MinScore) { v_MinScore = v_Score; }
                         }
 
                         for (int v_IndexScore = 0; v_IndexScore < v_AllScore.Count; v_IndexScore++)
@@ -92,7 +92,7 @@
                     {
                         string v_PseudoPlayerWinner = v_TmpGrid.GetWinnerName();
                         if (v_PseudoPlayerWinner == "IA Normale")
-                            {
+                        {
                             if (v_TmpGrid.m_NbPawn - p_Puissance4.m_NbPawn == 1)
                             {
                                 v_WinrateForAi.Add(10000);
@@ -154,7 +154,7 @@
                 v_WinrateForAi = new List<float>();
 
                 // Générer des grids aléatoires pour récupérer le coups avec la meillieur proba de win
-                for (int grid_number = 0; grid_number < 200; grid_number++)
+                for (int grid_number = 0; grid_number < 120; grid_number++)
                 {
                     Puissance4 v_TmpGrid = (Puissance4)p_Puissance4.Clone();
                     v_TmpGrid.PlacePawn(v_MainColToTry);
@@ -162,9 +162,27 @@
 
                     while (v_AvailablesColumnsTmpGrid.Count > 0 && v_TmpGrid.m_Winner == -1)
                     {
-                        int v_ColIndex = v_Random.Next(v_AvailablesColumnsTmpGrid.Count);
-                        int v_Col = v_AvailablesColumnsTmpGrid[v_ColIndex];
-
+                        List<int> v_WinnableCols = v_TmpGrid.GetWinnableColumn(v_TmpGrid.m_CurrentPlayer);
+                        int v_Col;
+                        if (v_WinnableCols.Any())
+                        {
+                            v_Col = v_WinnableCols[0];
+                        }
+                        else
+                        {
+                            List<int> v_TrueAvailableColsTmpGrid = new();
+                            foreach (int v_TmpCol in v_AvailablesColumnsTmpGrid)
+                            {
+                                Puissance4 v_SubTmpGrid = (Puissance4)v_TmpGrid.Clone();
+                                var v_SubTmpGridFutureWinnableCols = v_SubTmpGrid.GetWinnableColumn((v_SubTmpGrid.m_CurrentPlayer + 1) % 2);
+                                if (!v_SubTmpGridFutureWinnableCols.Any())
+                                {
+                                    v_TrueAvailableColsTmpGrid.Add(v_TmpCol);
+                                }
+                            }
+                            int v_ColIndex = v_Random.Next(v_TrueAvailableColsTmpGrid.Count);
+                            v_Col = v_TrueAvailableColsTmpGrid[v_ColIndex];
+                        }
                         v_TmpGrid.PlacePawn(v_Col);
 
                         // Mettre à jour la liste des colonnes disponibles

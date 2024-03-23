@@ -45,8 +45,8 @@ namespace R5._08.Project.Forms.Models
             {
                 v_Grid.m_GridTiles[v_Coo] = (Tile)m_GridTiles[v_Coo].Clone();
             }
-            v_Grid.m_GridId = -1;
-            m_AllGrids.Add(-1, v_Grid);
+            v_Grid.m_GridId = -m_AllGrids.Count;
+            m_AllGrids.Add(v_Grid.m_GridId, v_Grid);
 
             return v_Grid;
         }

@@ -203,6 +203,45 @@ namespace R5._08.Project.Forms.Models
             return v_Score;
         }
 
+        public bool IsWinCol(int p_Col, int p_Player)
+        {
+            int v_Row = m_NbPawnByCol[p_Col];
+            Tile v_Tile = m_Grid.Get(p_Col, v_Row);
+            List<Tile> v_Neighbours = v_Tile.GetNeighbors();
+
+            foreach (Tile v_Neighbour in v_Neighbours)
+            {
+                string v_Direction = v_Neighbour.GetDirection(v_Tile);
+                if (v_Neighbour.m_Player != p_Player)
+                {
+                    continue;
+                }
+
+                foreach (Vecteur v_Vector in v_Neighbour.m_Vectors)
+                {
+                    if (v_Vector.m_Direction == v_Direction && v_Vector.m_Lenght >= 3)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public List<int> GetWinnableColumn(int p_Player)
+        {
+            List<int> v_AvailableCols = GetAvailableCols();
+            List<int> v_WinnableCols = new();
+            foreach (int v_Column in v_AvailableCols)
+            {
+                if (IsWinCol(v_Column, p_Player))
+                {
+                    v_WinnableCols.Add(v_Column);
+                }
+            }
+            return v_WinnableCols;
+        }
+
         public bool CheckIfDraw()
         {
             int v_TotalPawn = m_NbPawn;

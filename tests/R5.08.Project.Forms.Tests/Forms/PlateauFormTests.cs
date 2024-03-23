@@ -488,11 +488,11 @@ namespace R5._08.Project.Forms.Tests
             Puissance4 v_Puissance4 = new()
             {
                 m_Joueur1 = v_Faker.Person.FullName,
-                m_Joueur2 = "IA Difficile"
+                m_Joueur2 = "IA Difficile",
+                //Set bot difficulty
+                m_difficulty = 2,
             };
             PlateauForm v_PlateauForm = new(v_Puissance4, m_UnitOfWorkMock.Object);
-            //Set bot difficulty
-            v_Puissance4.m_difficulty = 2;
 
             v_PlateauForm.PlateauForm_Load(new object(), EventArgs.Empty);
 
@@ -532,12 +532,13 @@ namespace R5._08.Project.Forms.Tests
             Puissance4 v_Puissance4 = new()
             {
                 m_Joueur1 = v_Faker.Person.FullName,
-                m_Joueur2 = "IA Difficile",
-                m_IaStart = true
-            };
+                m_Joueur2 = "IA Normale",
+                m_IaStart = true,
+                m_difficulty = 1
+        };
             PlateauForm v_PlateauForm = new(v_Puissance4, m_UnitOfWorkMock.Object);
             //Set bot difficulty
-            v_Puissance4.m_difficulty = 1;
+            
             
 
             v_PlateauForm.PlateauForm_Load(new object(), EventArgs.Empty);
